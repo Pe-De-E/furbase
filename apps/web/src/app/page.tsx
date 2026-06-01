@@ -42,10 +42,20 @@ export default async function Page({
 
       <main className="max-w-6xl mx-auto px-6 py-10">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-zinc-900">Animals looking for a home</h1>
-          <p className="text-zinc-500 mt-1">
-            {animals.length} {animals.length === 1 ? 'animal' : 'animals'} available
-          </p>
+          <div className="flex items-end justify-between gap-4 flex-wrap">
+            <div>
+              <h1 className="text-3xl font-bold text-zinc-900">Animals looking for a home</h1>
+              <p className="text-zinc-500 mt-1">
+                {animals.length} {animals.length === 1 ? 'animal' : 'animals'} available
+              </p>
+            </div>
+            <a
+              href="/matcher"
+              className="shrink-0 px-4 py-2 bg-zinc-900 text-white text-sm font-medium rounded-xl hover:bg-zinc-700 transition-colors"
+            >
+              Find my match →
+            </a>
+          </div>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-8">
