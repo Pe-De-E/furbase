@@ -1,1 +1,5 @@
-// Schemas werden hier exportiert sobald sie angelegt sind
+export * from './tier'
+export * from './user'
+export * from './favorit'
+export * from './matcher'
+export * from './settings'
