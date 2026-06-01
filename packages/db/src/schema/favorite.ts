@@ -1,9 +1,9 @@
 import { pgTable, uuid, timestamp, primaryKey } from 'drizzle-orm/pg-core'
 import { user } from './user'
-import { tier } from './tier'
+import { animal } from './animal'
 
-export const favorit = pgTable('favorit', {
+export const favorite = pgTable('favorite', {
   userId:    uuid('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
-  tierId:    uuid('tier_id').notNull().references(() => tier.id, { onDelete: 'cascade' }),
+  animalId:  uuid('animal_id').notNull().references(() => animal.id, { onDelete: 'cascade' }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-}, (t) => [primaryKey({ columns: [t.userId, t.tierId] })])
+}, (t) => [primaryKey({ columns: [t.userId, t.animalId] })])

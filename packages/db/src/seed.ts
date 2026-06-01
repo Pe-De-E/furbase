@@ -8,38 +8,35 @@ const db = drizzle(pool, { schema })
 async function main() {
   console.log('🌱 Seeding...')
 
-  // Settings
   await db.insert(schema.settings).values({
-    name: 'Tierheim Musterstadt',
-    address: 'Musterstraße 1, 12345 Musterstadt',
-    phone: '+49 123 456789',
-    email: 'info@tierheim-musterstadt.de',
-    website: 'https://tierheim-musterstadt.de',
+    name: 'Tierherberge Pfaffenhofen a. d. Ilm',
+    address: 'Musterstraße 1, 85276 Pfaffenhofen a. d. Ilm',
+    phone: '+49 8441 123456',
+    email: 'info@tierherberge-pfaffenhofen.de',
+    website: 'https://tierherberge-pfaffenhofen.de',
     description: 'Wir vermitteln Tiere in liebevolle Hände seit 1990.',
   })
 
-  // Tags
   const tags = await db.insert(schema.tag).values([
-    { name: 'kastriert',          category: 'health' },
-    { name: 'geimpft',            category: 'health' },
-    { name: 'gechipt',            category: 'health' },
-    { name: 'chronisch krank',    category: 'health' },
-    { name: 'kinderfreundlich',   category: 'behavior' },
-    { name: 'hundefreundlich',    category: 'behavior' },
-    { name: 'katzenfreundlich',   category: 'behavior' },
-    { name: 'stubenrein',         category: 'behavior' },
-    { name: 'einzelhaltung',      category: 'needs' },
-    { name: 'erfahrener Halter',  category: 'needs' },
-    { name: 'Leinentraining',     category: 'needs' },
+    { name: 'neutered',           category: 'health' },
+    { name: 'vaccinated',         category: 'health' },
+    { name: 'chipped',            category: 'health' },
+    { name: 'chronically ill',    category: 'health' },
+    { name: 'good with kids',     category: 'behavior' },
+    { name: 'good with dogs',     category: 'behavior' },
+    { name: 'good with cats',     category: 'behavior' },
+    { name: 'house trained',      category: 'behavior' },
+    { name: 'only pet',           category: 'needs' },
+    { name: 'experienced owner',  category: 'needs' },
+    { name: 'leash training',     category: 'needs' },
   ]).returning()
 
   const tagByName = Object.fromEntries(tags.map(t => [t.name, t.id]))
 
-  // Users
   const [admin, testUser] = await db.insert(schema.user).values([
     {
       name: 'Admin',
-      email: 'admin@tierheim-musterstadt.de',
+      email: 'admin@tierherberge-pfaffenhofen.de',
       role: 'admin',
     },
     {
@@ -49,23 +46,22 @@ async function main() {
     },
   ]).returning()
 
-  // Tiere
-  const tiere = await db.insert(schema.tier).values([
+  const animals = await db.insert(schema.animal).values([
     {
       name: 'Luna',
-      species: 'hund',
+      species: 'dog',
       breed: 'Labrador Mix',
       age: 36,
-      gender: 'weiblich',
-      size: 'gross',
+      gender: 'female',
+      size: 'large',
       weight: '28.50',
-      color: 'Schwarz',
-      description: 'Luna ist eine verschmuste Labrador-Mischlingshündin, die nach einem liebevollen Zuhause sucht. Sie ist sehr verspielt und liebt lange Spaziergänge.',
+      color: 'Black',
+      description: 'Luna is an affectionate Labrador mix looking for a loving home. She is very playful and loves long walks.',
       images: [
         'https://picsum.photos/seed/luna1/600/400',
         'https://picsum.photos/seed/luna2/600/400',
       ],
-      status: 'verfuegbar',
+      status: 'available',
       arrivalDate: '2024-11-15',
       isNeutered: true,
       isVaccinated: true,
@@ -73,26 +69,26 @@ async function main() {
       goodWithKids: true,
       goodWithDogs: true,
       goodWithCats: false,
-      activityLevel: 'hoch',
+      activityLevel: 'high',
       needsGarden: true,
       needsExperiencedOwner: false,
       needsTraining: false,
     },
     {
       name: 'Bello',
-      species: 'hund',
-      breed: 'Deutscher Schäferhund',
+      species: 'dog',
+      breed: 'German Shepherd',
       age: 60,
-      gender: 'maennlich',
-      size: 'gross',
+      gender: 'male',
+      size: 'large',
       weight: '35.00',
-      color: 'Braun-Schwarz',
-      description: 'Bello ist ein treuer Schäferhund, der ein erfahrenes Herrchen braucht. Er ist sehr intelligent und lernwillig.',
+      color: 'Brown-Black',
+      description: 'Bello is a loyal German Shepherd who needs an experienced owner. He is very intelligent and eager to learn.',
       images: [
         'https://picsum.photos/seed/bello1/600/400',
         'https://picsum.photos/seed/bello2/600/400',
       ],
-      status: 'verfuegbar',
+      status: 'available',
       arrivalDate: '2025-01-10',
       isNeutered: true,
       isVaccinated: true,
@@ -100,26 +96,26 @@ async function main() {
       goodWithKids: false,
       goodWithDogs: false,
       goodWithCats: false,
-      activityLevel: 'hoch',
+      activityLevel: 'high',
       needsGarden: true,
       needsExperiencedOwner: true,
       needsTraining: true,
     },
     {
       name: 'Mia',
-      species: 'katze',
-      breed: 'Europäisch Kurzhaar',
+      species: 'cat',
+      breed: 'European Shorthair',
       age: 24,
-      gender: 'weiblich',
-      size: 'klein',
+      gender: 'female',
+      size: 'small',
       weight: '4.20',
-      color: 'Getigert',
-      description: 'Mia ist eine ruhige Katze, die am liebsten auf dem Sofa kuschelt. Sie kommt gut mit anderen Katzen aus.',
+      color: 'Tabby',
+      description: 'Mia is a calm cat who loves to cuddle on the sofa. She gets along well with other cats.',
       images: [
         'https://picsum.photos/seed/mia1/600/400',
         'https://picsum.photos/seed/mia2/600/400',
       ],
-      status: 'verfuegbar',
+      status: 'available',
       arrivalDate: '2025-02-20',
       isNeutered: true,
       isVaccinated: true,
@@ -127,25 +123,25 @@ async function main() {
       goodWithKids: true,
       goodWithDogs: false,
       goodWithCats: true,
-      activityLevel: 'niedrig',
+      activityLevel: 'low',
       needsGarden: false,
       needsExperiencedOwner: false,
       needsTraining: false,
     },
     {
       name: 'Felix',
-      species: 'katze',
+      species: 'cat',
       breed: 'Maine Coon Mix',
       age: 48,
-      gender: 'maennlich',
-      size: 'mittel',
+      gender: 'male',
+      size: 'medium',
       weight: '6.80',
-      color: 'Rotbraun',
-      description: 'Felix ist ein imposanter Maine-Coon-Mix mit viel Persönlichkeit. Er liebt es, beobachtet zu werden.',
+      color: 'Auburn',
+      description: 'Felix is an impressive Maine Coon mix with lots of personality. He loves being the center of attention.',
       images: [
         'https://picsum.photos/seed/felix1/600/400',
       ],
-      status: 'reserviert',
+      status: 'reserved',
       arrivalDate: '2024-12-01',
       isNeutered: true,
       isVaccinated: true,
@@ -153,25 +149,25 @@ async function main() {
       goodWithKids: true,
       goodWithDogs: false,
       goodWithCats: true,
-      activityLevel: 'mittel',
+      activityLevel: 'medium',
       needsGarden: false,
       needsExperiencedOwner: false,
       needsTraining: false,
     },
     {
       name: 'Hoppel',
-      species: 'hase',
-      breed: 'Zwergkaninchen',
+      species: 'rabbit',
+      breed: 'Dwarf Rabbit',
       age: 12,
-      gender: 'maennlich',
-      size: 'klein',
+      gender: 'male',
+      size: 'small',
       weight: '1.50',
-      color: 'Weiß-Grau',
-      description: 'Hoppel sucht einen ruhigen Haushalt. Er ist am liebsten in Gesellschaft eines anderen Kaninchens.',
+      color: 'White-Grey',
+      description: 'Hoppel is looking for a quiet household. He is happiest with another rabbit for company.',
       images: [
         'https://picsum.photos/seed/hoppel1/600/400',
       ],
-      status: 'verfuegbar',
+      status: 'available',
       arrivalDate: '2025-03-05',
       isNeutered: true,
       isVaccinated: false,
@@ -179,27 +175,27 @@ async function main() {
       goodWithKids: false,
       goodWithDogs: false,
       goodWithCats: false,
-      activityLevel: 'niedrig',
+      activityLevel: 'low',
       needsGarden: false,
       needsExperiencedOwner: false,
       needsTraining: false,
     },
     {
       name: 'Rocky',
-      species: 'hund',
+      species: 'dog',
       breed: 'Boxer',
       age: 18,
-      gender: 'maennlich',
-      size: 'gross',
+      gender: 'male',
+      size: 'large',
       weight: '30.00',
-      color: 'Gestromt',
-      description: 'Rocky ist ein junger, energiegeladener Boxer der viel Bewegung und Beschäftigung braucht.',
+      color: 'Brindle',
+      description: 'Rocky is a young energetic Boxer who needs lots of exercise and mental stimulation.',
       images: [
         'https://picsum.photos/seed/rocky1/600/400',
         'https://picsum.photos/seed/rocky2/600/400',
         'https://picsum.photos/seed/rocky3/600/400',
       ],
-      status: 'verfuegbar',
+      status: 'available',
       arrivalDate: '2025-04-01',
       isNeutered: false,
       isVaccinated: true,
@@ -207,50 +203,48 @@ async function main() {
       goodWithKids: true,
       goodWithDogs: true,
       goodWithCats: false,
-      activityLevel: 'hoch',
+      activityLevel: 'high',
       needsGarden: true,
       needsExperiencedOwner: false,
       needsTraining: true,
     },
   ]).returning()
 
-  const tierByName = Object.fromEntries(tiere.map(t => [t.name, t.id]))
+  const animalByName = Object.fromEntries(animals.map(a => [a.name, a.id]))
 
-  // Tier-Tags
-  await db.insert(schema.tierTag).values([
-    { tierId: tierByName['Luna'],   tagId: tagByName['kastriert'] },
-    { tierId: tierByName['Luna'],   tagId: tagByName['geimpft'] },
-    { tierId: tierByName['Luna'],   tagId: tagByName['gechipt'] },
-    { tierId: tierByName['Luna'],   tagId: tagByName['kinderfreundlich'] },
-    { tierId: tierByName['Bello'],  tagId: tagByName['kastriert'] },
-    { tierId: tierByName['Bello'],  tagId: tagByName['geimpft'] },
-    { tierId: tierByName['Bello'],  tagId: tagByName['gechipt'] },
-    { tierId: tierByName['Bello'],  tagId: tagByName['erfahrener Halter'] },
-    { tierId: tierByName['Bello'],  tagId: tagByName['Leinentraining'] },
-    { tierId: tierByName['Mia'],    tagId: tagByName['kastriert'] },
-    { tierId: tierByName['Mia'],    tagId: tagByName['geimpft'] },
-    { tierId: tierByName['Mia'],    tagId: tagByName['gechipt'] },
-    { tierId: tierByName['Mia'],    tagId: tagByName['stubenrein'] },
-    { tierId: tierByName['Felix'],  tagId: tagByName['kastriert'] },
-    { tierId: tierByName['Felix'],  tagId: tagByName['geimpft'] },
-    { tierId: tierByName['Felix'],  tagId: tagByName['einzelhaltung'] },
-    { tierId: tierByName['Hoppel'], tagId: tagByName['kastriert'] },
-    { tierId: tierByName['Rocky'],  tagId: tagByName['geimpft'] },
-    { tierId: tierByName['Rocky'],  tagId: tagByName['gechipt'] },
-    { tierId: tierByName['Rocky'],  tagId: tagByName['kinderfreundlich'] },
-    { tierId: tierByName['Rocky'],  tagId: tagByName['Leinentraining'] },
+  await db.insert(schema.animalTag).values([
+    { animalId: animalByName['Luna'],   tagId: tagByName['neutered'] },
+    { animalId: animalByName['Luna'],   tagId: tagByName['vaccinated'] },
+    { animalId: animalByName['Luna'],   tagId: tagByName['chipped'] },
+    { animalId: animalByName['Luna'],   tagId: tagByName['good with kids'] },
+    { animalId: animalByName['Bello'],  tagId: tagByName['neutered'] },
+    { animalId: animalByName['Bello'],  tagId: tagByName['vaccinated'] },
+    { animalId: animalByName['Bello'],  tagId: tagByName['chipped'] },
+    { animalId: animalByName['Bello'],  tagId: tagByName['experienced owner'] },
+    { animalId: animalByName['Bello'],  tagId: tagByName['leash training'] },
+    { animalId: animalByName['Mia'],    tagId: tagByName['neutered'] },
+    { animalId: animalByName['Mia'],    tagId: tagByName['vaccinated'] },
+    { animalId: animalByName['Mia'],    tagId: tagByName['chipped'] },
+    { animalId: animalByName['Mia'],    tagId: tagByName['house trained'] },
+    { animalId: animalByName['Felix'],  tagId: tagByName['neutered'] },
+    { animalId: animalByName['Felix'],  tagId: tagByName['vaccinated'] },
+    { animalId: animalByName['Felix'],  tagId: tagByName['only pet'] },
+    { animalId: animalByName['Hoppel'], tagId: tagByName['neutered'] },
+    { animalId: animalByName['Rocky'],  tagId: tagByName['vaccinated'] },
+    { animalId: animalByName['Rocky'],  tagId: tagByName['chipped'] },
+    { animalId: animalByName['Rocky'],  tagId: tagByName['good with kids'] },
+    { animalId: animalByName['Rocky'],  tagId: tagByName['leash training'] },
   ])
 
-  // Favoriten für den Test-User
-  await db.insert(schema.favorit).values([
-    { userId: testUser.id, tierId: tierByName['Luna'] },
-    { userId: testUser.id, tierId: tierByName['Mia'] },
+  await db.insert(schema.favorite).values([
+    { userId: testUser.id, animalId: animalByName['Luna'] },
+    { userId: testUser.id, animalId: animalByName['Mia'] },
   ])
 
-  console.log('✅ Seed abgeschlossen')
-  console.log(`   ${tiere.length} Tiere`)
-  console.log(`   ${tags.length} Tags`)
-  console.log('   2 User (admin + testuser)')
+  console.log('✅ Seed done')
+  console.log(`   ${animals.length} animals`)
+  console.log(`   ${tags.length} tags`)
+  console.log('   2 users (admin + test)')
   await pool.end()
 }
 

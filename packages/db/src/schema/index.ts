@@ -1,5 +1,5 @@
-export * from './tier'
+export * from './animal'
 export * from './user'
-export * from './favorit'
+export * from './favorite'
 export * from './matcher'
 export * from './settings'
