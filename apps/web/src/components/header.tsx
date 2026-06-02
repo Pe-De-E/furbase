@@ -14,7 +14,7 @@ export default async function Header({ title }: { title?: string }) {
         <div className="flex items-center gap-4">
           {session?.user ? (
             <>
-              <Link href="/profile" className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900 transition-colors">
+              <Link href="/profile" className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900 transition-colors" title="Your profile">
                 {session.user.image && (
                   <img src={session.user.image} alt="" className="w-7 h-7 rounded-full" />
                 )}
