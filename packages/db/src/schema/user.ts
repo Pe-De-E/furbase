@@ -5,11 +5,11 @@ import {
   text,
   timestamp,
   integer,
+  primaryKey,
 } from 'drizzle-orm/pg-core'
 
 export const userRoleEnum = pgEnum('user_role', ['user', 'admin'])
 
-// Auth.js-kompatibles Schema
 export const user = pgTable('user', {
   id:            uuid('id').primaryKey().defaultRandom(),
   name:          text('name'),
@@ -32,7 +32,7 @@ export const account = pgTable('account', {
   scope:             text('scope'),
   idToken:           text('id_token'),
   sessionState:      text('session_state'),
-})
+}, (t) => [primaryKey({ columns: [t.provider, t.providerAccountId] })])
 
 export const session = pgTable('session', {
   sessionToken: text('session_token').primaryKey(),
@@ -44,4 +44,4 @@ export const verificationToken = pgTable('verification_token', {
   identifier: text('identifier').notNull(),
   token:      text('token').notNull(),
   expires:    timestamp('expires').notNull(),
-})
+}, (t) => [primaryKey({ columns: [t.identifier, t.token] })])

@@ -1,6 +1,8 @@
 import { db, animal, settings, speciesEnum } from '@shelter-os/db'
 import { eq, and, type SQL } from 'drizzle-orm'
 import AnimalCard from '@/components/animal-card'
+import Header from '@/components/header'
+
 
 const SPECIES_OPTIONS = [
   { value: '',            label: 'All' },
@@ -31,14 +33,7 @@ export default async function Page({
 
   return (
     <div className="min-h-screen bg-zinc-50">
-      <header className="bg-white border-b border-zinc-200">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <span className="text-lg font-semibold text-zinc-900">{shelterName}</span>
-          <a href="/login" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
-            Sign in
-          </a>
-        </div>
-      </header>
+      <Header title={shelterName} />
 
       <main className="max-w-6xl mx-auto px-6 py-10">
         <div className="mb-8">

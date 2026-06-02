@@ -105,9 +105,8 @@ export default function MatcherPage() {
   return (
     <div className="min-h-screen bg-zinc-50 flex flex-col">
       <header className="bg-white border-b border-zinc-200">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-6 py-4">
           <a href="/" className="text-lg font-semibold text-zinc-900">Tierherberge Pfaffenhofen</a>
-          <a href="/login" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">Sign in</a>
         </div>
       </header>
 

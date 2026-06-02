@@ -2,6 +2,7 @@ import { db, animal, animalTag, tag } from '@shelter-os/db'
 import { eq } from 'drizzle-orm'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Header from '@/components/header'
 
 const SPECIES_LABEL: Record<string, string> = {
   dog: 'Dog', cat: 'Cat', rabbit: 'Rabbit',
@@ -77,16 +78,7 @@ export default async function AnimalPage({
 
   return (
     <div className="min-h-screen bg-zinc-50">
-      <header className="bg-white border-b border-zinc-200">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="text-lg font-semibold text-zinc-900 hover:text-zinc-600 transition-colors">
-            Tierherberge Pfaffenhofen
-          </Link>
-          <a href="/login" className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
-            Sign in
-          </a>
-        </div>
-      </header>
+      <Header />
 
       <main className="max-w-6xl mx-auto px-6 py-10">
         <Link
