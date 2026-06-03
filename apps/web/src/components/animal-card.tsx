@@ -28,7 +28,13 @@ function formatAge(months: number | null): string {
   return `${years} ${years === 1 ? 'year' : 'years'}`
 }
 
-export default function AnimalCard({ animal }: { animal: Animal }) {
+export default function AnimalCard({
+  animal,
+  favoriteButton,
+}: {
+  animal: Animal
+  favoriteButton?: React.ReactNode
+}) {
   const image = animal.images?.[0] ?? `https://picsum.photos/seed/${animal.id}/600/400`
   const status = STATUS_STYLE[animal.status] ?? STATUS_STYLE.available
 
@@ -43,9 +49,12 @@ export default function AnimalCard({ animal }: { animal: Animal }) {
           alt={animal.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        <span className={`absolute top-3 right-3 text-xs font-medium text-white px-2.5 py-1 rounded-full ${status.className}`}>
+        <span className={`absolute top-3 left-3 text-xs font-medium text-white px-2.5 py-1 rounded-full ${status.className}`}>
           {status.label}
         </span>
+        {favoriteButton && (
+          <div className="absolute top-3 right-3">{favoriteButton}</div>
+        )}
       </div>
 
       <div className="p-4">
