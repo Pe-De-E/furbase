@@ -3,6 +3,7 @@ import { desc } from 'drizzle-orm'
 import Link from 'next/link'
 import StatusSelect from './status-select'
 import DeleteButton from './delete-button'
+import AnimalListMobile from './animal-list-mobile'
 
 export default async function AdminAnimalsPage() {
   const animals = await db.select().from(animal).orderBy(desc(animal.createdAt))
@@ -22,7 +23,9 @@ export default async function AdminAnimalsPage() {
         </Link>
       </div>
 
-      <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden overflow-x-auto">
+      <AnimalListMobile animals={animals} />
+
+      <div className="hidden sm:block bg-white rounded-2xl border border-zinc-100 overflow-hidden overflow-x-auto">
         <table className="w-full text-sm min-w-[600px]">
           <thead className="bg-zinc-50 border-b border-zinc-100">
             <tr>
