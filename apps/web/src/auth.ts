@@ -15,8 +15,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async session({ session, user: u }) {
       session.user.id = u.id
-      const [row] = await db.select({ role: user.role }).from(user).where(eq(user.id, u.id))
-      session.user.role = row?.role ?? 'user'
+      const adminEmails = (process.env.ADMIN_EMAILS ?? '').split(',').map(e => e.trim())
+      if (adminEmails.includes(u.email ?? '')) {
+        session.user.role = 'admin'
+      } else {
+        const [row] = await db.select({ role: user.role }).from(user).where(eq(user.id, u.id))
+        session.user.role = row?.role ?? 'user'
+      }
       return session
     },
   },
