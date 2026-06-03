@@ -1,5 +1,5 @@
 {
-  "name": "@shelter-os/db",
+  "name": "@furbase/db",
   "version": "0.0.1",
   "private": true,
   "exports": {

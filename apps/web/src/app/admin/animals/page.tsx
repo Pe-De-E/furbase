@@ -1,4 +1,4 @@
-import { db, animal } from '@shelter-os/db'
+import { db, animal } from '@furbase/db'
 import { desc } from 'drizzle-orm'
 import Link from 'next/link'
 import StatusSelect from './status-select'

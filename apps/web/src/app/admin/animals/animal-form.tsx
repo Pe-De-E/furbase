@@ -1,6 +1,6 @@
 import { saveAnimal, deleteAnimal } from '../actions'
 import type { InferSelectModel } from 'drizzle-orm'
-import type { animal } from '@shelter-os/db'
+import type { animal } from '@furbase/db'
 
 type Animal = InferSelectModel<typeof animal>
 

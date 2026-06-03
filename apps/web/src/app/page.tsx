@@ -1,4 +1,4 @@
-import { db, animal, settings, speciesEnum, favorite } from '@shelter-os/db'
+import { db, animal, settings, speciesEnum, favorite } from '@furbase/db'
 import { eq, and, type SQL } from 'drizzle-orm'
 import AnimalCard from '@/components/animal-card'
 import FavoriteButton from '@/components/favorite-button'

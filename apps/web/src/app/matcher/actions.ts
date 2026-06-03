@@ -1,6 +1,6 @@
 'use server'
 
-import { db, matcherProfile } from '@shelter-os/db'
+import { db, matcherProfile } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 import type { MatcherProfile } from '@/lib/matcher'
 

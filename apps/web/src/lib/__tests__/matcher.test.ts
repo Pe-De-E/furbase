@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { scoreAnimal, matchAnimals, type MatcherProfile } from '../matcher'
 import type { InferSelectModel } from 'drizzle-orm'
-import type { animal } from '@shelter-os/db'
+import type { animal } from '@furbase/db'
 
 type Animal = InferSelectModel<typeof animal>
 

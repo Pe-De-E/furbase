@@ -1,6 +1,6 @@
 'use server'
 
-import { db, volunteerProfile } from '@shelter-os/db'
+import { db, volunteerProfile } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 
 export async function saveVolunteerProfile(userId: string, formData: FormData) {

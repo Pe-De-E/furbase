@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import type { InferSelectModel } from 'drizzle-orm'
-import type { animal } from '@shelter-os/db'
+import type { animal } from '@furbase/db'
 
 type Animal = InferSelectModel<typeof animal>
 

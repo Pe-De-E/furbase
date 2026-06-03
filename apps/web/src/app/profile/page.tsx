@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { db, volunteerProfile, favorite, animal, matcherProfile } from '@shelter-os/db'
+import { db, volunteerProfile, favorite, animal, matcherProfile } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 import { auth } from '@/auth'
 import Header from '@/components/header'

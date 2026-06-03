@@ -3,7 +3,7 @@
 import { useTransition } from 'react'
 import { saveVolunteerProfile } from './actions'
 import type { InferSelectModel } from 'drizzle-orm'
-import type { volunteerProfile } from '@shelter-os/db'
+import type { volunteerProfile } from '@furbase/db'
 
 type VolunteerProfile = InferSelectModel<typeof volunteerProfile>
 

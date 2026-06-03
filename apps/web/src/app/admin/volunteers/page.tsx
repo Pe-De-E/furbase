@@ -1,4 +1,4 @@
-import { db, volunteerProfile, user } from '@shelter-os/db'
+import { db, volunteerProfile, user } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 import VolunteerListMobile from './volunteer-list-mobile'
 

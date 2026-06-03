@@ -1,6 +1,6 @@
 'use server'
 
-import { db, favorite } from '@shelter-os/db'
+import { db, favorite } from '@furbase/db'
 import { eq, and } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 

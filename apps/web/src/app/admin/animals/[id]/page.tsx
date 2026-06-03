@@ -1,4 +1,4 @@
-import { db, animal } from '@shelter-os/db'
+import { db, animal } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 import { notFound } from 'next/navigation'
 import AnimalForm from '../animal-form'

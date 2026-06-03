@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 import path from "path";
 
 const nextConfig: NextConfig = {
-  transpilePackages: ['@shelter-os/db'],
+  transpilePackages: ['@furbase/db'],
   turbopack: {
     root: path.resolve(__dirname, '../../'),
   },
