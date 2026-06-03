@@ -130,7 +130,7 @@ export default async function AnimalPage({
             )}
 
             {/* Details grid */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
                 { label: 'Age',           value: formatAge(row.age) },
                 { label: 'Gender',        value: row.gender ? GENDER_LABEL[row.gender] : '—' },

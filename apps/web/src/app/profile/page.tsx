@@ -26,7 +26,7 @@ export default async function ProfilePage() {
       <main className="max-w-3xl mx-auto px-6 py-10 flex flex-col gap-10">
 
         {/* Account */}
-        <section className="bg-white rounded-2xl border border-zinc-100 p-6 flex items-center gap-5">
+        <section className="bg-white rounded-2xl border border-zinc-100 p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
           {session.user.image && (
             <img src={session.user.image} alt="" className="w-16 h-16 rounded-full" />
           )}
@@ -97,7 +97,7 @@ export default async function ProfilePage() {
           </div>
 
           {matcher ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {[
                 { label: 'Living',      value: matcher.livingSituation?.replace('_', ' ') },
                 { label: 'Activity',    value: matcher.activityLevel },

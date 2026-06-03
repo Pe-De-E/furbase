@@ -45,7 +45,7 @@ function ToggleButton({
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 rounded-xl border-2 text-sm font-medium transition-all ${
+      className={`px-4 py-2.5 rounded-xl border-2 text-sm font-medium transition-all ${
         selected
           ? 'border-zinc-900 bg-zinc-900 text-white'
           : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-400'

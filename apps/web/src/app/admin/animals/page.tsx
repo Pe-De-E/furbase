@@ -22,8 +22,8 @@ export default async function AdminAnimalsPage() {
         </Link>
       </div>
 
-      <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden overflow-x-auto">
+        <table className="w-full text-sm min-w-[600px]">
           <thead className="bg-zinc-50 border-b border-zinc-100">
             <tr>
               <th className="text-left px-5 py-3 font-medium text-zinc-500">Animal</th>
