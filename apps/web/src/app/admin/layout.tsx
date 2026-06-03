@@ -30,6 +30,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <Link href="/admin/animals" className="text-sm font-medium hover:text-zinc-300 transition-colors">
               Animals
             </Link>
+            <Link href="/admin/volunteers" className="text-sm font-medium hover:text-zinc-300 transition-colors">
+              Volunteers
+            </Link>
           </div>
           <span className="text-xs text-zinc-500">Admin — {session.user.email}</span>
         </div>
