@@ -7,7 +7,7 @@ import VolunteerForm from './volunteer-form'
 
 export default async function ProfilePage() {
   const session = await auth()
-  if (!session?.user) redirect('/')
+  if (!session?.user) redirect('/api/auth/signin')
 
   const userId = session.user.id!
 
