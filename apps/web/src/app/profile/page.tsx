@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { db, volunteerProfile, favorite, animal } from '@shelter-os/db'
+import { db, volunteerProfile, favorite, animal, matcherProfile } from '@shelter-os/db'
 import { eq } from 'drizzle-orm'
 import { auth } from '@/auth'
 import Header from '@/components/header'
@@ -11,8 +11,9 @@ export default async function ProfilePage() {
 
   const userId = session.user.id!
 
-  const [volunteer, favorites] = await Promise.all([
+  const [volunteer, matcher, favorites] = await Promise.all([
     db.select().from(volunteerProfile).where(eq(volunteerProfile.userId, userId)).then(r => r[0] ?? null),
+    db.select().from(matcherProfile).where(eq(matcherProfile.userId, userId)).then(r => r[0] ?? null),
     db.select({ animal }).from(favorite)
       .innerJoin(animal, eq(favorite.animalId, animal.id))
       .where(eq(favorite.userId, userId)),
@@ -82,7 +83,7 @@ export default async function ProfilePage() {
 
         {/* Matcher */}
         <section className="bg-white rounded-2xl border border-zinc-100 p-6">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-4">
             <div>
               <h2 className="text-lg font-semibold text-zinc-900">Matching profile</h2>
               <p className="text-sm text-zinc-500 mt-0.5">Find animals that fit your lifestyle.</p>
@@ -91,10 +92,29 @@ export default async function ProfilePage() {
               href="/matcher"
               className="px-4 py-2 bg-zinc-900 text-white text-sm font-medium rounded-xl hover:bg-zinc-700 transition-colors"
             >
-              {/* TODO: show "Redo" if profile exists */}
-              Start questionnaire →
+              {matcher ? 'Redo questionnaire →' : 'Start questionnaire →'}
             </a>
           </div>
+
+          {matcher ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {[
+                { label: 'Living',      value: matcher.livingSituation?.replace('_', ' ') },
+                { label: 'Activity',    value: matcher.activityLevel },
+                { label: 'Experience',  value: matcher.experienceLevel },
+                { label: 'Hours alone', value: matcher.hoursAlonePerDay != null ? `up to ${matcher.hoursAlonePerDay}h` : null },
+                { label: 'Has kids',    value: matcher.hasKids != null ? (matcher.hasKids ? 'Yes' : 'No') : null },
+                { label: 'Prefers',     value: matcher.preferredSpecies?.length ? matcher.preferredSpecies.join(', ') : 'Any species' },
+              ].filter(i => i.value).map(({ label, value }) => (
+                <div key={label} className="bg-zinc-50 rounded-xl px-4 py-3">
+                  <p className="text-xs text-zinc-400 uppercase tracking-wide">{label}</p>
+                  <p className="text-sm font-medium text-zinc-800 mt-0.5 capitalize">{value}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-zinc-400">No matching profile saved yet.</p>
+          )}
         </section>
 
       </main>
