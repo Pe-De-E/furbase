@@ -3,17 +3,8 @@ import { eq, and, type SQL } from 'drizzle-orm'
 import AnimalCard from '@/components/animal-card'
 import FavoriteButton from '@/components/favorite-button'
 import Header from '@/components/header'
+import SpeciesFilter from '@/components/species-filter'
 import { auth } from '@/auth'
-
-const SPECIES_OPTIONS = [
-  { value: '',            label: 'All' },
-  { value: 'dog',         label: 'Dogs' },
-  { value: 'cat',         label: 'Cats' },
-  { value: 'rabbit',      label: 'Rabbits' },
-  { value: 'bird',        label: 'Birds' },
-  { value: 'small_animal',label: 'Small Animals' },
-  { value: 'other',       label: 'Other' },
-]
 
 export default async function Page({
   searchParams,
@@ -61,24 +52,8 @@ export default async function Page({
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-8">
-          {SPECIES_OPTIONS.map(opt => {
-            const isActive = opt.value === '' ? !species : opt.value === species
-            const href = opt.value ? `?species=${opt.value}` : '/'
-            return (
-              <a
-                key={opt.value}
-                href={href}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-zinc-900 text-white'
-                    : 'bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-400'
-                }`}
-              >
-                {opt.label}
-              </a>
-            )
-          })}
+        <div className="mb-8">
+          <SpeciesFilter active={species} />
         </div>
 
         {animals.length === 0 ? (

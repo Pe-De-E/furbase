@@ -1,16 +1,28 @@
-import { db, animal } from '@furbase/db'
-import { desc } from 'drizzle-orm'
+import { db, animal, speciesEnum } from '@furbase/db'
+import { eq, and, desc, type SQL } from 'drizzle-orm'
 import Link from 'next/link'
 import StatusSelect from './status-select'
 import DeleteButton from './delete-button'
 import AnimalListMobile from './animal-list-mobile'
+import SpeciesFilter from '@/components/species-filter'
 
-export default async function AdminAnimalsPage() {
-  const animals = await db.select().from(animal).orderBy(desc(animal.createdAt))
+export default async function AdminAnimalsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ species?: string }>
+}) {
+  const { species } = await searchParams
+
+  const conditions: SQL[] = []
+  if (species) conditions.push(eq(animal.species, species as (typeof speciesEnum.enumValues)[number]))
+
+  const animals = await db.select().from(animal)
+    .where(conditions.length ? and(...conditions) : undefined)
+    .orderBy(desc(animal.createdAt))
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900">Animals</h1>
           <p className="text-zinc-500 text-sm mt-0.5">{animals.length} total</p>
@@ -21,6 +33,10 @@ export default async function AdminAnimalsPage() {
         >
           + Add animal
         </Link>
+      </div>
+
+      <div className="mb-6">
+        <SpeciesFilter active={species} />
       </div>
 
       <AnimalListMobile animals={animals} />
