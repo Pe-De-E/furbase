@@ -11,10 +11,6 @@ import {
   primaryKey,
 } from 'drizzle-orm/pg-core'
 
-export const speciesEnum = pgEnum('species', [
-  'dog', 'cat', 'rabbit', 'bird', 'small_animal', 'other',
-])
-
 export const genderEnum = pgEnum('gender', [
   'male', 'female', 'unknown',
 ])
@@ -38,7 +34,7 @@ export const tagCategoryEnum = pgEnum('tag_category', [
 export const animal = pgTable('animal', {
   id:                    uuid('id').primaryKey().defaultRandom(),
   name:                  text('name').notNull(),
-  species:               speciesEnum('species').notNull(),
+  species:               text('species').notNull(),
   breed:                 text('breed'),
   breedSuspected:        text('breed_suspected'),
   age:                   integer('age'), // in months

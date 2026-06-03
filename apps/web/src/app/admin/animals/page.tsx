@@ -1,5 +1,5 @@
-import { db, animal, speciesEnum } from '@furbase/db'
-import { eq, and, desc, type SQL } from 'drizzle-orm'
+import { db, animal, species as speciesTable } from '@furbase/db'
+import { eq, and, asc, desc, type SQL } from 'drizzle-orm'
 import Link from 'next/link'
 import StatusSelect from './status-select'
 import DeleteButton from './delete-button'
@@ -14,11 +14,16 @@ export default async function AdminAnimalsPage({
   const { species } = await searchParams
 
   const conditions: SQL[] = []
-  if (species) conditions.push(eq(animal.species, species as (typeof speciesEnum.enumValues)[number]))
+  if (species) conditions.push(eq(animal.species, species))
 
-  const animals = await db.select().from(animal)
-    .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(desc(animal.createdAt))
+  const [animals, speciesList] = await Promise.all([
+    db.select().from(animal)
+      .where(conditions.length ? and(...conditions) : undefined)
+      .orderBy(desc(animal.createdAt)),
+    db.select({ value: speciesTable.value, label: speciesTable.label })
+      .from(speciesTable)
+      .orderBy(asc(speciesTable.sortOrder)),
+  ])
 
   return (
     <div>
@@ -36,7 +41,7 @@ export default async function AdminAnimalsPage({
       </div>
 
       <div className="mb-6">
-        <SpeciesFilter active={species} />
+        <SpeciesFilter species={speciesList} active={species} />
       </div>
 
       <AnimalListMobile animals={animals} />

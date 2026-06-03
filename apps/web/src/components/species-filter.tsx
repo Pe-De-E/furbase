@@ -1,17 +1,17 @@
-const OPTIONS = [
-  { value: '',             label: 'All' },
-  { value: 'dog',          label: 'Dogs' },
-  { value: 'cat',          label: 'Cats' },
-  { value: 'rabbit',       label: 'Rabbits' },
-  { value: 'bird',         label: 'Birds' },
-  { value: 'small_animal', label: 'Small Animals' },
-  { value: 'other',        label: 'Other' },
-]
+type Species = { value: string; label: string }
 
-export default function SpeciesFilter({ active }: { active?: string }) {
+export default function SpeciesFilter({
+  species,
+  active,
+}: {
+  species: Species[]
+  active?: string
+}) {
+  const options = [{ value: '', label: 'All' }, ...species]
+
   return (
     <div className="flex flex-wrap gap-2">
-      {OPTIONS.map(opt => {
+      {options.map(opt => {
         const isActive = opt.value === '' ? !active : opt.value === active
         const href = opt.value ? `?species=${opt.value}` : '/'
         return (

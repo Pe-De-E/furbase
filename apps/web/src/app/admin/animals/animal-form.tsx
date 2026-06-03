@@ -1,6 +1,8 @@
 import { saveAnimal, deleteAnimal } from '../actions'
 import type { InferSelectModel } from 'drizzle-orm'
 import type { animal } from '@furbase/db'
+import { db, species as speciesTable } from '@furbase/db'
+import { asc } from 'drizzle-orm'
 
 type Animal = InferSelectModel<typeof animal>
 
@@ -13,10 +15,13 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   )
 }
 
-const inputCls = "text-sm rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white"
-const selectCls = "text-sm rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white"
+const inputCls = "text-sm text-zinc-900 rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white placeholder:text-zinc-400"
+const selectCls = "text-sm text-zinc-900 rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white"
 
-export default function AnimalForm({ animal: a }: { animal?: Animal }) {
+export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
+  const speciesList = await db.select({ value: speciesTable.value, label: speciesTable.label })
+    .from(speciesTable)
+    .orderBy(asc(speciesTable.sortOrder))
   const isEdit = !!a
 
   return (
@@ -32,8 +37,8 @@ export default function AnimalForm({ animal: a }: { animal?: Animal }) {
           </Field>
           <Field label="Species *">
             <select name="species" required defaultValue={a?.species} className={selectCls}>
-              {['dog','cat','rabbit','bird','small_animal','other'].map(s => (
-                <option key={s} value={s}>{s.replace('_', ' ')}</option>
+              {speciesList.map(s => (
+                <option key={s.value} value={s.value}>{s.label}</option>
               ))}
             </select>
           </Field>

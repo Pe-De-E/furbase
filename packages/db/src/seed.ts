@@ -8,6 +8,15 @@ const db = drizzle(pool, { schema })
 async function main() {
   console.log('🌱 Seeding...')
 
+  await db.insert(schema.species).values([
+    { value: 'dog',          label: 'Dogs',         sortOrder: 1 },
+    { value: 'cat',          label: 'Cats',         sortOrder: 2 },
+    { value: 'rabbit',       label: 'Rabbits',      sortOrder: 3 },
+    { value: 'bird',         label: 'Birds',        sortOrder: 4 },
+    { value: 'small_animal', label: 'Small Animals',sortOrder: 5 },
+    { value: 'other',        label: 'Other',        sortOrder: 6 },
+  ])
+
   await db.insert(schema.settings).values({
     name: 'Tierherberge Pfaffenhofen a. d. Ilm',
     address: 'Musterstraße 1, 85276 Pfaffenhofen a. d. Ilm',

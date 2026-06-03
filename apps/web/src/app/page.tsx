@@ -1,5 +1,5 @@
-import { db, animal, settings, speciesEnum, favorite } from '@furbase/db'
-import { eq, and, type SQL } from 'drizzle-orm'
+import { db, animal, settings, species as speciesTable, favorite } from '@furbase/db'
+import { eq, and, asc, type SQL } from 'drizzle-orm'
 import AnimalCard from '@/components/animal-card'
 import FavoriteButton from '@/components/favorite-button'
 import Header from '@/components/header'
@@ -14,17 +14,20 @@ export default async function Page({
   const { species } = await searchParams
 
   const conditions: SQL[] = [eq(animal.status, 'available')]
-  if (species) conditions.push(eq(animal.species, species as (typeof speciesEnum.enumValues)[number]))
+  if (species) conditions.push(eq(animal.species, species))
 
   const session = await auth()
   const userId = session?.user?.id ?? null
 
-  const [animals, [config], userFavorites] = await Promise.all([
+  const [animals, [config], userFavorites, speciesList] = await Promise.all([
     db.select().from(animal).where(and(...conditions)),
     db.select().from(settings).limit(1),
     userId
       ? db.select({ animalId: favorite.animalId }).from(favorite).where(eq(favorite.userId, userId))
       : Promise.resolve([]),
+    db.select({ value: speciesTable.value, label: speciesTable.label })
+      .from(speciesTable)
+      .orderBy(asc(speciesTable.sortOrder)),
   ])
 
   const favoritedIds = new Set(userFavorites.map(f => f.animalId))
@@ -53,7 +56,7 @@ export default async function Page({
         </div>
 
         <div className="mb-8">
-          <SpeciesFilter active={species} />
+          <SpeciesFilter species={speciesList} active={species} />
         </div>
 
         {animals.length === 0 ? (
