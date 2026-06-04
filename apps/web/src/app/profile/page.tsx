@@ -1,14 +1,12 @@
-import { redirect } from 'next/navigation'
 import { db, volunteerProfile, favorite, animal, matcherProfile } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 import { auth } from '@/auth'
+import type { Session } from 'next-auth'
 import Header from '@/components/header'
 import VolunteerForm from './volunteer-form'
 
 export default async function ProfilePage() {
-  const session = await auth()
-  if (!session?.user) redirect('/api/auth/signin')
-
+  const session = (await auth())!
   const userId = session.user.id!
 
   const [volunteer, matcher, favorites] = await Promise.all([
