@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { auth, signIn, signOut } from '@/auth'
+import UserMenu from './user-menu'
 
 export default async function Header({ title }: { title?: string }) {
   const session = await auth()
+  const isAdmin = session?.user?.role === 'admin'
 
   return (
     <header className="bg-white border-b border-zinc-200">
@@ -13,25 +15,13 @@ export default async function Header({ title }: { title?: string }) {
 
         <div className="flex items-center gap-3 shrink-0">
           {session?.user ? (
-            <>
-              <Link
-                href="/profile"
-                className="flex items-center gap-2 text-sm text-zinc-700 hover:text-zinc-900 transition-colors"
-                title="Your profile"
-              >
-                <div className="w-7 h-7 rounded-full bg-zinc-200 flex items-center justify-center text-xs font-medium text-zinc-600 relative overflow-hidden shrink-0">
-                  {(session.user.name ?? session.user.email ?? '?')[0].toUpperCase()}
-                  {session.user.image && (
-                    <img src={session.user.image} alt="" className="absolute inset-0 w-full h-full object-cover" />
-                  )}
-                </div>
-              </Link>
-              <form action={async () => { 'use server'; await signOut() }}>
-                <button className="text-sm text-zinc-400 hover:text-zinc-700 transition-colors">
-                  Sign out
-                </button>
-              </form>
-            </>
+            <UserMenu
+              name={session.user.name}
+              email={session.user.email}
+              image={session.user.image}
+              isAdmin={isAdmin}
+              signOutAction={async () => { 'use server'; await signOut() }}
+            />
           ) : (
             <form action={async () => { 'use server'; await signIn('google') }}>
               <button className="text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors">
