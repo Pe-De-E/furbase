@@ -2,7 +2,13 @@
 
 import { deleteAnimal } from '../actions'
 
-export default function DeleteButton({ animalId, name }: { animalId: string; name: string }) {
+export default function DeleteButton({
+  animalId,
+  name,
+}: {
+  animalId: string
+  name: string
+}) {
   return (
     <button
       type="button"

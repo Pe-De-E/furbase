@@ -9,7 +9,10 @@ export default async function Header({ title }: { title?: string }) {
   return (
     <header className="bg-white border-b border-zinc-200">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-4">
-        <Link href="/" className="text-base sm:text-lg font-semibold text-zinc-900 hover:text-zinc-600 transition-colors truncate">
+        <Link
+          href="/"
+          className="text-base sm:text-lg font-semibold text-zinc-900 hover:text-zinc-600 transition-colors truncate"
+        >
           {title ?? 'Tierherberge Pfaffenhofen'}
         </Link>
 
@@ -20,10 +23,18 @@ export default async function Header({ title }: { title?: string }) {
               email={session.user.email}
               image={session.user.image}
               isAdmin={isAdmin}
-              signOutAction={async () => { 'use server'; await signOut() }}
+              signOutAction={async () => {
+                'use server'
+                await signOut()
+              }}
             />
           ) : (
-            <form action={async () => { 'use server'; await signIn('google') }}>
+            <form
+              action={async () => {
+                'use server'
+                await signIn('google')
+              }}
+            >
               <button className="text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors">
                 Sign in
               </button>

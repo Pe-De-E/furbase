@@ -54,56 +54,56 @@ const baseProfile: MatcherProfile = {
 
 describe('hard filters — should mark as incompatible', () => {
   it('animal not good with kids when user has kids', () => {
-    const result = scoreAnimal(
-      makeAnimal({ goodWithKids: false }),
-      { ...baseProfile, hasKids: true }
-    )
+    const result = scoreAnimal(makeAnimal({ goodWithKids: false }), {
+      ...baseProfile,
+      hasKids: true,
+    })
     expect(result.isCompatible).toBe(false)
     expect(result.score).toBe(0)
     expect(result.reasons).toContain('Not good with kids')
   })
 
   it('animal not good with dogs when user has dogs', () => {
-    const result = scoreAnimal(
-      makeAnimal({ goodWithDogs: false }),
-      { ...baseProfile, hasOtherDogs: true }
-    )
+    const result = scoreAnimal(makeAnimal({ goodWithDogs: false }), {
+      ...baseProfile,
+      hasOtherDogs: true,
+    })
     expect(result.isCompatible).toBe(false)
     expect(result.reasons).toContain('Not good with dogs')
   })
 
   it('animal not good with cats when user has cats', () => {
-    const result = scoreAnimal(
-      makeAnimal({ goodWithCats: false }),
-      { ...baseProfile, hasOtherCats: true }
-    )
+    const result = scoreAnimal(makeAnimal({ goodWithCats: false }), {
+      ...baseProfile,
+      hasOtherCats: true,
+    })
     expect(result.isCompatible).toBe(false)
     expect(result.reasons).toContain('Not good with cats')
   })
 
   it('animal needs garden but user lives in apartment', () => {
-    const result = scoreAnimal(
-      makeAnimal({ needsGarden: true }),
-      { ...baseProfile, livingSituation: 'apartment' }
-    )
+    const result = scoreAnimal(makeAnimal({ needsGarden: true }), {
+      ...baseProfile,
+      livingSituation: 'apartment',
+    })
     expect(result.isCompatible).toBe(false)
     expect(result.reasons).toContain('Needs a garden')
   })
 
   it('animal needs experienced owner but user is beginner', () => {
-    const result = scoreAnimal(
-      makeAnimal({ needsExperiencedOwner: true }),
-      { ...baseProfile, experienceLevel: 'beginner' }
-    )
+    const result = scoreAnimal(makeAnimal({ needsExperiencedOwner: true }), {
+      ...baseProfile,
+      experienceLevel: 'beginner',
+    })
     expect(result.isCompatible).toBe(false)
     expect(result.reasons).toContain('Needs experienced owner')
   })
 
   it('highly active animal left alone 6+ hours per day', () => {
-    const result = scoreAnimal(
-      makeAnimal({ activityLevel: 'high' }),
-      { ...baseProfile, hoursAlone: '6+' }
-    )
+    const result = scoreAnimal(makeAnimal({ activityLevel: 'high' }), {
+      ...baseProfile,
+      hoursAlone: '6+',
+    })
     expect(result.isCompatible).toBe(false)
     expect(result.reasons).toContain('Too active for long alone hours')
   })
@@ -113,10 +113,10 @@ describe('hard filters — should mark as incompatible', () => {
 
 describe('scoring', () => {
   it('perfect activity level match gives 30 points', () => {
-    const result = scoreAnimal(
-      makeAnimal({ activityLevel: 'high' }),
-      { ...baseProfile, activityLevel: 'high' }
-    )
+    const result = scoreAnimal(makeAnimal({ activityLevel: 'high' }), {
+      ...baseProfile,
+      activityLevel: 'high',
+    })
     expect(result.score).toBeGreaterThanOrEqual(30)
     expect(result.reasons).toContain('Activity level matches perfectly')
   })
@@ -124,49 +124,53 @@ describe('scoring', () => {
   it('activity level one step off gives 15 points', () => {
     const result = scoreAnimal(
       makeAnimal({ activityLevel: 'high', size: 'any' as any }),
-      { ...baseProfile, activityLevel: 'medium', preferredSize: 'any' }
+      {
+        ...baseProfile,
+        activityLevel: 'medium',
+        preferredSize: 'any',
+      },
     )
     expect(result.reasons).toContain('Activity level close match')
   })
 
   it('preferred species match gives bonus', () => {
-    const result = scoreAnimal(
-      makeAnimal({ species: 'cat' }),
-      { ...baseProfile, preferredSpecies: 'cat' }
-    )
+    const result = scoreAnimal(makeAnimal({ species: 'cat' }), {
+      ...baseProfile,
+      preferredSpecies: 'cat',
+    })
     expect(result.isCompatible).toBe(true)
     expect(result.reasons).toContain('Preferred species match')
   })
 
   it('species mismatch gives no species bonus', () => {
-    const withMatch = scoreAnimal(
-      makeAnimal({ species: 'dog' }),
-      { ...baseProfile, preferredSpecies: 'dog' }
-    )
-    const withMismatch = scoreAnimal(
-      makeAnimal({ species: 'cat' }),
-      { ...baseProfile, preferredSpecies: 'dog' }
-    )
+    const withMatch = scoreAnimal(makeAnimal({ species: 'dog' }), {
+      ...baseProfile,
+      preferredSpecies: 'dog',
+    })
+    const withMismatch = scoreAnimal(makeAnimal({ species: 'cat' }), {
+      ...baseProfile,
+      preferredSpecies: 'dog',
+    })
     expect(withMatch.score).toBeGreaterThan(withMismatch.score)
   })
 
   it('good with kids gives bonus when user has kids', () => {
-    const result = scoreAnimal(
-      makeAnimal({ goodWithKids: true }),
-      { ...baseProfile, hasKids: true }
-    )
+    const result = scoreAnimal(makeAnimal({ goodWithKids: true }), {
+      ...baseProfile,
+      hasKids: true,
+    })
     expect(result.reasons).toContain('Good with kids')
   })
 
   it('needs training penalizes beginner score', () => {
-    const withTraining = scoreAnimal(
-      makeAnimal({ needsTraining: true }),
-      { ...baseProfile, experienceLevel: 'beginner' }
-    )
-    const withoutTraining = scoreAnimal(
-      makeAnimal({ needsTraining: false }),
-      { ...baseProfile, experienceLevel: 'beginner' }
-    )
+    const withTraining = scoreAnimal(makeAnimal({ needsTraining: true }), {
+      ...baseProfile,
+      experienceLevel: 'beginner',
+    })
+    const withoutTraining = scoreAnimal(makeAnimal({ needsTraining: false }), {
+      ...baseProfile,
+      experienceLevel: 'beginner',
+    })
     expect(withTraining.score).toBeLessThan(withoutTraining.score)
     expect(withTraining.reasons).toContain('Needs some training')
   })
@@ -189,8 +193,16 @@ describe('matchAnimals', () => {
   })
 
   it('higher scoring animals come first among compatible', () => {
-    const perfectMatch = makeAnimal({ id: 'perfect', activityLevel: 'high', species: 'dog' })
-    const weakMatch = makeAnimal({ id: 'weak', activityLevel: 'low', species: 'cat' })
+    const perfectMatch = makeAnimal({
+      id: 'perfect',
+      activityLevel: 'high',
+      species: 'dog',
+    })
+    const weakMatch = makeAnimal({
+      id: 'weak',
+      activityLevel: 'low',
+      species: 'cat',
+    })
 
     const results = matchAnimals([weakMatch, perfectMatch], {
       ...baseProfile,

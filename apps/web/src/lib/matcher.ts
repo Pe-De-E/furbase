@@ -29,31 +29,68 @@ export function scoreAnimal(a: Animal, p: MatcherProfile): MatchResult {
 
   // Hard filters — dealbreakers
   if (p.hasKids && a.goodWithKids === false) {
-    return { animal: a, score: 0, isCompatible: false, reasons: ['Not good with kids'] }
+    return {
+      animal: a,
+      score: 0,
+      isCompatible: false,
+      reasons: ['Not good with kids'],
+    }
   }
   if (p.hasOtherDogs && a.goodWithDogs === false) {
-    return { animal: a, score: 0, isCompatible: false, reasons: ['Not good with dogs'] }
+    return {
+      animal: a,
+      score: 0,
+      isCompatible: false,
+      reasons: ['Not good with dogs'],
+    }
   }
   if (p.hasOtherCats && a.goodWithCats === false) {
-    return { animal: a, score: 0, isCompatible: false, reasons: ['Not good with cats'] }
+    return {
+      animal: a,
+      score: 0,
+      isCompatible: false,
+      reasons: ['Not good with cats'],
+    }
   }
   if (p.livingSituation === 'apartment' && a.needsGarden) {
-    return { animal: a, score: 0, isCompatible: false, reasons: ['Needs a garden'] }
+    return {
+      animal: a,
+      score: 0,
+      isCompatible: false,
+      reasons: ['Needs a garden'],
+    }
   }
   if (p.experienceLevel === 'beginner' && a.needsExperiencedOwner) {
-    return { animal: a, score: 0, isCompatible: false, reasons: ['Needs experienced owner'] }
+    return {
+      animal: a,
+      score: 0,
+      isCompatible: false,
+      reasons: ['Needs experienced owner'],
+    }
   }
   if (p.hoursAlone === '6+' && a.activityLevel === 'high') {
-    return { animal: a, score: 0, isCompatible: false, reasons: ['Too active for long alone hours'] }
+    return {
+      animal: a,
+      score: 0,
+      isCompatible: false,
+      reasons: ['Too active for long alone hours'],
+    }
   }
 
   let score = 0
 
   // Activity level match (0-30 pts)
   if (a.activityLevel) {
-    const diff = Math.abs(ACTIVITY_RANK[a.activityLevel] - ACTIVITY_RANK[p.activityLevel])
-    if (diff === 0) { score += 30; reasons.push('Activity level matches perfectly') }
-    else if (diff === 1) { score += 15; reasons.push('Activity level close match') }
+    const diff = Math.abs(
+      ACTIVITY_RANK[a.activityLevel] - ACTIVITY_RANK[p.activityLevel],
+    )
+    if (diff === 0) {
+      score += 30
+      reasons.push('Activity level matches perfectly')
+    } else if (diff === 1) {
+      score += 15
+      reasons.push('Activity level close match')
+    }
   }
 
   // Species preference (0-25 pts)
@@ -63,7 +100,11 @@ export function scoreAnimal(a: Animal, p: MatcherProfile): MatchResult {
   }
 
   // Size preference (0-20 pts)
-  if (p.preferredSize === 'any' || !p.preferredSize || a.size === p.preferredSize) {
+  if (
+    p.preferredSize === 'any' ||
+    !p.preferredSize ||
+    a.size === p.preferredSize
+  ) {
     score += 20
     if (p.preferredSize !== 'any') reasons.push('Size matches your preference')
   }
@@ -92,9 +133,12 @@ export function scoreAnimal(a: Animal, p: MatcherProfile): MatchResult {
   return { animal: a, score: Math.max(0, score), isCompatible: true, reasons }
 }
 
-export function matchAnimals(animals: Animal[], profile: MatcherProfile): MatchResult[] {
+export function matchAnimals(
+  animals: Animal[],
+  profile: MatcherProfile,
+): MatchResult[] {
   return animals
-    .map(a => scoreAnimal(a, profile))
+    .map((a) => scoreAnimal(a, profile))
     .sort((a, b) => {
       if (a.isCompatible && !b.isCompatible) return -1
       if (!a.isCompatible && b.isCompatible) return 1

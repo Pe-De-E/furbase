@@ -6,7 +6,13 @@ import { asc } from 'drizzle-orm'
 
 type Animal = InferSelectModel<typeof animal>
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function Field({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) {
   return (
     <div className="flex flex-col gap-1.5">
       <label className="text-sm font-medium text-zinc-700">{label}</label>
@@ -15,11 +21,14 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   )
 }
 
-const inputCls = "text-sm text-zinc-900 rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white placeholder:text-zinc-400"
-const selectCls = "text-sm text-zinc-900 rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white"
+const inputCls =
+  'text-sm text-zinc-900 rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white placeholder:text-zinc-400'
+const selectCls =
+  'text-sm text-zinc-900 rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white'
 
 export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
-  const speciesList = await db.select({ value: speciesTable.value, label: speciesTable.label })
+  const speciesList = await db
+    .select({ value: speciesTable.value, label: speciesTable.label })
     .from(speciesTable)
     .orderBy(asc(speciesTable.sortOrder))
   const isEdit = !!a
@@ -33,23 +42,49 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Name *">
-            <input name="name" required defaultValue={a?.name} className={inputCls} />
+            <input
+              name="name"
+              required
+              defaultValue={a?.name}
+              className={inputCls}
+            />
           </Field>
           <Field label="Species *">
-            <select name="species" required defaultValue={a?.species} className={selectCls}>
-              {speciesList.map(s => (
-                <option key={s.value} value={s.value}>{s.label}</option>
+            <select
+              name="species"
+              required
+              defaultValue={a?.species}
+              className={selectCls}
+            >
+              {speciesList.map((s) => (
+                <option key={s.value} value={s.value}>
+                  {s.label}
+                </option>
               ))}
             </select>
           </Field>
           <Field label="Breed">
-            <input name="breed" defaultValue={a?.breed ?? ''} className={inputCls} />
+            <input
+              name="breed"
+              defaultValue={a?.breed ?? ''}
+              className={inputCls}
+            />
           </Field>
           <Field label="Age (months)">
-            <input name="age" type="number" min={0} defaultValue={a?.age ?? ''} className={inputCls} />
+            <input
+              name="age"
+              type="number"
+              min={0}
+              defaultValue={a?.age ?? ''}
+              className={inputCls}
+            />
           </Field>
           <Field label="Gender">
-            <select name="gender" defaultValue={a?.gender ?? ''} className={selectCls}>
+            <select
+              name="gender"
+              defaultValue={a?.gender ?? ''}
+              className={selectCls}
+            >
               <option value="">—</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -57,7 +92,11 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
             </select>
           </Field>
           <Field label="Size">
-            <select name="size" defaultValue={a?.size ?? ''} className={selectCls}>
+            <select
+              name="size"
+              defaultValue={a?.size ?? ''}
+              className={selectCls}
+            >
               <option value="">—</option>
               <option value="small">Small</option>
               <option value="medium">Medium</option>
@@ -65,13 +104,28 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
             </select>
           </Field>
           <Field label="Weight (kg)">
-            <input name="weight" type="number" step="0.01" defaultValue={a?.weight ?? ''} className={inputCls} />
+            <input
+              name="weight"
+              type="number"
+              step="0.01"
+              defaultValue={a?.weight ?? ''}
+              className={inputCls}
+            />
           </Field>
           <Field label="Color">
-            <input name="color" defaultValue={a?.color ?? ''} className={inputCls} />
+            <input
+              name="color"
+              defaultValue={a?.color ?? ''}
+              className={inputCls}
+            />
           </Field>
           <Field label="Status *">
-            <select name="status" required defaultValue={a?.status ?? 'available'} className={selectCls}>
+            <select
+              name="status"
+              required
+              defaultValue={a?.status ?? 'available'}
+              className={selectCls}
+            >
               <option value="available">Available</option>
               <option value="reserved">Reserved</option>
               <option value="adopted">Adopted</option>
@@ -80,12 +134,22 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
             </select>
           </Field>
           <Field label="Arrival date">
-            <input name="arrivalDate" type="date" defaultValue={a?.arrivalDate ?? ''} className={inputCls} />
+            <input
+              name="arrivalDate"
+              type="date"
+              defaultValue={a?.arrivalDate ?? ''}
+              className={inputCls}
+            />
           </Field>
         </div>
 
         <Field label="Description">
-          <textarea name="description" rows={4} defaultValue={a?.description ?? ''} className={`${inputCls} resize-none`} />
+          <textarea
+            name="description"
+            rows={4}
+            defaultValue={a?.description ?? ''}
+            className={`${inputCls} resize-none`}
+          />
         </Field>
 
         <Field label="Image URLs (one per line)">
@@ -104,18 +168,21 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {[
-            { name: 'isNeutered',            label: 'Neutered' },
-            { name: 'isVaccinated',           label: 'Vaccinated' },
-            { name: 'isChipped',              label: 'Chipped' },
-            { name: 'needsGarden',            label: 'Needs garden' },
-            { name: 'needsExperiencedOwner',  label: 'Experienced owner' },
-            { name: 'needsTraining',          label: 'Needs training' },
+            { name: 'isNeutered', label: 'Neutered' },
+            { name: 'isVaccinated', label: 'Vaccinated' },
+            { name: 'isChipped', label: 'Chipped' },
+            { name: 'needsGarden', label: 'Needs garden' },
+            { name: 'needsExperiencedOwner', label: 'Experienced owner' },
+            { name: 'needsTraining', label: 'Needs training' },
           ].map(({ name, label }) => (
-            <label key={name} className="flex items-center gap-2 text-sm text-zinc-700 cursor-pointer">
+            <label
+              key={name}
+              className="flex items-center gap-2 text-sm text-zinc-700 cursor-pointer"
+            >
               <input
                 type="checkbox"
                 name={name}
-                defaultChecked={a?.[name as keyof Animal] as boolean ?? false}
+                defaultChecked={(a?.[name as keyof Animal] as boolean) ?? false}
                 className="accent-zinc-900"
               />
               {label}
@@ -125,7 +192,11 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label="Activity level">
-            <select name="activityLevel" defaultValue={a?.activityLevel ?? ''} className={selectCls}>
+            <select
+              name="activityLevel"
+              defaultValue={a?.activityLevel ?? ''}
+              className={selectCls}
+            >
               <option value="">—</option>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -147,9 +218,11 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
                 <select
                   name={name}
                   defaultValue={
-                    a?.[name as keyof Animal] === true ? 'true'
-                    : a?.[name as keyof Animal] === false ? 'false'
-                    : ''
+                    a?.[name as keyof Animal] === true
+                      ? 'true'
+                      : a?.[name as keyof Animal] === false
+                        ? 'false'
+                        : ''
                   }
                   className={selectCls}
                 >
@@ -173,10 +246,15 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
               Delete animal
             </button>
           </form>
-        ) : <div />}
+        ) : (
+          <div />
+        )}
 
         <div className="flex gap-3">
-          <a href="/admin/animals" className="px-4 py-2.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
+          <a
+            href="/admin/animals"
+            className="px-4 py-2.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors"
+          >
             Cancel
           </a>
           <button

@@ -12,7 +12,9 @@ test.describe('Auth & protected routes', () => {
     await expect(page).toHaveURL(/signin|auth/)
   })
 
-  test('admin/animals redirects to sign in when not logged in', async ({ page }) => {
+  test('admin/animals redirects to sign in when not logged in', async ({
+    page,
+  }) => {
     await page.goto('/admin/animals')
     await expect(page).toHaveURL(/signin|auth/)
   })

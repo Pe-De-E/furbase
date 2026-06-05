@@ -5,19 +5,25 @@ import type { animal } from '@furbase/db'
 type Animal = InferSelectModel<typeof animal>
 
 const SPECIES_LABEL: Record<string, string> = {
-  dog: 'Dog', cat: 'Cat', rabbit: 'Rabbit',
-  bird: 'Bird', small_animal: 'Small Animal', other: 'Other',
+  dog: 'Dog',
+  cat: 'Cat',
+  rabbit: 'Rabbit',
+  bird: 'Bird',
+  small_animal: 'Small Animal',
+  other: 'Other',
 }
 
 const GENDER_LABEL: Record<string, string> = {
-  male: 'Male', female: 'Female', unknown: 'Unknown',
+  male: 'Male',
+  female: 'Female',
+  unknown: 'Unknown',
 }
 
 const STATUS_STYLE: Record<string, { label: string; className: string }> = {
-  available:     { label: 'Available',     className: 'bg-emerald-500' },
-  reserved:      { label: 'Reserved',      className: 'bg-amber-400' },
-  adopted:       { label: 'Adopted',       className: 'bg-zinc-400' },
-  quarantine:    { label: 'Quarantine',    className: 'bg-red-500' },
+  available: { label: 'Available', className: 'bg-emerald-500' },
+  reserved: { label: 'Reserved', className: 'bg-amber-400' },
+  adopted: { label: 'Adopted', className: 'bg-zinc-400' },
+  quarantine: { label: 'Quarantine', className: 'bg-red-500' },
   not_adoptable: { label: 'Not adoptable', className: 'bg-red-700' },
 }
 
@@ -35,7 +41,8 @@ export default function AnimalCard({
   animal: Animal
   favoriteButton?: React.ReactNode
 }) {
-  const image = animal.images?.[0] ?? `https://picsum.photos/seed/${animal.id}/600/400`
+  const image =
+    animal.images?.[0] ?? `https://picsum.photos/seed/${animal.id}/600/400`
   const status = STATUS_STYLE[animal.status] ?? STATUS_STYLE.available
 
   return (
@@ -49,7 +56,9 @@ export default function AnimalCard({
           alt={animal.name}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
-        <span className={`absolute top-3 left-3 text-xs font-medium text-white px-2.5 py-1 rounded-full ${status.className}`}>
+        <span
+          className={`absolute top-3 left-3 text-xs font-medium text-white px-2.5 py-1 rounded-full ${status.className}`}
+        >
           {status.label}
         </span>
         {favoriteButton && (
@@ -59,7 +68,9 @@ export default function AnimalCard({
 
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
-          <h2 className="text-lg font-semibold text-zinc-900 leading-tight">{animal.name}</h2>
+          <h2 className="text-lg font-semibold text-zinc-900 leading-tight">
+            {animal.name}
+          </h2>
           {animal.isNeutered && (
             <span className="shrink-0 text-xs bg-zinc-100 text-zinc-500 px-2 py-0.5 rounded-full mt-0.5">
               neutered

@@ -3,25 +3,32 @@ import { asc } from 'drizzle-orm'
 import { addSpecies, deleteSpecies } from './actions'
 
 export default async function AdminSpeciesPage() {
-  const speciesList = await db.select().from(species).orderBy(asc(species.sortOrder))
+  const speciesList = await db
+    .select()
+    .from(species)
+    .orderBy(asc(species.sortOrder))
 
   return (
     <div>
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-zinc-900">Species</h1>
-        <p className="text-zinc-500 text-sm mt-0.5">Manage animal species shown in filters and forms.</p>
+        <p className="text-zinc-500 text-sm mt-0.5">
+          Manage animal species shown in filters and forms.
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
         {/* Current species */}
         <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden">
           <div className="px-5 py-4 border-b border-zinc-50">
             <p className="text-sm font-medium text-zinc-700">Current species</p>
           </div>
           <ul className="divide-y divide-zinc-50">
-            {speciesList.map(s => (
-              <li key={s.id} className="flex items-center justify-between px-5 py-3">
+            {speciesList.map((s) => (
+              <li
+                key={s.id}
+                className="flex items-center justify-between px-5 py-3"
+              >
                 <div>
                   <p className="text-sm font-medium text-zinc-900">{s.label}</p>
                   <p className="text-xs text-zinc-400 font-mono">{s.value}</p>
@@ -44,7 +51,9 @@ export default async function AdminSpeciesPage() {
           <p className="text-sm font-medium text-zinc-700 mb-4">Add species</p>
           <form action={addSpecies} className="flex flex-col gap-4">
             <div>
-              <label className="block text-xs text-zinc-500 mb-1">Label <span className="text-zinc-400">(displayed in UI)</span></label>
+              <label className="block text-xs text-zinc-500 mb-1">
+                Label <span className="text-zinc-400">(displayed in UI)</span>
+              </label>
               <input
                 name="label"
                 required
@@ -53,7 +62,12 @@ export default async function AdminSpeciesPage() {
               />
             </div>
             <div>
-              <label className="block text-xs text-zinc-500 mb-1">Value <span className="text-zinc-400">(internal key, auto-formatted)</span></label>
+              <label className="block text-xs text-zinc-500 mb-1">
+                Value{' '}
+                <span className="text-zinc-400">
+                  (internal key, auto-formatted)
+                </span>
+              </label>
               <input
                 name="value"
                 required
@@ -69,7 +83,6 @@ export default async function AdminSpeciesPage() {
             </button>
           </form>
         </div>
-
       </div>
     </div>
   )

@@ -1,8 +1,14 @@
 'use client'
 
 const AVATAR_COLORS = [
-  '#4285F4', '#EA4335', '#34A853', '#FBBC04',
-  '#FF6D00', '#7B1FA2', '#0097A7', '#C62828',
+  '#4285F4',
+  '#EA4335',
+  '#34A853',
+  '#FBBC04',
+  '#FF6D00',
+  '#7B1FA2',
+  '#0097A7',
+  '#C62828',
 ]
 
 export function avatarColor(str: string | null | undefined): string {
@@ -11,10 +17,10 @@ export function avatarColor(str: string | null | undefined): string {
 }
 
 type Props = {
-  name:   string | null | undefined
-  email:  string | null | undefined
-  image:  string | null | undefined
-  size?:  number
+  name: string | null | undefined
+  email: string | null | undefined
+  image: string | null | undefined
+  size?: number
 }
 
 export default function UserAvatar({ name, email, image, size = 28 }: Props) {

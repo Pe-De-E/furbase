@@ -5,28 +5,44 @@ import Link from 'next/link'
 import Header from '@/components/header'
 
 const SPECIES_LABEL: Record<string, string> = {
-  dog: 'Dog', cat: 'Cat', rabbit: 'Rabbit',
-  bird: 'Bird', small_animal: 'Small Animal', other: 'Other',
+  dog: 'Dog',
+  cat: 'Cat',
+  rabbit: 'Rabbit',
+  bird: 'Bird',
+  small_animal: 'Small Animal',
+  other: 'Other',
 }
 
 const GENDER_LABEL: Record<string, string> = {
-  male: 'Male', female: 'Female', unknown: 'Unknown',
+  male: 'Male',
+  female: 'Female',
+  unknown: 'Unknown',
 }
 
 const SIZE_LABEL: Record<string, string> = {
-  small: 'Small', medium: 'Medium', large: 'Large',
+  small: 'Small',
+  medium: 'Medium',
+  large: 'Large',
 }
 
 const ACTIVITY_LABEL: Record<string, string> = {
-  low: 'Low', medium: 'Medium', high: 'High',
+  low: 'Low',
+  medium: 'Medium',
+  high: 'High',
 }
 
 const STATUS_STYLE: Record<string, { label: string; className: string }> = {
-  available:     { label: 'Available',     className: 'bg-emerald-100 text-emerald-700' },
-  reserved:      { label: 'Reserved',      className: 'bg-amber-100 text-amber-700' },
-  adopted:       { label: 'Adopted',       className: 'bg-zinc-100 text-zinc-500' },
-  quarantine:    { label: 'Quarantine',    className: 'bg-red-100 text-red-700' },
-  not_adoptable: { label: 'Not adoptable', className: 'bg-red-100 text-red-700' },
+  available: {
+    label: 'Available',
+    className: 'bg-emerald-100 text-emerald-700',
+  },
+  reserved: { label: 'Reserved', className: 'bg-amber-100 text-amber-700' },
+  adopted: { label: 'Adopted', className: 'bg-zinc-100 text-zinc-500' },
+  quarantine: { label: 'Quarantine', className: 'bg-red-100 text-red-700' },
+  not_adoptable: {
+    label: 'Not adoptable',
+    className: 'bg-red-100 text-red-700',
+  },
 }
 
 function formatAge(months: number | null): string {
@@ -41,7 +57,9 @@ function formatAge(months: number | null): string {
 function formatDate(dateStr: string | null): string {
   if (!dateStr) return 'Unknown'
   return new Date(dateStr).toLocaleDateString('en-GB', {
-    day: 'numeric', month: 'long', year: 'numeric',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   })
 }
 
@@ -61,19 +79,21 @@ export default async function AnimalPage({
     .innerJoin(tag, eq(animalTag.tagId, tag.id))
     .where(eq(animalTag.animalId, id))
 
-  const images = row.images?.length ? row.images : [`https://picsum.photos/seed/${row.id}/800/600`]
+  const images = row.images?.length
+    ? row.images
+    : [`https://picsum.photos/seed/${row.id}/800/600`]
   const status = STATUS_STYLE[row.status] ?? STATUS_STYLE.available
 
   const compatibilityItems = [
-    { label: 'Kids',        value: row.goodWithKids },
-    { label: 'Dogs',        value: row.goodWithDogs },
-    { label: 'Cats',        value: row.goodWithCats },
+    { label: 'Kids', value: row.goodWithKids },
+    { label: 'Dogs', value: row.goodWithDogs },
+    { label: 'Cats', value: row.goodWithCats },
   ]
 
   const needsItems = [
-    { label: 'Garden',            value: row.needsGarden },
+    { label: 'Garden', value: row.needsGarden },
     { label: 'Experienced owner', value: row.needsExperiencedOwner },
-    { label: 'Training',          value: row.needsTraining },
+    { label: 'Training', value: row.needsTraining },
   ]
 
   return (
@@ -101,8 +121,15 @@ export default async function AnimalPage({
             {images.length > 1 && (
               <div className="grid grid-cols-3 gap-3">
                 {images.slice(1).map((src, i) => (
-                  <div key={i} className="aspect-square rounded-xl overflow-hidden bg-zinc-100">
-                    <img src={src} alt={`${row.name} ${i + 2}`} className="w-full h-full object-cover" />
+                  <div
+                    key={i}
+                    className="aspect-square rounded-xl overflow-hidden bg-zinc-100"
+                  >
+                    <img
+                      src={src}
+                      alt={`${row.name} ${i + 2}`}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 ))}
               </div>
@@ -114,14 +141,18 @@ export default async function AnimalPage({
             <div>
               <div className="flex items-center gap-3 mb-1">
                 <h1 className="text-3xl font-bold text-zinc-900">{row.name}</h1>
-                <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${status.className}`}>
+                <span
+                  className={`text-xs font-medium px-2.5 py-1 rounded-full ${status.className}`}
+                >
                   {status.label}
                 </span>
               </div>
               <p className="text-zinc-500">
                 {SPECIES_LABEL[row.species] ?? row.species}
                 {row.breed ? ` · ${row.breed}` : ''}
-                {row.breedSuspected ? ` (suspected: ${row.breedSuspected})` : ''}
+                {row.breedSuspected
+                  ? ` (suspected: ${row.breedSuspected})`
+                  : ''}
               </p>
             </div>
 
@@ -132,29 +163,49 @@ export default async function AnimalPage({
             {/* Details grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {[
-                { label: 'Age',           value: formatAge(row.age) },
-                { label: 'Gender',        value: row.gender ? GENDER_LABEL[row.gender] : '—' },
-                { label: 'Size',          value: row.size ? SIZE_LABEL[row.size] : '—' },
-                { label: 'Weight',        value: row.weight ? `${row.weight} kg` : '—' },
-                { label: 'Color',         value: row.color ?? '—' },
-                { label: 'Activity',      value: row.activityLevel ? ACTIVITY_LABEL[row.activityLevel] : '—' },
-                { label: 'Arrival',       value: formatDate(row.arrivalDate) },
+                { label: 'Age', value: formatAge(row.age) },
+                {
+                  label: 'Gender',
+                  value: row.gender ? GENDER_LABEL[row.gender] : '—',
+                },
+                { label: 'Size', value: row.size ? SIZE_LABEL[row.size] : '—' },
+                {
+                  label: 'Weight',
+                  value: row.weight ? `${row.weight} kg` : '—',
+                },
+                { label: 'Color', value: row.color ?? '—' },
+                {
+                  label: 'Activity',
+                  value: row.activityLevel
+                    ? ACTIVITY_LABEL[row.activityLevel]
+                    : '—',
+                },
+                { label: 'Arrival', value: formatDate(row.arrivalDate) },
               ].map(({ label, value }) => (
-                <div key={label} className="bg-white rounded-xl border border-zinc-100 px-4 py-3">
-                  <p className="text-xs text-zinc-400 uppercase tracking-wide">{label}</p>
-                  <p className="text-sm font-medium text-zinc-800 mt-0.5">{value}</p>
+                <div
+                  key={label}
+                  className="bg-white rounded-xl border border-zinc-100 px-4 py-3"
+                >
+                  <p className="text-xs text-zinc-400 uppercase tracking-wide">
+                    {label}
+                  </p>
+                  <p className="text-sm font-medium text-zinc-800 mt-0.5">
+                    {value}
+                  </p>
                 </div>
               ))}
             </div>
 
             {/* Health */}
             <div>
-              <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">Health</p>
+              <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">
+                Health
+              </p>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { label: 'Neutered',   value: row.isNeutered },
+                  { label: 'Neutered', value: row.isNeutered },
                   { label: 'Vaccinated', value: row.isVaccinated },
-                  { label: 'Chipped',    value: row.isChipped },
+                  { label: 'Chipped', value: row.isChipped },
                 ].map(({ label, value }) => (
                   <span
                     key={label}
@@ -172,7 +223,9 @@ export default async function AnimalPage({
 
             {/* Compatibility */}
             <div>
-              <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">Good with</p>
+              <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">
+                Good with
+              </p>
               <div className="flex flex-wrap gap-2">
                 {compatibilityItems.map(({ label, value }) => (
                   <span
@@ -192,15 +245,22 @@ export default async function AnimalPage({
             </div>
 
             {/* Needs */}
-            {needsItems.some(n => n.value) && (
+            {needsItems.some((n) => n.value) && (
               <div>
-                <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">Needs</p>
+                <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">
+                  Needs
+                </p>
                 <div className="flex flex-wrap gap-2">
-                  {needsItems.filter(n => n.value).map(({ label }) => (
-                    <span key={label} className="text-xs px-3 py-1 rounded-full border bg-amber-50 border-amber-200 text-amber-700 font-medium">
-                      {label}
-                    </span>
-                  ))}
+                  {needsItems
+                    .filter((n) => n.value)
+                    .map(({ label }) => (
+                      <span
+                        key={label}
+                        className="text-xs px-3 py-1 rounded-full border bg-amber-50 border-amber-200 text-amber-700 font-medium"
+                      >
+                        {label}
+                      </span>
+                    ))}
                 </div>
               </div>
             )}
@@ -208,10 +268,15 @@ export default async function AnimalPage({
             {/* Tags */}
             {tagRows.length > 0 && (
               <div>
-                <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">Tags</p>
+                <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">
+                  Tags
+                </p>
                 <div className="flex flex-wrap gap-2">
-                  {tagRows.map(t => (
-                    <span key={t.name} className="text-xs px-3 py-1 rounded-full bg-zinc-100 text-zinc-600 border border-zinc-200">
+                  {tagRows.map((t) => (
+                    <span
+                      key={t.name}
+                      className="text-xs px-3 py-1 rounded-full bg-zinc-100 text-zinc-600 border border-zinc-200"
+                    >
                       {t.name}
                     </span>
                   ))}

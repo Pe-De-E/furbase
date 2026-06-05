@@ -47,11 +47,19 @@ test.describe('Matcher wizard', () => {
     await page.getByRole('button', { name: /find my match/i }).click()
 
     await expect(page).toHaveURL(/\/matcher\/results/)
-    await expect(page.getByRole('heading', { name: /your matches/i })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: /your matches/i }),
+    ).toBeVisible()
   })
 
-  test('results show compatible and incompatible sections', async ({ page }) => {
-    await page.goto('/matcher/results?living=apartment&kids=false&dogs=false&cats=false&activity=low&alone=2-4&experience=beginner&species=&size=any')
-    await expect(page.getByRole('heading', { name: /your matches/i })).toBeVisible()
+  test('results show compatible and incompatible sections', async ({
+    page,
+  }) => {
+    await page.goto(
+      '/matcher/results?living=apartment&kids=false&dogs=false&cats=false&activity=low&alone=2-4&experience=beginner&species=&size=any',
+    )
+    await expect(
+      page.getByRole('heading', { name: /your matches/i }),
+    ).toBeVisible()
   })
 })

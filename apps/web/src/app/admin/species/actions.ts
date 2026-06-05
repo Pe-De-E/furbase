@@ -5,7 +5,10 @@ import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 
 export async function addSpecies(formData: FormData) {
-  const value = (formData.get('value') as string).toLowerCase().trim().replace(/\s+/g, '_')
+  const value = (formData.get('value') as string)
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '_')
   const label = (formData.get('label') as string).trim()
   if (!value || !label) return
 

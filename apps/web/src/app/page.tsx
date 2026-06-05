@@ -1,4 +1,10 @@
-import { db, animal, settings, species as speciesTable, favorite } from '@furbase/db'
+import {
+  db,
+  animal,
+  settings,
+  species as speciesTable,
+  favorite,
+} from '@furbase/db'
 import { eq, and, asc, type SQL } from 'drizzle-orm'
 import AnimalCard from '@/components/animal-card'
 import FavoriteButton from '@/components/favorite-button'
@@ -20,17 +26,24 @@ export default async function Page({
   const userId = session?.user?.id ?? null
 
   const [animals, [config], userFavorites, speciesList] = await Promise.all([
-    db.select().from(animal).where(and(...conditions)),
+    db
+      .select()
+      .from(animal)
+      .where(and(...conditions)),
     db.select().from(settings).limit(1),
     userId
-      ? db.select({ animalId: favorite.animalId }).from(favorite).where(eq(favorite.userId, userId))
+      ? db
+          .select({ animalId: favorite.animalId })
+          .from(favorite)
+          .where(eq(favorite.userId, userId))
       : Promise.resolve([]),
-    db.select({ value: speciesTable.value, label: speciesTable.label })
+    db
+      .select({ value: speciesTable.value, label: speciesTable.label })
       .from(speciesTable)
       .orderBy(asc(speciesTable.sortOrder)),
   ])
 
-  const favoritedIds = new Set(userFavorites.map(f => f.animalId))
+  const favoritedIds = new Set(userFavorites.map((f) => f.animalId))
   const shelterName = config?.name ?? 'Animal Shelter'
 
   return (
@@ -41,9 +54,12 @@ export default async function Page({
         <div className="mb-8">
           <div className="flex items-end justify-between gap-4 flex-wrap">
             <div>
-              <h1 className="text-3xl font-bold text-zinc-900">Animals looking for a home</h1>
+              <h1 className="text-3xl font-bold text-zinc-900">
+                Animals looking for a home
+              </h1>
               <p className="text-zinc-500 mt-1">
-                {animals.length} {animals.length === 1 ? 'animal' : 'animals'} available
+                {animals.length} {animals.length === 1 ? 'animal' : 'animals'}{' '}
+                available
               </p>
             </div>
             <a
@@ -65,7 +81,7 @@ export default async function Page({
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {animals.map(a => (
+            {animals.map((a) => (
               <AnimalCard
                 key={a.id}
                 animal={a}

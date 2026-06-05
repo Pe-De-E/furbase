@@ -8,13 +8,17 @@ test.describe('Animal detail page', () => {
     await firstCard.click()
 
     await expect(page).toHaveURL(/\/animals\/.+/)
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(animalName!)
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      animalName!,
+    )
   })
 
   test('shows status badge', async ({ page }) => {
     await page.goto('/')
     await page.locator('a[href^="/animals/"]').first().click()
-    await expect(page.getByText(/available|reserved|adopted/i).first()).toBeVisible()
+    await expect(
+      page.getByText(/available|reserved|adopted/i).first(),
+    ).toBeVisible()
   })
 
   test('back button returns to listing', async ({ page }) => {
@@ -28,6 +32,8 @@ test.describe('Animal detail page', () => {
     await page.goto('/animals/00000000-0000-0000-0000-000000000000')
     await expect(page).toHaveURL(/\/animals\//)
     // Next.js notFound() renders a 404 page
-    await expect(page.getByRole('heading', { name: /404|not found/i })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: /404|not found/i }),
+    ).toBeVisible()
   })
 })

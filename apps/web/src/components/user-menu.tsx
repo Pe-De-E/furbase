@@ -6,14 +6,20 @@ import { LayoutDashboard, LogOut, User } from 'lucide-react'
 import UserAvatar from './user-avatar'
 
 type Props = {
-  name:           string | null | undefined
-  email:          string | null | undefined
-  image:          string | null | undefined
-  isAdmin:        boolean
-  signOutAction:  () => Promise<void>
+  name: string | null | undefined
+  email: string | null | undefined
+  image: string | null | undefined
+  isAdmin: boolean
+  signOutAction: () => Promise<void>
 }
 
-export default function UserMenu({ name, email, image, isAdmin, signOutAction }: Props) {
+export default function UserMenu({
+  name,
+  email,
+  image,
+  isAdmin,
+  signOutAction,
+}: Props) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -28,7 +34,7 @@ export default function UserMenu({ name, email, image, isAdmin, signOutAction }:
   return (
     <div className="relative" ref={ref}>
       <button
-        onClick={() => setOpen(o => !o)}
+        onClick={() => setOpen((o) => !o)}
         className="border-0 p-0 bg-transparent focus:outline-none focus:ring-2 focus:ring-zinc-400 focus:ring-offset-1 rounded-full"
         title="Your account"
       >
@@ -38,7 +44,9 @@ export default function UserMenu({ name, email, image, isAdmin, signOutAction }:
       {open && (
         <div className="absolute right-0 mt-2 w-52 bg-white rounded-2xl border border-zinc-100 shadow-lg py-2 z-50">
           <div className="px-4 py-2 border-b border-zinc-100 mb-1">
-            <p className="text-sm font-medium text-zinc-900 truncate">{name?.replace(/\s*\(.*\)\s*$/, '')}</p>
+            <p className="text-sm font-medium text-zinc-900 truncate">
+              {name?.replace(/\s*\(.*\)\s*$/, '')}
+            </p>
             <p className="text-xs text-zinc-400 truncate">{email}</p>
           </div>
 

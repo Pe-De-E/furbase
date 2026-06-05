@@ -17,10 +17,13 @@ export default async function AdminAnimalsPage({
   if (species) conditions.push(eq(animal.species, species))
 
   const [animals, speciesList] = await Promise.all([
-    db.select().from(animal)
+    db
+      .select()
+      .from(animal)
       .where(conditions.length ? and(...conditions) : undefined)
       .orderBy(desc(animal.createdAt)),
-    db.select({ value: speciesTable.value, label: speciesTable.label })
+    db
+      .select({ value: speciesTable.value, label: speciesTable.label })
       .from(speciesTable)
       .orderBy(asc(speciesTable.sortOrder)),
   ])
@@ -50,20 +53,31 @@ export default async function AdminAnimalsPage({
         <table className="w-full text-sm min-w-[600px]">
           <thead className="bg-zinc-50 border-b border-zinc-100">
             <tr>
-              <th className="text-left px-5 py-3 font-medium text-zinc-500">Animal</th>
-              <th className="text-left px-5 py-3 font-medium text-zinc-500">Species</th>
-              <th className="text-left px-5 py-3 font-medium text-zinc-500">Status</th>
-              <th className="text-left px-5 py-3 font-medium text-zinc-500">Arrival</th>
+              <th className="text-left px-5 py-3 font-medium text-zinc-500">
+                Animal
+              </th>
+              <th className="text-left px-5 py-3 font-medium text-zinc-500">
+                Species
+              </th>
+              <th className="text-left px-5 py-3 font-medium text-zinc-500">
+                Status
+              </th>
+              <th className="text-left px-5 py-3 font-medium text-zinc-500">
+                Arrival
+              </th>
               <th className="px-5 py-3" />
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-50">
-            {animals.map(a => (
+            {animals.map((a) => (
               <tr key={a.id} className="hover:bg-zinc-50 transition-colors">
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-3">
                     <img
-                      src={a.images?.[0] ?? `https://picsum.photos/seed/${a.id}/80/80`}
+                      src={
+                        a.images?.[0] ??
+                        `https://picsum.photos/seed/${a.id}/80/80`
+                      }
                       alt={a.name}
                       className="w-9 h-9 rounded-lg object-cover bg-zinc-100"
                     />
@@ -73,7 +87,9 @@ export default async function AdminAnimalsPage({
                     </div>
                   </div>
                 </td>
-                <td className="px-5 py-3 capitalize text-zinc-600">{a.species}</td>
+                <td className="px-5 py-3 capitalize text-zinc-600">
+                  {a.species}
+                </td>
                 <td className="px-5 py-3">
                   <StatusSelect animalId={a.id} status={a.status} />
                 </td>

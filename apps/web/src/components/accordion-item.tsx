@@ -13,17 +13,20 @@ export default function AccordionItem({
 
   return (
     <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden">
-      <button onClick={() => setOpen(o => !o)} className="w-full p-4 text-left">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        className="w-full p-4 text-left"
+      >
         <div className="flex items-center gap-3">
           {summary}
-          <span className="text-zinc-300 text-sm shrink-0">{open ? '▲' : '▼'}</span>
+          <span className="text-zinc-300 text-sm shrink-0">
+            {open ? '▲' : '▼'}
+          </span>
         </div>
       </button>
 
       {open && (
-        <div className="border-t border-zinc-100 px-4 py-4">
-          {details}
-        </div>
+        <div className="border-t border-zinc-100 px-4 py-4">{details}</div>
       )}
     </div>
   )

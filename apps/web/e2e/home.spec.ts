@@ -3,7 +3,9 @@ import { test, expect } from '@playwright/test'
 test.describe('Home — animal listing', () => {
   test('loads and shows animals', async ({ page }) => {
     await page.goto('/')
-    await expect(page.getByRole('heading', { name: /animals looking for a home/i })).toBeVisible()
+    await expect(
+      page.getByRole('heading', { name: /animals looking for a home/i }),
+    ).toBeVisible()
     // at least one animal card
     await expect(page.locator('a[href^="/animals/"]').first()).toBeVisible()
   })

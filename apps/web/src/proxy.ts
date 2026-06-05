@@ -10,12 +10,14 @@ export default auth((req) => {
   const isAdmin = req.auth?.user?.role === 'admin'
 
   if (nextUrl.pathname.startsWith('/admin')) {
-    if (!isLoggedIn) return NextResponse.redirect(new URL('/api/auth/signin', nextUrl))
-    if (!isAdmin)    return NextResponse.redirect(new URL('/', nextUrl))
+    if (!isLoggedIn)
+      return NextResponse.redirect(new URL('/api/auth/signin', nextUrl))
+    if (!isAdmin) return NextResponse.redirect(new URL('/', nextUrl))
   }
 
   if (nextUrl.pathname === '/profile') {
-    if (!isLoggedIn) return NextResponse.redirect(new URL('/api/auth/signin', nextUrl))
+    if (!isLoggedIn)
+      return NextResponse.redirect(new URL('/api/auth/signin', nextUrl))
   }
 })
 
