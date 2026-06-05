@@ -207,7 +207,7 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
                 How active are you?
               </h2>
               <p className="text-zinc-500 mb-6">
-                We'll match you with an animal that fits your lifestyle.
+                We&apos;ll match you with an animal that fits your lifestyle.
               </p>
               <div className="flex flex-col gap-3">
                 <OptionButton
@@ -301,7 +301,7 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
                 Any preferences?
               </h2>
               <p className="text-zinc-500 mb-6">
-                Optional — leave on "Any" to see all compatible animals.
+                Optional — leave on &quot;Any&quot; to see all compatible animals.
               </p>
 
               <div className="flex flex-col gap-6">

@@ -69,7 +69,7 @@ export default function VolunteerForm({
 
       <div>
         <label className="block text-sm font-medium text-zinc-700 mb-1.5">
-          Anything else you'd like to add?
+          Anything else you&apos;d like to add?
         </label>
         <textarea
           name="notes"

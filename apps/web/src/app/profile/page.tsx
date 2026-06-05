@@ -61,7 +61,7 @@ export default async function ProfilePage() {
             How can you help?
           </h2>
           <p className="text-sm text-zinc-500 mb-6">
-            Let us know how you'd like to support the shelter — we'll reach out
+            Let us know how you&apos;d like to support the shelter — we&apos;ll reach out
             when needed.
           </p>
           <VolunteerForm userId={userId} initial={volunteer} />
