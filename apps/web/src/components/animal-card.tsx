@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import type { InferSelectModel } from 'drizzle-orm'
 import type { animal } from '@furbase/db'
 
@@ -51,10 +52,12 @@ export default function AnimalCard({
       className="group block rounded-2xl overflow-hidden bg-white border border-zinc-100 shadow-sm hover:shadow-md transition-shadow"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
-        <img
+        <Image
           src={image}
           alt={animal.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
         <span
           className={`absolute top-3 left-3 text-xs font-medium text-white px-2.5 py-1 rounded-full ${status.className}`}
