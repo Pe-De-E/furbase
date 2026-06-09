@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 const AVATAR_COLORS = [
   '#4285F4',
   '#EA4335',
@@ -26,6 +28,19 @@ type Props = {
 export default function UserAvatar({ name, email, image, size = 28 }: Props) {
   const initial = (name ?? email ?? '?')[0].toUpperCase()
 
+  if (image) {
+    return (
+      <Image
+        src={image}
+        alt={name ?? email ?? ''}
+        width={size}
+        height={size}
+        referrerPolicy="no-referrer"
+        style={{ borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
+      />
+    )
+  }
+
   return (
     <div
       style={{
@@ -33,9 +48,6 @@ export default function UserAvatar({ name, email, image, size = 28 }: Props) {
         height: size,
         borderRadius: '50%',
         backgroundColor: avatarColor(name ?? email),
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        ...(image ? { backgroundImage: `url("${image}")` } : {}),
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -45,7 +57,7 @@ export default function UserAvatar({ name, email, image, size = 28 }: Props) {
         flexShrink: 0,
       }}
     >
-      {!image && initial}
+      {initial}
     </div>
   )
 }
