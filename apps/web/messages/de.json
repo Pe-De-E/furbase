@@ -1,0 +1,47 @@
+{
+  "ListingHero": {
+    "title": "Tiere suchen ein neues Zuhause",
+    "findMatch": "Passende Tiere finden →"
+  },
+  "AnimalGrid": {
+    "count": "{count, plural, =0 {Keine Tiere verfügbar} one {# Tier verfügbar} other {# Tiere verfügbar}}",
+    "empty": "Keine Tiere in dieser Kategorie gefunden."
+  },
+  "AnimalCard": {
+    "species": {
+      "dog": "Hund",
+      "cat": "Katze",
+      "rabbit": "Kaninchen",
+      "bird": "Vogel",
+      "small_animal": "Kleintier",
+      "other": "Sonstiges"
+    },
+    "gender": {
+      "male": "Männlich",
+      "female": "Weiblich",
+      "unknown": "Unbekannt"
+    },
+    "status": {
+      "available": "Vermittelbar",
+      "reserved": "Reserviert",
+      "adopted": "Vermittelt",
+      "quarantine": "Quarantäne",
+      "not_adoptable": "Nicht vermittelbar"
+    },
+    "neutered": "kastriert",
+    "ageUnknown": "Alter unbekannt",
+    "ageMonths": "{months, plural, one {# Monat} other {# Monate}}",
+    "ageYears": "{years, plural, one {# Jahr} other {# Jahre}}"
+  },
+  "Header": {
+    "signIn": "Anmelden"
+  },
+  "UserMenu": {
+    "profile": "Profil",
+    "adminPanel": "Admin-Bereich",
+    "signOut": "Abmelden"
+  },
+  "SpeciesFilter": {
+    "all": "Alle"
+  }
+}

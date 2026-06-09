@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl'
+
 type Species = { value: string; label: string }
 
 export default function SpeciesFilter({
@@ -7,7 +9,8 @@ export default function SpeciesFilter({
   species: Species[]
   active?: string
 }) {
-  const options = [{ value: '', label: 'All' }, ...species]
+  const t = useTranslations('SpeciesFilter')
+  const options = [{ value: '', label: t('all') }, ...species]
 
   return (
     <div className="flex flex-wrap gap-2">

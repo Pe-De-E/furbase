@@ -1,7 +1,7 @@
 'use client'
 
 import { useTransition, useState } from 'react'
-import { toggleFavorite } from '@/app/actions'
+import { toggleFavorite } from '@/app/[locale]/actions'
 
 export default function FavoriteButton({
   userId,

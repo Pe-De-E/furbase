@@ -20,7 +20,7 @@ test.describe('Auth & protected routes', () => {
   })
 
   test('sign in button visible in header when logged out', async ({ page }) => {
-    await page.goto('/')
+    await page.goto('/en')
     await expect(page.getByRole('button', { name: /sign in/i })).toBeVisible()
   })
 })

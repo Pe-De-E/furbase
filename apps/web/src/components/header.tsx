@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import HeaderAuth from './header-auth'
+import LocaleSwitcher from './locale-switcher'
 
 export default function Header({ title }: { title?: string }) {
   return (
@@ -12,7 +13,10 @@ export default function Header({ title }: { title?: string }) {
           {title ?? 'Tierherberge Pfaffenhofen'}
         </Link>
 
-        <HeaderAuth />
+        <div className="flex items-center gap-4">
+          <LocaleSwitcher />
+          <HeaderAuth />
+        </div>
       </div>
     </header>
   )

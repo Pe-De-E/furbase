@@ -1,8 +1,9 @@
 import { auth, signIn, signOut } from '@/auth'
+import { getTranslations } from 'next-intl/server'
 import UserMenu from './user-menu'
 
 export default async function HeaderAuth() {
-  const session = await auth()
+  const [session, t] = await Promise.all([auth(), getTranslations('Header')])
 
   if (!session?.user) {
     return (
@@ -13,7 +14,7 @@ export default async function HeaderAuth() {
         }}
       >
         <button className="text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors">
-          Sign in
+          {t('signIn')}
         </button>
       </form>
     )

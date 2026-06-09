@@ -2,6 +2,7 @@ import { db, animal, favorite } from '@furbase/db'
 import { eq, and, type SQL } from 'drizzle-orm'
 import AnimalCard from './animal-card'
 import FavoriteButton from './favorite-button'
+import { getTranslations } from 'next-intl/server'
 
 type Props = {
   species?: string
@@ -9,6 +10,8 @@ type Props = {
 }
 
 export default async function AnimalGrid({ species, userId }: Props) {
+  const t = await getTranslations('AnimalGrid')
+
   const conditions: SQL[] = [eq(animal.status, 'available')]
   if (species) conditions.push(eq(animal.species, species))
 
@@ -26,16 +29,14 @@ export default async function AnimalGrid({ species, userId }: Props) {
 
   if (animals.length === 0) {
     return (
-      <div className="text-center py-32 text-zinc-400">
-        No animals found in this category.
-      </div>
+      <div className="text-center py-32 text-zinc-400">{t('empty')}</div>
     )
   }
 
   return (
     <>
       <p className="text-zinc-500 mb-8">
-        {animals.length} {animals.length === 1 ? 'animal' : 'animals'} available
+        {t('count', { count: animals.length })}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {animals.map((a) => (

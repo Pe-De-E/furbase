@@ -2,37 +2,16 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { InferSelectModel } from 'drizzle-orm'
 import type { animal } from '@furbase/db'
+import { useTranslations } from 'next-intl'
 
 type Animal = InferSelectModel<typeof animal>
 
-const SPECIES_LABEL: Record<string, string> = {
-  dog: 'Dog',
-  cat: 'Cat',
-  rabbit: 'Rabbit',
-  bird: 'Bird',
-  small_animal: 'Small Animal',
-  other: 'Other',
-}
-
-const GENDER_LABEL: Record<string, string> = {
-  male: 'Male',
-  female: 'Female',
-  unknown: 'Unknown',
-}
-
-const STATUS_STYLE: Record<string, { label: string; className: string }> = {
-  available: { label: 'Available', className: 'bg-emerald-500' },
-  reserved: { label: 'Reserved', className: 'bg-amber-400' },
-  adopted: { label: 'Adopted', className: 'bg-zinc-400' },
-  quarantine: { label: 'Quarantine', className: 'bg-red-500' },
-  not_adoptable: { label: 'Not adoptable', className: 'bg-red-700' },
-}
-
-function formatAge(months: number | null): string {
-  if (!months) return 'Age unknown'
-  if (months < 12) return `${months} ${months === 1 ? 'month' : 'months'}`
-  const years = Math.floor(months / 12)
-  return `${years} ${years === 1 ? 'year' : 'years'}`
+const STATUS_CLASS: Record<string, string> = {
+  available: 'bg-emerald-500',
+  reserved: 'bg-amber-400',
+  adopted: 'bg-zinc-400',
+  quarantine: 'bg-red-500',
+  not_adoptable: 'bg-red-700',
 }
 
 export default function AnimalCard({
@@ -42,9 +21,17 @@ export default function AnimalCard({
   animal: Animal
   favoriteButton?: React.ReactNode
 }) {
+  const t = useTranslations('AnimalCard')
   const image =
     animal.images?.[0] ?? `https://picsum.photos/seed/${animal.id}/600/400`
-  const status = STATUS_STYLE[animal.status] ?? STATUS_STYLE.available
+  const statusClass = STATUS_CLASS[animal.status] ?? STATUS_CLASS.available
+
+  function formatAge(months: number | null): string {
+    if (!months) return t('ageUnknown')
+    if (months < 12) return t('ageMonths', { months })
+    const years = Math.floor(months / 12)
+    return t('ageYears', { years })
+  }
 
   return (
     <Link
@@ -60,9 +47,9 @@ export default function AnimalCard({
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
         <span
-          className={`absolute top-3 left-3 text-xs font-medium text-white px-2.5 py-1 rounded-full ${status.className}`}
+          className={`absolute top-3 left-3 text-xs font-medium text-white px-2.5 py-1 rounded-full ${statusClass}`}
         >
-          {status.label}
+          {t(`status.${animal.status}` as Parameters<typeof t>[0])}
         </span>
         {favoriteButton && (
           <div className="absolute top-3 right-3">{favoriteButton}</div>
@@ -76,13 +63,13 @@ export default function AnimalCard({
           </h2>
           {animal.isNeutered && (
             <span className="shrink-0 text-xs bg-zinc-100 text-zinc-500 px-2 py-0.5 rounded-full mt-0.5">
-              neutered
+              {t('neutered')}
             </span>
           )}
         </div>
 
         <p className="text-sm text-zinc-500 mt-0.5">
-          {SPECIES_LABEL[animal.species] ?? animal.species}
+          {t(`species.${animal.species}` as Parameters<typeof t>[0])}
           {animal.breed ? ` · ${animal.breed}` : ''}
         </p>
 
@@ -94,7 +81,7 @@ export default function AnimalCard({
           )}
           {animal.gender && (
             <span className="text-xs bg-zinc-50 border border-zinc-200 text-zinc-600 px-2 py-0.5 rounded-full">
-              {GENDER_LABEL[animal.gender] ?? animal.gender}
+              {t(`gender.${animal.gender}` as Parameters<typeof t>[0])}
             </span>
           )}
           {animal.size && (

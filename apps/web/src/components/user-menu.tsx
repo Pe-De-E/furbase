@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { LayoutDashboard, LogOut, User } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import UserAvatar from './user-avatar'
 
 type Props = {
@@ -20,6 +21,7 @@ export default function UserMenu({
   isAdmin,
   signOutAction,
 }: Props) {
+  const t = useTranslations('UserMenu')
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -56,7 +58,7 @@ export default function UserMenu({
             className="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
           >
             <User className="inline-block mr-2 w-3.5 h-3.5 text-zinc-400" />
-            Profile
+            {t('profile')}
           </Link>
 
           {isAdmin && (
@@ -66,7 +68,7 @@ export default function UserMenu({
               className="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
             >
               <LayoutDashboard className="inline-block mr-2 w-3.5 h-3.5 text-zinc-400" />
-              Admin panel
+              {t('adminPanel')}
             </Link>
           )}
 
@@ -74,7 +76,7 @@ export default function UserMenu({
             <form action={signOutAction}>
               <button className="w-full text-left px-4 py-2 text-sm text-zinc-400 hover:text-zinc-700 hover:bg-zinc-50 transition-colors">
                 <LogOut className="inline-block mr-2 w-3.5 h-3.5 text-zinc-400" />
-                Sign out
+                {t('signOut')}
               </button>
             </form>
           </div>
