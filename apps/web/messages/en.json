@@ -34,7 +34,16 @@
     "ageYears": "{years, plural, one {# year} other {# years}}"
   },
   "Header": {
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "about": "About"
+  },
+  "About": {
+    "contact": "Contact",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "website": "Website",
+    "noDescription": "No description available."
   },
   "UserMenu": {
     "profile": "Profile",

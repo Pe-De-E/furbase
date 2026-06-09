@@ -34,7 +34,16 @@
     "ageYears": "{years, plural, one {# Jahr} other {# Jahre}}"
   },
   "Header": {
-    "signIn": "Anmelden"
+    "signIn": "Anmelden",
+    "about": "Über uns"
+  },
+  "About": {
+    "contact": "Kontakt",
+    "address": "Adresse",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "website": "Website",
+    "noDescription": "Keine Beschreibung vorhanden."
   },
   "UserMenu": {
     "profile": "Profil",
