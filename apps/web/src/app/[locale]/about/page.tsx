@@ -24,7 +24,7 @@ export default async function AboutPage() {
       icon: Globe,
       label: t('website'),
       value: config?.website?.replace(/^https?:\/\//, ''),
-      href: config?.website,
+      href: config?.website ?? undefined,
       external: true,
     },
   ].filter((item) => item.value)
