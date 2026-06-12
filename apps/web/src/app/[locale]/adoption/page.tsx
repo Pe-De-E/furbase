@@ -1,7 +1,10 @@
-import { db, adoptionChecklistItem, adoptionChecklistProgress } from '@furbase/db'
+import {
+  db,
+  adoptionChecklistItem,
+  adoptionChecklistProgress,
+} from '@furbase/db'
 import { eq, asc } from 'drizzle-orm'
 import { auth } from '@/auth'
-import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import Header from '@/components/header'
 import Checklist from './checklist'
@@ -13,14 +16,19 @@ export default async function AdoptionPage({
 }) {
   const { locale } = await params
   const session = await auth()
-  if (!session?.user?.id) redirect('/api/auth/signin')
+  const userId = session?.user?.id
 
   const [items, progress, t] = await Promise.all([
-    db.select().from(adoptionChecklistItem).orderBy(asc(adoptionChecklistItem.sortOrder)),
     db
-      .select({ itemId: adoptionChecklistProgress.itemId })
-      .from(adoptionChecklistProgress)
-      .where(eq(adoptionChecklistProgress.userId, session.user.id)),
+      .select()
+      .from(adoptionChecklistItem)
+      .orderBy(asc(adoptionChecklistItem.sortOrder)),
+    userId
+      ? db
+          .select({ itemId: adoptionChecklistProgress.itemId })
+          .from(adoptionChecklistProgress)
+          .where(eq(adoptionChecklistProgress.userId, userId))
+      : [],
     getTranslations('Adoption'),
   ])
 
@@ -41,19 +49,27 @@ export default async function AdoptionPage({
         <h1 className="text-3xl font-bold text-zinc-900 mb-2">{t('title')}</h1>
         <p className="text-zinc-500 mb-2">{t('subtitle')}</p>
 
-        <div className="flex items-center gap-3 mb-8">
-          <div className="flex-1 h-2 bg-zinc-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-emerald-500 rounded-full transition-all duration-300"
-              style={{ width: `${items.length ? (done / items.length) * 100 : 0}%` }}
-            />
+        {userId && (
+          <div className="flex items-center gap-3 mb-8">
+            <div className="flex-1 h-2 bg-zinc-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-emerald-500 rounded-full transition-all duration-300"
+                style={{
+                  width: `${items.length ? (done / items.length) * 100 : 0}%`,
+                }}
+              />
+            </div>
+            <span className="text-sm text-zinc-500 shrink-0">
+              {t('progress', { done, total: items.length })}
+            </span>
           </div>
-          <span className="text-sm text-zinc-500 shrink-0">
-            {t('progress', { done, total: items.length })}
-          </span>
-        </div>
+        )}
 
-        <Checklist items={enriched} />
+        <Checklist
+          items={enriched}
+          isLoggedIn={!!userId}
+          loginHint={t('loginHint')}
+        />
       </main>
     </div>
   )

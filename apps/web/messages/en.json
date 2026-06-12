@@ -71,7 +71,8 @@
   "Adoption": {
     "title": "Adoption Checklist",
     "subtitle": "Your personal progress on the path to adoption",
-    "progress": "{done} of {total} completed"
+    "progress": "{done} of {total} completed",
+    "loginHint": "Sign in to save your progress"
   },
   "SpeciesFilter": {
     "all": "All"

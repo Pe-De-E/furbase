@@ -71,7 +71,8 @@
   "Adoption": {
     "title": "Adoptions-Checkliste",
     "subtitle": "Dein persönlicher Fortschritt auf dem Weg zur Adoption",
-    "progress": "{done} von {total} erledigt"
+    "progress": "{done} von {total} erledigt",
+    "loginHint": "Melde dich an, um deinen Fortschritt zu speichern"
   },
   "SpeciesFilter": {
     "all": "Alle"
