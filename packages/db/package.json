@@ -10,6 +10,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx --env-file=.env src/seed.ts",
+    "db:seed:adoption": "tsx --env-file=.env src/seed-adoption.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

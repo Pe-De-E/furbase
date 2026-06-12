@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { LayoutDashboard, LogOut, User } from 'lucide-react'
+import { LayoutDashboard, LogOut, User, ClipboardList } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import UserAvatar from './user-avatar'
 
@@ -59,6 +59,15 @@ export default function UserMenu({
           >
             <User className="inline-block mr-2 w-3.5 h-3.5 text-zinc-400" />
             {t('profile')}
+          </Link>
+
+          <Link
+            href="/adoption"
+            onClick={() => setOpen(false)}
+            className="block px-4 py-2 text-sm text-zinc-700 hover:bg-zinc-50 transition-colors"
+          >
+            <ClipboardList className="inline-block mr-2 w-3.5 h-3.5 text-zinc-400" />
+            {t('adoption')}
           </Link>
 
           {isAdmin && (

@@ -11,9 +11,6 @@ build/
 .env.local
 .env.*.local
 
-# Drizzle
-migrations/
-
 # Turbo
 .turbo/
 

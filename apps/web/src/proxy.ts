@@ -10,6 +10,7 @@ const { auth } = NextAuth(authConfig)
 // matches /admin or /en/admin etc.
 const isAdminRoute = (p: string) => /^\/(de\/|en\/)?admin/.test(p)
 const isProfileRoute = (p: string) => /^\/(de\/|en\/)?profile$/.test(p)
+const isAdoptionRoute = (p: string) => /^\/(de\/|en\/)?adoption$/.test(p)
 
 export default auth((req) => {
   const { nextUrl } = req
@@ -22,7 +23,7 @@ export default auth((req) => {
     if (!isAdmin) return NextResponse.redirect(new URL('/', nextUrl))
   }
 
-  if (isProfileRoute(nextUrl.pathname)) {
+  if (isProfileRoute(nextUrl.pathname) || isAdoptionRoute(nextUrl.pathname)) {
     if (!isLoggedIn)
       return NextResponse.redirect(new URL('/api/auth/signin', nextUrl))
   }

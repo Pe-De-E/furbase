@@ -47,8 +47,31 @@
   },
   "UserMenu": {
     "profile": "Profile",
+    "adoption": "Adoption Checklist",
     "adminPanel": "Admin panel",
     "signOut": "Sign out"
+  },
+  "AdminAdoption": {
+    "title": "Adoption Checklist",
+    "total": "{count} items",
+    "add": "+ Add item",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Delete \"{text}\"?",
+    "formTitleNew": "New item",
+    "formTitleEdit": "Edit item",
+    "fieldTextDe": "Text (German) *",
+    "fieldTextEn": "Text (English) *",
+    "fieldDescDe": "Description (German)",
+    "fieldDescEn": "Description (English)",
+    "fieldOrder": "Sort order",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "Adoption": {
+    "title": "Adoption Checklist",
+    "subtitle": "Your personal progress on the path to adoption",
+    "progress": "{done} of {total} completed"
   },
   "SpeciesFilter": {
     "all": "All"
