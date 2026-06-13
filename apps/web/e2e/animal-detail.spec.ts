@@ -22,10 +22,12 @@ test.describe('Animal detail page', () => {
   })
 
   test('back button returns to listing', async ({ page }) => {
-    await page.goto('/')
+    // explicit /en: the back link text is English, and since i18n the
+    // middleware keeps the locale prefix when navigating back
+    await page.goto('/en')
     await page.locator('a[href^="/animals/"]').first().click()
     await page.getByRole('link', { name: /back to all animals/i }).click()
-    await expect(page).toHaveURL('/')
+    await expect(page).toHaveURL('/en')
   })
 
   test('unknown animal id shows 404', async ({ page }) => {
