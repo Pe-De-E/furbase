@@ -44,6 +44,12 @@ export default async function AdminLayout({
             >
               Adoption
             </Link>
+            <Link
+              href="/admin/requests"
+              className="text-sm font-medium hover:text-zinc-300 transition-colors"
+            >
+              Requests
+            </Link>
           </div>
           <span className="text-xs text-zinc-500 hidden sm:inline">
             Admin — {session?.user?.email}

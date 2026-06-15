@@ -76,5 +76,23 @@
   },
   "SpeciesFilter": {
     "all": "Alle"
+  },
+  "RequestButton": {
+    "signIn": "Anmelden, um Adoption anzufragen",
+    "request": "Adoption von {name} anfragen",
+    "messagePlaceholder": "Erzähl uns etwas über dich und warum du adoptieren möchtest (optional)",
+    "cancel": "Abbrechen",
+    "submit": "Anfrage absenden",
+    "submitting": "Wird gesendet…",
+    "success": "Adoptionsanfrage eingereicht — wir melden uns"
+  },
+  "ProfileRequests": {
+    "title": "Meine Adoptionsanfragen",
+    "empty": "Noch keine Anfragen gestellt.",
+    "status": {
+      "pending": "Ausstehend",
+      "approved": "Genehmigt",
+      "rejected": "Abgelehnt"
+    }
   }
 }

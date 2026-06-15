@@ -4,18 +4,21 @@ import {
   favorite,
   animal,
   matcherProfile,
+  adoptionRequest,
 } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 import { auth } from '@/auth'
 import type { Session } from 'next-auth'
 import Header from '@/components/header'
 import VolunteerForm from './volunteer-form'
+import { getTranslations } from 'next-intl/server'
 
 export default async function ProfilePage() {
   const session = (await auth())!
   const userId = session.user.id!
+  const t = await getTranslations('ProfileRequests')
 
-  const [volunteer, matcher, favorites] = await Promise.all([
+  const [volunteer, matcher, favorites, requests] = await Promise.all([
     db
       .select()
       .from(volunteerProfile)
@@ -31,6 +34,19 @@ export default async function ProfilePage() {
       .from(favorite)
       .innerJoin(animal, eq(favorite.animalId, animal.id))
       .where(eq(favorite.userId, userId)),
+    db
+      .select({
+        id: adoptionRequest.id,
+        status: adoptionRequest.status,
+        createdAt: adoptionRequest.createdAt,
+        animalName: animal.name,
+        animalId: animal.id,
+        animalImage: animal.images,
+      })
+      .from(adoptionRequest)
+      .innerJoin(animal, eq(adoptionRequest.animalId, animal.id))
+      .where(eq(adoptionRequest.userId, userId))
+      .orderBy(adoptionRequest.createdAt),
   ])
 
   return (
@@ -110,6 +126,56 @@ export default async function ProfilePage() {
                   </div>
                 </a>
               ))}
+            </div>
+          )}
+        </section>
+
+        {/* Adoption Requests */}
+        <section className="bg-white rounded-2xl border border-zinc-100 p-6">
+          <h2 className="text-lg font-semibold text-zinc-900 mb-4">
+            {t('title')}
+            {requests.length > 0 && (
+              <span className="ml-2 text-sm font-normal text-zinc-400">
+                {requests.length}
+              </span>
+            )}
+          </h2>
+          {requests.length === 0 ? (
+            <p className="text-sm text-zinc-400">{t('empty')}</p>
+          ) : (
+            <div className="flex flex-col gap-3">
+              {requests.map((r) => {
+                const statusStyle = {
+                  pending: 'bg-amber-50 border-amber-200 text-amber-700',
+                  approved: 'bg-emerald-50 border-emerald-200 text-emerald-700',
+                  rejected: 'bg-red-50 border-red-200 text-red-600',
+                }[r.status]
+                return (
+                  <a
+                    key={r.id}
+                    href={`/animals/${r.animalId}`}
+                    className="flex items-center gap-3 rounded-xl border border-zinc-100 p-3 hover:border-zinc-300 transition-colors"
+                  >
+                    <img
+                      src={
+                        r.animalImage?.[0] ??
+                        `https://picsum.photos/seed/${r.animalId}/80/80`
+                      }
+                      alt={r.animalName}
+                      className="w-12 h-12 rounded-lg object-cover bg-zinc-100"
+                    />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-zinc-900">{r.animalName}</p>
+                      <p className="text-xs text-zinc-400">
+                        {new Date(r.createdAt).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${statusStyle}`}>
+                      {t(`status.${r.status}` as Parameters<typeof t>[0])}
+                    </span>
+                  </a>
+                )
+              })}
             </div>
           )}
         </section>

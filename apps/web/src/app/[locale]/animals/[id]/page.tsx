@@ -1,8 +1,10 @@
-import { db, animal, animalTag, tag } from '@furbase/db'
-import { eq } from 'drizzle-orm'
+import { db, animal, animalTag, tag, adoptionRequest } from '@furbase/db'
+import { eq, and } from 'drizzle-orm'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Header from '@/components/header'
+import { auth } from '@/auth'
+import RequestButton from './request-button'
 
 const SPECIES_LABEL: Record<string, string> = {
   dog: 'Dog',
@@ -69,15 +71,26 @@ export default async function AnimalPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
+  const session = await auth()
+  const userId = session?.user?.id ?? null
 
   const [row] = await db.select().from(animal).where(eq(animal.id, id))
   if (!row) notFound()
 
-  const tagRows = await db
-    .select({ name: tag.name, category: tag.category })
-    .from(animalTag)
-    .innerJoin(tag, eq(animalTag.tagId, tag.id))
-    .where(eq(animalTag.animalId, id))
+  const [existingRequest, tagRows] = await Promise.all([
+    userId
+      ? db
+          .select({ id: adoptionRequest.id })
+          .from(adoptionRequest)
+          .where(and(eq(adoptionRequest.userId, userId), eq(adoptionRequest.animalId, id)))
+          .then((r) => r[0] ?? null)
+      : Promise.resolve(null),
+    db
+      .select({ name: tag.name, category: tag.category })
+      .from(animalTag)
+      .innerJoin(tag, eq(animalTag.tagId, tag.id))
+      .where(eq(animalTag.animalId, id)),
+  ])
 
   const images = row.images?.length
     ? row.images
@@ -284,9 +297,14 @@ export default async function AnimalPage({
               </div>
             )}
 
-            <button className="w-full bg-zinc-900 text-white rounded-xl py-3.5 text-sm font-medium hover:bg-zinc-700 transition-colors mt-2">
-              Interested in {row.name}? Contact us
-            </button>
+            {row.status === 'available' && (
+              <RequestButton
+                animalId={row.id}
+                animalName={row.name}
+                isLoggedIn={!!userId}
+                hasExistingRequest={!!existingRequest}
+              />
+            )}
           </div>
         </div>
       </main>
