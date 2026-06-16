@@ -1,6 +1,7 @@
 'use client'
 
 import { useTransition } from 'react'
+import { useTranslations } from 'next-intl'
 import { updateAnimalStatus } from '../actions'
 
 const STATUS_STYLE: Record<string, string> = {
@@ -26,6 +27,7 @@ export default function StatusSelect({
   animalId: string
   status: string
 }) {
+  const t = useTranslations('AnimalForm')
   const [isPending, startTransition] = useTransition()
 
   return (
@@ -44,7 +46,7 @@ export default function StatusSelect({
     >
       {STATUSES.map((s) => (
         <option key={s} value={s}>
-          {s.replace('_', ' ')}
+          {t(`status.${s}` as Parameters<typeof t>[0])}
         </option>
       ))}
     </select>

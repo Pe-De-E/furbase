@@ -86,6 +86,116 @@
     "submitting": "Wird gesendet…",
     "success": "Adoptionsanfrage eingereicht — wir melden uns"
   },
+  "AdminLayout": {
+    "backToSite": "← Öffentliche Seite",
+    "animals": "Tiere",
+    "volunteers": "Ehrenamtliche",
+    "species": "Tierarten",
+    "adoption": "Adoption",
+    "requests": "Anfragen"
+  },
+  "AdminAnimals": {
+    "title": "Tiere",
+    "total": "{count} gesamt",
+    "addAnimal": "+ Tier hinzufügen",
+    "colAnimal": "Tier",
+    "colSpecies": "Tierart",
+    "colStatus": "Status",
+    "colArrival": "Aufnahme",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deleteConfirm": "{name} löschen?",
+    "fieldSpecies": "Tierart",
+    "fieldArrival": "Aufnahme",
+    "fieldAge": "Alter",
+    "fieldAgeMonths": "{months} Monate",
+    "fieldGender": "Geschlecht",
+    "fieldStatus": "Status"
+  },
+  "AnimalForm": {
+    "sectionBasic": "Grunddaten",
+    "sectionHealth": "Gesundheit & Verhalten",
+    "fieldName": "Name *",
+    "fieldSpecies": "Tierart *",
+    "fieldBreed": "Rasse",
+    "fieldAge": "Alter (Monate)",
+    "fieldGender": "Geschlecht",
+    "fieldSize": "Größe",
+    "fieldWeight": "Gewicht (kg)",
+    "fieldColor": "Farbe",
+    "fieldStatus": "Status *",
+    "fieldArrival": "Aufnahmedatum",
+    "fieldDescription": "Beschreibung",
+    "fieldImages": "Bild-URLs (eine pro Zeile)",
+    "fieldActivityLevel": "Aktivitätslevel",
+    "sectionCompat": "Verträglichkeit",
+    "compatKids": "Kinder",
+    "compatDogs": "Hunde",
+    "compatCats": "Katzen",
+    "gender": { "male": "Männlich", "female": "Weiblich", "unknown": "Unbekannt" },
+    "size": { "small": "Klein", "medium": "Mittel", "large": "Groß" },
+    "status": {
+      "available": "Vermittelbar",
+      "reserved": "Reserviert",
+      "adopted": "Vermittelt",
+      "quarantine": "Quarantäne",
+      "not_adoptable": "Nicht vermittelbar"
+    },
+    "activity": { "low": "Niedrig", "medium": "Mittel", "high": "Hoch" },
+    "compat": { "unknown": "Unbekannt", "yes": "Ja", "no": "Nein" },
+    "checks": {
+      "isNeutered": "Kastriert",
+      "isVaccinated": "Geimpft",
+      "isChipped": "Gechipt",
+      "needsGarden": "Braucht Garten",
+      "needsExperiencedOwner": "Erfahrener Halter",
+      "needsTraining": "Braucht Training"
+    },
+    "editHeading": "Bearbeiten",
+    "deleteAnimal": "Tier löschen",
+    "cancel": "Abbrechen",
+    "addAnimal": "Tier hinzufügen",
+    "saveChanges": "Änderungen speichern"
+  },
+  "AdminVolunteers": {
+    "title": "Ehrenamtliche",
+    "stats": "{total} registriert · {active} mit Angeboten",
+    "roles": {
+      "canFoster": "Pflegestelle",
+      "canTransport": "Transport",
+      "canWalkDogs": "Gassi gehen",
+      "canHelp": "Allgemeine Hilfe"
+    },
+    "noActiveOffers": "Keine aktiven Angebote",
+    "empty": "Noch keine Ehrenamtlichen registriert.",
+    "offerCount": "{count, plural, one {# Angebot} other {# Angebote}}",
+    "contactEmail": "Per E-Mail kontaktieren →"
+  },
+  "AdminSpecies": {
+    "title": "Tierarten",
+    "subtitle": "Tierarten für Filter und Formulare verwalten.",
+    "currentSpecies": "Aktuelle Tierarten",
+    "addSpecies": "Tierart hinzufügen",
+    "fieldLabel": "Bezeichnung",
+    "fieldLabelHint": "(in der UI angezeigt)",
+    "fieldValue": "Wert",
+    "fieldValueHint": "(interner Schlüssel, wird automatisch formatiert)",
+    "labelPlaceholder": "z.B. Meerschweinchen",
+    "valuePlaceholder": "z.B. meerschweinchen",
+    "delete": "Löschen"
+  },
+  "AdminRequests": {
+    "title": "Adoptionsanfragen",
+    "stats": "{total} gesamt · {pending} ausstehend",
+    "empty": "Noch keine Adoptionsanfragen.",
+    "approve": "Genehmigen",
+    "reject": "Ablehnen",
+    "status": {
+      "pending": "Ausstehend",
+      "approved": "Genehmigt",
+      "rejected": "Abgelehnt"
+    }
+  },
   "ProfileRequests": {
     "title": "Meine Adoptionsanfragen",
     "empty": "Noch keine Anfragen gestellt.",

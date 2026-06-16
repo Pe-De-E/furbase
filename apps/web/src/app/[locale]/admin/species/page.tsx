@@ -1,27 +1,26 @@
 import { db, species } from '@furbase/db'
 import { asc } from 'drizzle-orm'
+import { getTranslations } from 'next-intl/server'
 import { addSpecies, deleteSpecies } from './actions'
 
 export default async function AdminSpeciesPage() {
-  const speciesList = await db
-    .select()
-    .from(species)
-    .orderBy(asc(species.sortOrder))
+  const [speciesList, t] = await Promise.all([
+    db.select().from(species).orderBy(asc(species.sortOrder)),
+    getTranslations('AdminSpecies'),
+  ])
 
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-zinc-900">Species</h1>
-        <p className="text-zinc-500 text-sm mt-0.5">
-          Manage animal species shown in filters and forms.
-        </p>
+        <h1 className="text-2xl font-bold text-zinc-900">{t('title')}</h1>
+        <p className="text-zinc-500 text-sm mt-0.5">{t('subtitle')}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Current species */}
         <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden">
           <div className="px-5 py-4 border-b border-zinc-50">
-            <p className="text-sm font-medium text-zinc-700">Current species</p>
+            <p className="text-sm font-medium text-zinc-700">{t('currentSpecies')}</p>
           </div>
           <ul className="divide-y divide-zinc-50">
             {speciesList.map((s) => (
@@ -38,7 +37,7 @@ export default async function AdminSpeciesPage() {
                     type="submit"
                     className="text-xs text-red-400 hover:text-red-600 transition-colors"
                   >
-                    Delete
+                    {t('delete')}
                   </button>
                 </form>
               </li>
@@ -48,30 +47,29 @@ export default async function AdminSpeciesPage() {
 
         {/* Add species */}
         <div className="bg-white rounded-2xl border border-zinc-100 p-6">
-          <p className="text-sm font-medium text-zinc-700 mb-4">Add species</p>
+          <p className="text-sm font-medium text-zinc-700 mb-4">{t('addSpecies')}</p>
           <form action={addSpecies} className="flex flex-col gap-4">
             <div>
               <label className="block text-xs text-zinc-500 mb-1">
-                Label <span className="text-zinc-400">(displayed in UI)</span>
+                {t('fieldLabel')}{' '}
+                <span className="text-zinc-400">{t('fieldLabelHint')}</span>
               </label>
               <input
                 name="label"
                 required
-                placeholder="e.g. Guinea Pigs"
+                placeholder={t('labelPlaceholder')}
                 className="w-full text-sm rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400"
               />
             </div>
             <div>
               <label className="block text-xs text-zinc-500 mb-1">
-                Value{' '}
-                <span className="text-zinc-400">
-                  (internal key, auto-formatted)
-                </span>
+                {t('fieldValue')}{' '}
+                <span className="text-zinc-400">{t('fieldValueHint')}</span>
               </label>
               <input
                 name="value"
                 required
-                placeholder="e.g. guinea_pig"
+                placeholder={t('valuePlaceholder')}
                 className="w-full text-sm rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 font-mono"
               />
             </div>
@@ -79,7 +77,7 @@ export default async function AdminSpeciesPage() {
               type="submit"
               className="self-end px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-xl hover:bg-zinc-700 transition-colors"
             >
-              Add species
+              {t('addSpecies')}
             </button>
           </form>
         </div>

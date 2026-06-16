@@ -86,6 +86,116 @@
     "submitting": "Sending…",
     "success": "Adoption request submitted — we’ll be in touch"
   },
+  "AdminLayout": {
+    "backToSite": "← Public site",
+    "animals": "Animals",
+    "volunteers": "Volunteers",
+    "species": "Species",
+    "adoption": "Adoption",
+    "requests": "Requests"
+  },
+  "AdminAnimals": {
+    "title": "Animals",
+    "total": "{count} total",
+    "addAnimal": "+ Add animal",
+    "colAnimal": "Animal",
+    "colSpecies": "Species",
+    "colStatus": "Status",
+    "colArrival": "Arrival",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Delete {name}?",
+    "fieldSpecies": "Species",
+    "fieldArrival": "Arrival",
+    "fieldAge": "Age",
+    "fieldAgeMonths": "{months} months",
+    "fieldGender": "Gender",
+    "fieldStatus": "Status"
+  },
+  "AnimalForm": {
+    "sectionBasic": "Basic info",
+    "sectionHealth": "Health & behavior",
+    "fieldName": "Name *",
+    "fieldSpecies": "Species *",
+    "fieldBreed": "Breed",
+    "fieldAge": "Age (months)",
+    "fieldGender": "Gender",
+    "fieldSize": "Size",
+    "fieldWeight": "Weight (kg)",
+    "fieldColor": "Color",
+    "fieldStatus": "Status *",
+    "fieldArrival": "Arrival date",
+    "fieldDescription": "Description",
+    "fieldImages": "Image URLs (one per line)",
+    "fieldActivityLevel": "Activity level",
+    "sectionCompat": "Compatibility",
+    "compatKids": "Kids",
+    "compatDogs": "Dogs",
+    "compatCats": "Cats",
+    "gender": { "male": "Male", "female": "Female", "unknown": "Unknown" },
+    "size": { "small": "Small", "medium": "Medium", "large": "Large" },
+    "status": {
+      "available": "Available",
+      "reserved": "Reserved",
+      "adopted": "Adopted",
+      "quarantine": "Quarantine",
+      "not_adoptable": "Not adoptable"
+    },
+    "activity": { "low": "Low", "medium": "Medium", "high": "High" },
+    "compat": { "unknown": "Unknown", "yes": "Yes", "no": "No" },
+    "checks": {
+      "isNeutered": "Neutered",
+      "isVaccinated": "Vaccinated",
+      "isChipped": "Chipped",
+      "needsGarden": "Needs garden",
+      "needsExperiencedOwner": "Experienced owner",
+      "needsTraining": "Needs training"
+    },
+    "editHeading": "Edit",
+    "deleteAnimal": "Delete animal",
+    "cancel": "Cancel",
+    "addAnimal": "Add animal",
+    "saveChanges": "Save changes"
+  },
+  "AdminVolunteers": {
+    "title": "Volunteers",
+    "stats": "{total} registered · {active} offering help",
+    "roles": {
+      "canFoster": "Foster care",
+      "canTransport": "Transport",
+      "canWalkDogs": "Dog walking",
+      "canHelp": "General volunteering"
+    },
+    "noActiveOffers": "No active offers",
+    "empty": "No volunteers registered yet.",
+    "offerCount": "{count, plural, one {# offer} other {# offers}}",
+    "contactEmail": "Contact via email →"
+  },
+  "AdminSpecies": {
+    "title": "Species",
+    "subtitle": "Manage animal species shown in filters and forms.",
+    "currentSpecies": "Current species",
+    "addSpecies": "Add species",
+    "fieldLabel": "Label",
+    "fieldLabelHint": "(displayed in UI)",
+    "fieldValue": "Value",
+    "fieldValueHint": "(internal key, auto-formatted)",
+    "labelPlaceholder": "e.g. Guinea Pigs",
+    "valuePlaceholder": "e.g. guinea_pig",
+    "delete": "Delete"
+  },
+  "AdminRequests": {
+    "title": "Adoption Requests",
+    "stats": "{total} total · {pending} pending",
+    "empty": "No adoption requests yet.",
+    "approve": "Approve",
+    "reject": "Reject",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    }
+  },
   "ProfileRequests": {
     "title": "My adoption requests",
     "empty": "No requests submitted yet.",

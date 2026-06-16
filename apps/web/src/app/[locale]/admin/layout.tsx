@@ -1,4 +1,5 @@
 import { auth } from '@/auth'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 
 export default async function AdminLayout({
@@ -6,7 +7,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const session = await auth()
+  const [session, t] = await Promise.all([auth(), getTranslations('AdminLayout')])
 
   return (
     <div className="min-h-screen bg-zinc-50">
@@ -17,38 +18,38 @@ export default async function AdminLayout({
               href="/"
               className="text-sm text-zinc-400 hover:text-white transition-colors"
             >
-              ← Public site
+              {t('backToSite')}
             </Link>
             <span className="text-zinc-600 hidden sm:inline">|</span>
             <Link
               href="/admin/animals"
               className="text-sm font-medium hover:text-zinc-300 transition-colors"
             >
-              Animals
+              {t('animals')}
             </Link>
             <Link
               href="/admin/volunteers"
               className="text-sm font-medium hover:text-zinc-300 transition-colors"
             >
-              Volunteers
+              {t('volunteers')}
             </Link>
             <Link
               href="/admin/species"
               className="text-sm font-medium hover:text-zinc-300 transition-colors"
             >
-              Species
+              {t('species')}
             </Link>
             <Link
               href="/admin/adoption"
               className="text-sm font-medium hover:text-zinc-300 transition-colors"
             >
-              Adoption
+              {t('adoption')}
             </Link>
             <Link
               href="/admin/requests"
               className="text-sm font-medium hover:text-zinc-300 transition-colors"
             >
-              Requests
+              {t('requests')}
             </Link>
           </div>
           <span className="text-xs text-zinc-500 hidden sm:inline">

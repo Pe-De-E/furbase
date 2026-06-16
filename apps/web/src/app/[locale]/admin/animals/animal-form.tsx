@@ -1,4 +1,5 @@
 import { saveAnimal, deleteAnimal } from '../actions'
+import { getTranslations } from 'next-intl/server'
 import type { InferSelectModel } from 'drizzle-orm'
 import type { animal } from '@furbase/db'
 import { db, species as speciesTable } from '@furbase/db'
@@ -27,10 +28,13 @@ const selectCls =
   'text-sm text-zinc-900 rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white'
 
 export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
-  const speciesList = await db
-    .select({ value: speciesTable.value, label: speciesTable.label })
-    .from(speciesTable)
-    .orderBy(asc(speciesTable.sortOrder))
+  const [speciesList, t] = await Promise.all([
+    db
+      .select({ value: speciesTable.value, label: speciesTable.label })
+      .from(speciesTable)
+      .orderBy(asc(speciesTable.sortOrder)),
+    getTranslations('AnimalForm'),
+  ])
   const isEdit = !!a
 
   return (
@@ -38,10 +42,10 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
       {isEdit && <input type="hidden" name="id" value={a.id} />}
 
       <div className="bg-white rounded-2xl border border-zinc-100 p-6 flex flex-col gap-5">
-        <h2 className="font-semibold text-zinc-900">Basic info</h2>
+        <h2 className="font-semibold text-zinc-900">{t('sectionBasic')}</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Field label="Name *">
+          <Field label={t('fieldName')}>
             <input
               name="name"
               required
@@ -49,7 +53,7 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
               className={inputCls}
             />
           </Field>
-          <Field label="Species *">
+          <Field label={t('fieldSpecies')}>
             <select
               name="species"
               required
@@ -63,14 +67,14 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
               ))}
             </select>
           </Field>
-          <Field label="Breed">
+          <Field label={t('fieldBreed')}>
             <input
               name="breed"
               defaultValue={a?.breed ?? ''}
               className={inputCls}
             />
           </Field>
-          <Field label="Age (months)">
+          <Field label={t('fieldAge')}>
             <input
               name="age"
               type="number"
@@ -79,31 +83,31 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
               className={inputCls}
             />
           </Field>
-          <Field label="Gender">
+          <Field label={t('fieldGender')}>
             <select
               name="gender"
               defaultValue={a?.gender ?? ''}
               className={selectCls}
             >
               <option value="">—</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="unknown">Unknown</option>
+              <option value="male">{t('gender.male')}</option>
+              <option value="female">{t('gender.female')}</option>
+              <option value="unknown">{t('gender.unknown')}</option>
             </select>
           </Field>
-          <Field label="Size">
+          <Field label={t('fieldSize')}>
             <select
               name="size"
               defaultValue={a?.size ?? ''}
               className={selectCls}
             >
               <option value="">—</option>
-              <option value="small">Small</option>
-              <option value="medium">Medium</option>
-              <option value="large">Large</option>
+              <option value="small">{t('size.small')}</option>
+              <option value="medium">{t('size.medium')}</option>
+              <option value="large">{t('size.large')}</option>
             </select>
           </Field>
-          <Field label="Weight (kg)">
+          <Field label={t('fieldWeight')}>
             <input
               name="weight"
               type="number"
@@ -112,28 +116,28 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
               className={inputCls}
             />
           </Field>
-          <Field label="Color">
+          <Field label={t('fieldColor')}>
             <input
               name="color"
               defaultValue={a?.color ?? ''}
               className={inputCls}
             />
           </Field>
-          <Field label="Status *">
+          <Field label={t('fieldStatus')}>
             <select
               name="status"
               required
               defaultValue={a?.status ?? 'available'}
               className={selectCls}
             >
-              <option value="available">Available</option>
-              <option value="reserved">Reserved</option>
-              <option value="adopted">Adopted</option>
-              <option value="quarantine">Quarantine</option>
-              <option value="not_adoptable">Not adoptable</option>
+              <option value="available">{t('status.available')}</option>
+              <option value="reserved">{t('status.reserved')}</option>
+              <option value="adopted">{t('status.adopted')}</option>
+              <option value="quarantine">{t('status.quarantine')}</option>
+              <option value="not_adoptable">{t('status.not_adoptable')}</option>
             </select>
           </Field>
-          <Field label="Arrival date">
+          <Field label={t('fieldArrival')}>
             <input
               name="arrivalDate"
               type="date"
@@ -143,7 +147,7 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
           </Field>
         </div>
 
-        <Field label="Description">
+        <Field label={t('fieldDescription')}>
           <textarea
             name="description"
             rows={4}
@@ -152,29 +156,30 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
           />
         </Field>
 
-        <Field label="Image URLs (one per line)">
+        <Field label={t('fieldImages')}>
           <textarea
             name="images"
             rows={3}
             defaultValue={a?.images?.join('\n') ?? ''}
-            placeholder="https://example.com/photo.jpg"
             className={`${inputCls} resize-none font-mono text-xs`}
           />
         </Field>
       </div>
 
       <div className="bg-white rounded-2xl border border-zinc-100 p-6 flex flex-col gap-5">
-        <h2 className="font-semibold text-zinc-900">Health & behavior</h2>
+        <h2 className="font-semibold text-zinc-900">{t('sectionHealth')}</h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {[
-            { name: 'isNeutered', label: 'Neutered' },
-            { name: 'isVaccinated', label: 'Vaccinated' },
-            { name: 'isChipped', label: 'Chipped' },
-            { name: 'needsGarden', label: 'Needs garden' },
-            { name: 'needsExperiencedOwner', label: 'Experienced owner' },
-            { name: 'needsTraining', label: 'Needs training' },
-          ].map(({ name, label }) => (
+          {(
+            [
+              'isNeutered',
+              'isVaccinated',
+              'isChipped',
+              'needsGarden',
+              'needsExperiencedOwner',
+              'needsTraining',
+            ] as const
+          ).map((name) => (
             <label
               key={name}
               className="flex items-center gap-2 text-sm text-zinc-700 cursor-pointer"
@@ -185,34 +190,36 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
                 defaultChecked={(a?.[name as keyof Animal] as boolean) ?? false}
                 className="accent-zinc-900"
               />
-              {label}
+              {t(`checks.${name}` as Parameters<typeof t>[0])}
             </label>
           ))}
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Field label="Activity level">
+          <Field label={t('fieldActivityLevel')}>
             <select
               name="activityLevel"
               defaultValue={a?.activityLevel ?? ''}
               className={selectCls}
             >
               <option value="">—</option>
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
+              <option value="low">{t('activity.low')}</option>
+              <option value="medium">{t('activity.medium')}</option>
+              <option value="high">{t('activity.high')}</option>
             </select>
           </Field>
         </div>
 
         <div className="flex flex-col gap-2">
-          <p className="text-sm font-medium text-zinc-700">Compatibility</p>
+          <p className="text-sm font-medium text-zinc-700">{t('sectionCompat')}</p>
           <div className="grid grid-cols-3 gap-3">
-            {[
-              { name: 'goodWithKids', label: 'Kids' },
-              { name: 'goodWithDogs', label: 'Dogs' },
-              { name: 'goodWithCats', label: 'Cats' },
-            ].map(({ name, label }) => (
+            {(
+              [
+                { name: 'goodWithKids', label: t('compatKids') },
+                { name: 'goodWithDogs', label: t('compatDogs') },
+                { name: 'goodWithCats', label: t('compatCats') },
+              ] as const
+            ).map(({ name, label }) => (
               <div key={name} className="flex flex-col gap-1">
                 <span className="text-xs text-zinc-500">{label}</span>
                 <select
@@ -226,9 +233,9 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
                   }
                   className={selectCls}
                 >
-                  <option value="">Unknown</option>
-                  <option value="true">Yes</option>
-                  <option value="false">No</option>
+                  <option value="">{t('compat.unknown')}</option>
+                  <option value="true">{t('compat.yes')}</option>
+                  <option value="false">{t('compat.no')}</option>
                 </select>
               </div>
             ))}
@@ -243,7 +250,7 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
               type="submit"
               className="text-sm text-red-500 hover:text-red-700 transition-colors"
             >
-              Delete animal
+              {t('deleteAnimal')}
             </button>
           </form>
         ) : (
@@ -255,13 +262,13 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
             href="/admin/animals"
             className="px-4 py-2.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors"
           >
-            Cancel
+            {t('cancel')}
           </a>
           <button
             type="submit"
             className="px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-xl hover:bg-zinc-700 transition-colors"
           >
-            {isEdit ? 'Save changes' : 'Add animal'}
+            {isEdit ? t('saveChanges') : t('addAnimal')}
           </button>
         </div>
       </div>

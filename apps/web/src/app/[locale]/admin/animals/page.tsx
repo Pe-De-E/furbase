@@ -1,5 +1,6 @@
 import { db, animal, species as speciesTable } from '@furbase/db'
 import { eq, and, asc, desc, type SQL } from 'drizzle-orm'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import StatusSelect from './status-select'
 import DeleteButton from './delete-button'
@@ -12,6 +13,7 @@ export default async function AdminAnimalsPage({
   searchParams: Promise<{ species?: string }>
 }) {
   const { species } = await searchParams
+  const t = await getTranslations('AdminAnimals')
 
   const conditions: SQL[] = []
   if (species) conditions.push(eq(animal.species, species))
@@ -32,14 +34,14 @@ export default async function AdminAnimalsPage({
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-900">Animals</h1>
-          <p className="text-zinc-500 text-sm mt-0.5">{animals.length} total</p>
+          <h1 className="text-2xl font-bold text-zinc-900">{t('title')}</h1>
+          <p className="text-zinc-500 text-sm mt-0.5">{t('total', { count: animals.length })}</p>
         </div>
         <Link
           href="/admin/animals/new"
           className="px-4 py-2 bg-zinc-900 text-white text-sm font-medium rounded-xl hover:bg-zinc-700 transition-colors"
         >
-          + Add animal
+          {t('addAnimal')}
         </Link>
       </div>
 
@@ -54,16 +56,16 @@ export default async function AdminAnimalsPage({
           <thead className="bg-zinc-50 border-b border-zinc-100">
             <tr>
               <th className="text-left px-5 py-3 font-medium text-zinc-500">
-                Animal
+                {t('colAnimal')}
               </th>
               <th className="text-left px-5 py-3 font-medium text-zinc-500">
-                Species
+                {t('colSpecies')}
               </th>
               <th className="text-left px-5 py-3 font-medium text-zinc-500">
-                Status
+                {t('colStatus')}
               </th>
               <th className="text-left px-5 py-3 font-medium text-zinc-500">
-                Arrival
+                {t('colArrival')}
               </th>
               <th className="px-5 py-3" />
             </tr>
@@ -102,9 +104,9 @@ export default async function AdminAnimalsPage({
                       href={`/admin/animals/${a.id}`}
                       className="text-xs text-zinc-500 hover:text-zinc-900 transition-colors"
                     >
-                      Edit
+                      {t('edit')}
                     </Link>
-                    <DeleteButton animalId={a.id} name={a.name} />
+                    <DeleteButton animalId={a.id} name={a.name} deleteConfirm={t('deleteConfirm', { name: a.name })} deleteLabel={t('delete')} />
                   </div>
                 </td>
               </tr>

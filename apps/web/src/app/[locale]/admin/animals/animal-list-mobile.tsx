@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 import { updateAnimalStatus } from '../actions'
 import { deleteAnimal } from '../actions'
 import type { InferSelectModel } from 'drizzle-orm'
@@ -26,6 +27,8 @@ const STATUSES = [
 ] as const
 
 function AnimalRow({ animal: a }: { animal: Animal }) {
+  const t = useTranslations('AdminAnimals')
+  const tf = useTranslations('AnimalForm')
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
 
@@ -49,7 +52,7 @@ function AnimalRow({ animal: a }: { animal: Animal }) {
         <span
           className={`text-xs font-medium px-2 py-0.5 rounded-full shrink-0 ${STATUS_STYLE[a.status] ?? ''}`}
         >
-          {a.status.replace('_', ' ')}
+          {tf(`status.${a.status}` as Parameters<typeof tf>[0])}
         </span>
         <span className="text-zinc-300 text-sm ml-1">{open ? '▲' : '▼'}</span>
       </button>
@@ -58,29 +61,29 @@ function AnimalRow({ animal: a }: { animal: Animal }) {
         <div className="border-t border-zinc-100 px-4 py-4 flex flex-col gap-4">
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div>
-              <p className="text-xs text-zinc-400">Species</p>
+              <p className="text-xs text-zinc-400">{t('fieldSpecies')}</p>
               <p className="capitalize text-zinc-700 mt-0.5">{a.species}</p>
             </div>
             <div>
-              <p className="text-xs text-zinc-400">Arrival</p>
+              <p className="text-xs text-zinc-400">{t('fieldArrival')}</p>
               <p className="text-zinc-700 mt-0.5">{a.arrivalDate ?? '—'}</p>
             </div>
             <div>
-              <p className="text-xs text-zinc-400">Age</p>
+              <p className="text-xs text-zinc-400">{t('fieldAge')}</p>
               <p className="text-zinc-700 mt-0.5">
-                {a.age ? `${a.age} months` : '—'}
+                {a.age ? t('fieldAgeMonths', { months: a.age }) : '—'}
               </p>
             </div>
             <div>
-              <p className="text-xs text-zinc-400">Gender</p>
+              <p className="text-xs text-zinc-400">{t('fieldGender')}</p>
               <p className="capitalize text-zinc-700 mt-0.5">
-                {a.gender ?? '—'}
+                {a.gender ? tf(`gender.${a.gender}` as Parameters<typeof tf>[0]) : '—'}
               </p>
             </div>
           </div>
 
           <div>
-            <p className="text-xs text-zinc-400 mb-1.5">Status</p>
+            <p className="text-xs text-zinc-400 mb-1.5">{t('fieldStatus')}</p>
             <select
               value={a.status}
               disabled={isPending}
@@ -96,7 +99,7 @@ function AnimalRow({ animal: a }: { animal: Animal }) {
             >
               {STATUSES.map((s) => (
                 <option key={s} value={s}>
-                  {s.replace('_', ' ')}
+                  {tf(`status.${s}` as Parameters<typeof tf>[0])}
                 </option>
               ))}
             </select>
@@ -107,16 +110,16 @@ function AnimalRow({ animal: a }: { animal: Animal }) {
               href={`/admin/animals/${a.id}`}
               className="text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"
             >
-              Edit
+              {t('edit')}
             </Link>
             <button
               type="button"
               onClick={() => {
-                if (confirm(`Delete ${a.name}?`)) deleteAnimal(a.id)
+                if (confirm(t('deleteConfirm', { name: a.name }))) deleteAnimal(a.id)
               }}
               className="text-sm text-red-400 hover:text-red-600 transition-colors"
             >
-              Delete
+              {t('delete')}
             </button>
           </div>
         </div>

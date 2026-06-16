@@ -1,39 +1,29 @@
 import { db, volunteerProfile, user } from '@furbase/db'
 import { eq } from 'drizzle-orm'
+import { getTranslations } from 'next-intl/server'
 import VolunteerListMobile from './volunteer-list-mobile'
 
-const ROLES = [
-  {
-    key: 'canFoster',
-    label: 'Foster care',
-    color: 'bg-purple-100 text-purple-700',
-  },
-  {
-    key: 'canTransport',
-    label: 'Transport',
-    color: 'bg-blue-100 text-blue-700',
-  },
-  {
-    key: 'canWalkDogs',
-    label: 'Dog walking',
-    color: 'bg-emerald-100 text-emerald-700',
-  },
-  {
-    key: 'canHelp',
-    label: 'General volunteering',
-    color: 'bg-amber-100 text-amber-700',
-  },
-] as const
+const ROLE_KEYS = ['canFoster', 'canTransport', 'canWalkDogs', 'canHelp'] as const
+
+const ROLE_COLOR: Record<string, string> = {
+  canFoster: 'bg-purple-100 text-purple-700',
+  canTransport: 'bg-blue-100 text-blue-700',
+  canWalkDogs: 'bg-emerald-100 text-emerald-700',
+  canHelp: 'bg-amber-100 text-amber-700',
+}
 
 export default async function AdminVolunteersPage() {
-  const rows = await db
-    .select({
-      volunteer: volunteerProfile,
-      user: { name: user.name, email: user.email, image: user.image },
-    })
-    .from(volunteerProfile)
-    .innerJoin(user, eq(volunteerProfile.userId, user.id))
-    .orderBy(volunteerProfile.updatedAt)
+  const [rows, t] = await Promise.all([
+    db
+      .select({
+        volunteer: volunteerProfile,
+        user: { name: user.name, email: user.email, image: user.image },
+      })
+      .from(volunteerProfile)
+      .innerJoin(user, eq(volunteerProfile.userId, user.id))
+      .orderBy(volunteerProfile.updatedAt),
+    getTranslations('AdminVolunteers'),
+  ])
 
   const activeCount = rows.filter(
     (r) =>
@@ -46,15 +36,15 @@ export default async function AdminVolunteersPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-zinc-900">Volunteers</h1>
+        <h1 className="text-2xl font-bold text-zinc-900">{t('title')}</h1>
         <p className="text-zinc-500 text-sm mt-0.5">
-          {rows.length} registered · {activeCount} offering help
+          {t('stats', { total: rows.length, active: activeCount })}
         </p>
       </div>
 
       {rows.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-2xl border border-zinc-100 text-zinc-400">
-          No volunteers registered yet.
+          {t('empty')}
         </div>
       ) : (
         <>
@@ -62,7 +52,7 @@ export default async function AdminVolunteersPage() {
 
           <div className="hidden sm:flex flex-col gap-4">
             {rows.map(({ volunteer: v, user: u }) => {
-              const activeRoles = ROLES.filter((r) => v[r.key])
+              const activeRoles = ROLE_KEYS.filter((k) => v[k])
               return (
                 <div
                   key={v.id}
@@ -95,19 +85,19 @@ export default async function AdminVolunteersPage() {
                         </div>
                         {activeRoles.length === 0 && (
                           <span className="text-xs text-zinc-300">
-                            No active offers
+                            {t('noActiveOffers')}
                           </span>
                         )}
                       </div>
 
                       {activeRoles.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-3">
-                          {activeRoles.map((r) => (
+                          {activeRoles.map((k) => (
                             <span
-                              key={r.key}
-                              className={`text-xs font-medium px-2.5 py-1 rounded-full ${r.color}`}
+                              key={k}
+                              className={`text-xs font-medium px-2.5 py-1 rounded-full ${ROLE_COLOR[k]}`}
                             >
-                              {r.label}
+                              {t(`roles.${k}` as Parameters<typeof t>[0])}
                             </span>
                           ))}
                         </div>

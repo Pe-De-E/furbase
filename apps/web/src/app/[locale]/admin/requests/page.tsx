@@ -1,5 +1,6 @@
 import { db, adoptionRequest, animal, user } from '@furbase/db'
 import { eq } from 'drizzle-orm'
+import { getTranslations } from 'next-intl/server'
 import { updateRequestStatus } from './actions'
 
 const STATUS_STYLE: Record<string, string> = {
@@ -9,31 +10,34 @@ const STATUS_STYLE: Record<string, string> = {
 }
 
 export default async function AdminRequestsPage() {
-  const rows = await db
-    .select({
-      request: adoptionRequest,
-      animal: { id: animal.id, name: animal.name, images: animal.images },
-      user: { name: user.name, email: user.email, image: user.image },
-    })
-    .from(adoptionRequest)
-    .innerJoin(animal, eq(adoptionRequest.animalId, animal.id))
-    .innerJoin(user, eq(adoptionRequest.userId, user.id))
-    .orderBy(adoptionRequest.createdAt)
+  const [rows, t] = await Promise.all([
+    db
+      .select({
+        request: adoptionRequest,
+        animal: { id: animal.id, name: animal.name, images: animal.images },
+        user: { name: user.name, email: user.email, image: user.image },
+      })
+      .from(adoptionRequest)
+      .innerJoin(animal, eq(adoptionRequest.animalId, animal.id))
+      .innerJoin(user, eq(adoptionRequest.userId, user.id))
+      .orderBy(adoptionRequest.createdAt),
+    getTranslations('AdminRequests'),
+  ])
 
   const pendingCount = rows.filter((r) => r.request.status === 'pending').length
 
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-zinc-900">Adoption Requests</h1>
+        <h1 className="text-2xl font-bold text-zinc-900">{t('title')}</h1>
         <p className="text-zinc-500 text-sm mt-0.5">
-          {rows.length} total · {pendingCount} pending
+          {t('stats', { total: rows.length, pending: pendingCount })}
         </p>
       </div>
 
       {rows.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-2xl border border-zinc-100 text-zinc-400">
-          No adoption requests yet.
+          {t('empty')}
         </div>
       ) : (
         <div className="flex flex-col gap-4">
@@ -88,7 +92,7 @@ export default async function AdminRequestsPage() {
                   <span
                     className={`text-xs font-medium px-2.5 py-1 rounded-full ${STATUS_STYLE[req.status]}`}
                   >
-                    {req.status.charAt(0).toUpperCase() + req.status.slice(1)}
+                    {t(`status.${req.status}` as Parameters<typeof t>[0])}
                   </span>
                   <p className="text-xs text-zinc-400">
                     {new Date(req.createdAt).toLocaleDateString()}
@@ -116,7 +120,7 @@ export default async function AdminRequestsPage() {
                       type="submit"
                       className="px-4 py-2 text-sm font-medium rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
                     >
-                      Approve
+                      {t('approve')}
                     </button>
                   </form>
                   <form
@@ -129,7 +133,7 @@ export default async function AdminRequestsPage() {
                       type="submit"
                       className="px-4 py-2 text-sm font-medium rounded-xl border border-zinc-200 text-zinc-600 hover:bg-zinc-50 transition-colors"
                     >
-                      Reject
+                      {t('reject')}
                     </button>
                   </form>
                 </div>

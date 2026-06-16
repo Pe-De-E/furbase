@@ -1,29 +1,16 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 
-const ROLES = [
-  {
-    key: 'canFoster',
-    label: 'Foster care',
-    color: 'bg-purple-100 text-purple-700',
-  },
-  {
-    key: 'canTransport',
-    label: 'Transport',
-    color: 'bg-blue-100 text-blue-700',
-  },
-  {
-    key: 'canWalkDogs',
-    label: 'Dog walking',
-    color: 'bg-emerald-100 text-emerald-700',
-  },
-  {
-    key: 'canHelp',
-    label: 'General volunteering',
-    color: 'bg-amber-100 text-amber-700',
-  },
-] as const
+const ROLE_KEYS = ['canFoster', 'canTransport', 'canWalkDogs', 'canHelp'] as const
+
+const ROLE_COLOR: Record<string, string> = {
+  canFoster: 'bg-purple-100 text-purple-700',
+  canTransport: 'bg-blue-100 text-blue-700',
+  canWalkDogs: 'bg-emerald-100 text-emerald-700',
+  canHelp: 'bg-amber-100 text-amber-700',
+}
 
 type Row = {
   volunteer: {
@@ -38,8 +25,9 @@ type Row = {
 }
 
 function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
+  const t = useTranslations('AdminVolunteers')
   const [open, setOpen] = useState(false)
-  const activeRoles = ROLES.filter((r) => v[r.key])
+  const activeRoles = ROLE_KEYS.filter((k) => v[k])
 
   return (
     <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden">
@@ -63,7 +51,7 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
         </div>
         {activeRoles.length > 0 && (
           <span className="text-xs bg-zinc-100 text-zinc-500 px-2 py-0.5 rounded-full shrink-0">
-            {activeRoles.length} offer{activeRoles.length > 1 ? 's' : ''}
+            {t('offerCount', { count: activeRoles.length })}
           </span>
         )}
         <span className="text-zinc-300 text-sm ml-1">{open ? '▲' : '▼'}</span>
@@ -73,17 +61,17 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
         <div className="border-t border-zinc-100 px-4 py-4 flex flex-col gap-4">
           {activeRoles.length > 0 ? (
             <div className="flex flex-wrap gap-2">
-              {activeRoles.map((r) => (
+              {activeRoles.map((k) => (
                 <span
-                  key={r.key}
-                  className={`text-xs font-medium px-2.5 py-1 rounded-full ${r.color}`}
+                  key={k}
+                  className={`text-xs font-medium px-2.5 py-1 rounded-full ${ROLE_COLOR[k]}`}
                 >
-                  {r.label}
+                  {t(`roles.${k}` as Parameters<typeof t>[0])}
                 </span>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-zinc-400">No active offers</p>
+            <p className="text-sm text-zinc-400">{t('noActiveOffers')}</p>
           )}
           {v.notes && (
             <p className="text-sm text-zinc-500 bg-zinc-50 rounded-xl px-4 py-3">
@@ -94,7 +82,7 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
             href={`mailto:${u.email}`}
             className="text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"
           >
-            Contact via email →
+            {t('contactEmail')}
           </a>
         </div>
       )}
