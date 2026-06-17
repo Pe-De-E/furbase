@@ -4,6 +4,7 @@ import type { InferSelectModel } from 'drizzle-orm'
 import type { animal } from '@furbase/db'
 import { db, species as speciesTable } from '@furbase/db'
 import { asc } from 'drizzle-orm'
+import ImageUpload from './image-upload'
 
 type Animal = InferSelectModel<typeof animal>
 
@@ -157,12 +158,7 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
         </Field>
 
         <Field label={t('fieldImages')}>
-          <textarea
-            name="images"
-            rows={3}
-            defaultValue={a?.images?.join('\n') ?? ''}
-            className={`${inputCls} resize-none font-mono text-xs`}
-          />
+          <ImageUpload defaultImages={a?.images ?? []} />
         </Field>
       </div>
 

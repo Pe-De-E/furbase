@@ -72,11 +72,7 @@ export async function saveAnimal(formData: FormData) {
     needsGarden: formData.get('needsGarden') === 'on',
     needsExperiencedOwner: formData.get('needsExperiencedOwner') === 'on',
     needsTraining: formData.get('needsTraining') === 'on',
-    images:
-      (formData.get('images') as string)
-        ?.split('\n')
-        .map((s) => s.trim())
-        .filter(Boolean) ?? [],
+    images: formData.getAll('images').map(String).filter(Boolean),
     updatedAt: new Date(),
   }
 
