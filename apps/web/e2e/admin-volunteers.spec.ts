@@ -1,14 +1,14 @@
 import { test, expect } from './fixtures'
 import { Pool } from 'pg'
 
-const TEST_USER_ID = '00000000-0000-0000-0000-000000000001'
+const TEST_USER_ID = '00000000-0000-0000-0000-000000000003'
 
 let pool: Pool
 
 test.beforeAll(async () => {
   pool = new Pool({ connectionString: process.env.DATABASE_URL })
   await pool.query(
-    `INSERT INTO "user" (id, name, email) VALUES ($1, 'Test User', 'user@test.com')
+    `INSERT INTO "user" (id, name, email) VALUES ($1, 'Volunteer User', 'volunteer@test.com')
      ON CONFLICT DO NOTHING`,
     [TEST_USER_ID],
   )
@@ -37,7 +37,7 @@ test.describe('Admin volunteers', () => {
     )
 
     await adminPage.goto('/en/admin/volunteers')
-    await expect(adminPage.getByText('user@test.com')).toBeVisible()
+    await expect(adminPage.getByText('volunteer@test.com')).toBeVisible()
     await expect(adminPage.getByText('Foster care')).toBeVisible()
 
     // cleanup

@@ -82,6 +82,7 @@ jobs:
         run: |
           echo "DATABASE_URL=$DATABASE_URL" > packages/db/.env
           pnpm --filter @furbase/db db:seed
+          pnpm --filter @furbase/db db:seed:adoption
 
       - name: Cache Next.js build
         uses: actions/cache@v4

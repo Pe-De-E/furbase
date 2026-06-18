@@ -96,7 +96,7 @@ test.describe('Admin animals — edit', () => {
     await adminPage.getByRole('button', { name: 'Save changes' }).click()
 
     await expect(adminPage).toHaveURL(/\/admin\/animals$/)
-    await expect(adminPage.getByText(updatedName)).toBeVisible()
+    await expect(adminPage.getByText(updatedName).first()).toBeVisible()
   })
 })
 
@@ -130,7 +130,7 @@ test.describe('Admin animals — delete', () => {
     const row = adminPage.getByRole('row').filter({ hasText: animalName })
     await expect(row).toBeVisible()
     await row.getByRole('button', { name: 'Delete' }).click()
-    await expect(adminPage.getByText(animalName)).not.toBeVisible()
+    await expect(adminPage.getByText(animalName).first()).not.toBeVisible()
   })
 
   test('dismiss confirm dialog keeps the animal', async ({ adminPage }) => {
@@ -139,7 +139,7 @@ test.describe('Admin animals — delete', () => {
     await adminPage.goto('/en/admin/animals')
     const row = adminPage.getByRole('row').filter({ hasText: animalName })
     await row.getByRole('button', { name: 'Delete' }).click()
-    await expect(adminPage.getByText(animalName)).toBeVisible()
+    await expect(adminPage.getByText(animalName).first()).toBeVisible()
   })
 
   test('delete from edit page removes the animal', async ({ adminPage }) => {

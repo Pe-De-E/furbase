@@ -106,7 +106,7 @@ test.describe('Profile — favorites', () => {
 
     // heart button is in the listing; navigate there to click it
     await userPage.goto('/en')
-    const card = userPage.locator(`a[href="/en/animals/${animalId}"]`)
+    const card = userPage.locator(`a[href="/animals/${animalId}"]`)
 
     // scroll into view in case it's below fold
     await card.scrollIntoViewIfNeeded()
@@ -128,7 +128,7 @@ test.describe('Profile — favorites', () => {
 
     // unfavorite via the listing page
     await userPage.goto('/en')
-    const card = userPage.locator(`a[href="/en/animals/${animalId}"]`)
+    const card = userPage.locator(`a[href="/animals/${animalId}"]`)
     await card.scrollIntoViewIfNeeded()
     await card.locator('button[title]').click()
 
@@ -169,7 +169,7 @@ test.describe('Profile — matcher profile', () => {
     await userPage.getByRole('button', { name: /continue/i }).click()
 
     // Step 5: experience
-    await userPage.getByText('Experienced').click()
+    await userPage.getByRole('button', { name: /^Experienced/ }).click()
     await userPage.getByRole('button', { name: /continue/i }).click()
 
     // Step 6: submit
