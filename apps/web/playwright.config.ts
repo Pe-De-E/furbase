@@ -10,13 +10,15 @@ export default defineConfig({
     baseURL: 'http://localhost:3000',
     trace: 'on-first-retry',
   },
-  projects: [
-    { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-    { name: 'mobile', use: { ...devices['iPhone 14'] } },
-  ],
+  projects: process.env.CI
+    ? [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }]
+    : [
+        { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
+        { name: 'mobile', use: { ...devices['iPhone 14'] } },
+      ],
   webServer: {
-    command: 'pnpm dev',
+    command: process.env.CI ? 'pnpm start' : 'pnpm dev',
     url: 'http://localhost:3000',
-    reuseExistingServer: true,
+    reuseExistingServer: !process.env.CI,
   },
 })

@@ -241,14 +241,13 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
 
       <div className="flex items-center justify-between">
         {isEdit ? (
-          <form action={deleteAnimal.bind(null, a.id)}>
-            <button
-              type="submit"
-              className="text-sm text-red-500 hover:text-red-700 transition-colors"
-            >
-              {t('deleteAnimal')}
-            </button>
-          </form>
+          <button
+            type="submit"
+            formAction={deleteAnimal.bind(null, a.id)}
+            className="text-sm text-red-500 hover:text-red-700 transition-colors"
+          >
+            {t('deleteAnimal')}
+          </button>
         ) : (
           <div />
         )}
