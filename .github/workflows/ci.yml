@@ -74,8 +74,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Migrate database
-        run: pnpm --filter @furbase/db db:migrate
+      - name: Apply database schema
+        run: pnpm --filter @furbase/db exec drizzle-kit push --force
 
       - name: Seed database
         run: |
