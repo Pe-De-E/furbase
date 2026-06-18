@@ -36,9 +36,9 @@ export default function AnimalCard({
   return (
     <Link
       href={`/animals/${animal.id}`}
-      className="group block rounded-2xl overflow-hidden bg-white border border-zinc-100 shadow-sm hover:shadow-md transition-shadow"
+      className="group block rounded-2xl overflow-hidden bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 shadow-sm hover:shadow-md transition-shadow"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100">
+      <div className="relative aspect-[4/3] overflow-hidden bg-zinc-100 dark:bg-zinc-800">
         <Image
           src={image}
           alt={animal.name}
@@ -58,34 +58,34 @@ export default function AnimalCard({
 
       <div className="p-4">
         <div className="flex items-start justify-between gap-2">
-          <h2 className="text-lg font-semibold text-zinc-900 leading-tight">
+          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 leading-tight">
             {animal.name}
           </h2>
           {animal.isNeutered && (
-            <span className="shrink-0 text-xs bg-zinc-100 text-zinc-500 px-2 py-0.5 rounded-full mt-0.5">
+            <span className="shrink-0 text-xs bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400 px-2 py-0.5 rounded-full mt-0.5">
               {t('neutered')}
             </span>
           )}
         </div>
 
-        <p className="text-sm text-zinc-500 mt-0.5">
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
           {t(`species.${animal.species}` as Parameters<typeof t>[0])}
           {animal.breed ? ` · ${animal.breed}` : ''}
         </p>
 
         <div className="flex items-center gap-2 mt-3 flex-wrap">
           {animal.age != null && (
-            <span className="text-xs bg-zinc-50 border border-zinc-200 text-zinc-600 px-2 py-0.5 rounded-full">
+            <span className="text-xs bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 px-2 py-0.5 rounded-full">
               {formatAge(animal.age)}
             </span>
           )}
           {animal.gender && (
-            <span className="text-xs bg-zinc-50 border border-zinc-200 text-zinc-600 px-2 py-0.5 rounded-full">
+            <span className="text-xs bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 px-2 py-0.5 rounded-full">
               {t(`gender.${animal.gender}` as Parameters<typeof t>[0])}
             </span>
           )}
           {animal.size && (
-            <span className="text-xs bg-zinc-50 border border-zinc-200 text-zinc-600 px-2 py-0.5 rounded-full capitalize">
+            <span className="text-xs bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 px-2 py-0.5 rounded-full capitalize">
               {animal.size}
             </span>
           )}

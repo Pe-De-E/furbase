@@ -55,12 +55,12 @@ export default function RequestButton({ animalId, animalName, isLoggedIn, hasExi
         onChange={(e) => setMessage(e.target.value)}
         placeholder={t('messagePlaceholder')}
         rows={4}
-        className="w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm text-zinc-800 resize-none focus:outline-none focus:ring-2 focus:ring-zinc-300"
+        className="w-full rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-3 text-sm text-zinc-800 dark:text-zinc-200 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 resize-none focus:outline-none focus:ring-2 focus:ring-zinc-300 dark:focus:ring-zinc-600"
       />
       <div className="flex gap-2">
         <button
           onClick={() => setOpen(false)}
-          className="flex-1 rounded-xl py-3 text-sm font-medium border border-zinc-200 text-zinc-600 hover:bg-zinc-50 transition-colors"
+          className="flex-1 rounded-xl py-3 text-sm font-medium border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
         >
           {t('cancel')}
         </button>

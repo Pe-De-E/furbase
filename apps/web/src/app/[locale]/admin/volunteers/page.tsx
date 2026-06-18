@@ -36,14 +36,14 @@ export default async function AdminVolunteersPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-zinc-900">{t('title')}</h1>
-        <p className="text-zinc-500 text-sm mt-0.5">
+        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{t('title')}</h1>
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-0.5">
           {t('stats', { total: rows.length, active: activeCount })}
         </p>
       </div>
 
       {rows.length === 0 ? (
-        <div className="text-center py-20 bg-white rounded-2xl border border-zinc-100 text-zinc-400">
+        <div className="text-center py-20 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-zinc-400 dark:text-zinc-500">
           {t('empty')}
         </div>
       ) : (
@@ -56,10 +56,10 @@ export default async function AdminVolunteersPage() {
               return (
                 <div
                   key={v.id}
-                  className="bg-white rounded-2xl border border-zinc-100 p-5"
+                  className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-5"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-full bg-zinc-200 shrink-0 relative overflow-hidden flex items-center justify-center text-zinc-500 text-sm font-medium">
+                    <div className="w-10 h-10 rounded-full bg-zinc-200 dark:bg-zinc-700 shrink-0 relative overflow-hidden flex items-center justify-center text-zinc-500 dark:text-zinc-400 text-sm font-medium">
                       {u.name?.[0] ?? '?'}
                       {u.image && (
                         <img
@@ -73,18 +73,18 @@ export default async function AdminVolunteersPage() {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-4 flex-wrap">
                         <div>
-                          <p className="font-medium text-zinc-900">
+                          <p className="font-medium text-zinc-900 dark:text-zinc-100">
                             {u.name ?? '—'}
                           </p>
                           <a
                             href={`mailto:${u.email}`}
-                            className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors"
+                            className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                           >
                             {u.email}
                           </a>
                         </div>
                         {activeRoles.length === 0 && (
-                          <span className="text-xs text-zinc-300">
+                          <span className="text-xs text-zinc-300 dark:text-zinc-600">
                             {t('noActiveOffers')}
                           </span>
                         )}
@@ -104,7 +104,7 @@ export default async function AdminVolunteersPage() {
                       )}
 
                       {v.notes && (
-                        <p className="text-sm text-zinc-500 mt-3 bg-zinc-50 rounded-xl px-4 py-3">
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-3 bg-zinc-50 dark:bg-zinc-800 rounded-xl px-4 py-3">
                           {v.notes}
                         </p>
                       )}

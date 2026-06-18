@@ -57,7 +57,7 @@ export default async function AdminLayout({
           </span>
         </div>
       </header>
-      <div className="max-w-6xl mx-auto px-6 py-10">{children}</div>
+      <div className="max-w-6xl mx-auto px-6 py-10 bg-zinc-50 dark:bg-zinc-950 min-h-[calc(100vh-56px)]">{children}</div>
     </div>
   )
 }

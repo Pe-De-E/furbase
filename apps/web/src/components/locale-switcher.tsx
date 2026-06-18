@@ -21,7 +21,7 @@ export default function LocaleSwitcher() {
     <button
       onClick={switchLocale}
       disabled={isPending}
-      className="text-sm font-medium text-zinc-500 hover:text-zinc-900 transition-colors disabled:opacity-50"
+      className="text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors disabled:opacity-50"
     >
       {locale === 'de' ? 'EN' : 'DE'}
     </button>

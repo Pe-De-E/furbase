@@ -17,16 +17,16 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-sm font-medium text-zinc-700">{label}</label>
+      <label className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{label}</label>
       {children}
     </div>
   )
 }
 
 const inputCls =
-  'text-sm text-zinc-900 rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white placeholder:text-zinc-400'
+  'text-sm text-zinc-900 dark:text-zinc-100 rounded-xl border border-zinc-200 dark:border-zinc-700 px-4 py-2.5 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-500 bg-white dark:bg-zinc-800 placeholder:text-zinc-400 dark:placeholder:text-zinc-500'
 const selectCls =
-  'text-sm text-zinc-900 rounded-xl border border-zinc-200 px-4 py-2.5 focus:outline-none focus:border-zinc-400 bg-white'
+  'text-sm text-zinc-900 dark:text-zinc-100 rounded-xl border border-zinc-200 dark:border-zinc-700 px-4 py-2.5 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-500 bg-white dark:bg-zinc-800'
 
 export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
   const [speciesList, t] = await Promise.all([
@@ -42,8 +42,8 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
     <form action={saveAnimal} className="flex flex-col gap-6">
       {isEdit && <input type="hidden" name="id" value={a.id} />}
 
-      <div className="bg-white rounded-2xl border border-zinc-100 p-6 flex flex-col gap-5">
-        <h2 className="font-semibold text-zinc-900">{t('sectionBasic')}</h2>
+      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-6 flex flex-col gap-5">
+        <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">{t('sectionBasic')}</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field label={t('fieldName')}>
@@ -162,8 +162,8 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
         </Field>
       </div>
 
-      <div className="bg-white rounded-2xl border border-zinc-100 p-6 flex flex-col gap-5">
-        <h2 className="font-semibold text-zinc-900">{t('sectionHealth')}</h2>
+      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-6 flex flex-col gap-5">
+        <h2 className="font-semibold text-zinc-900 dark:text-zinc-100">{t('sectionHealth')}</h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
           {(
@@ -178,7 +178,7 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
           ).map((name) => (
             <label
               key={name}
-              className="flex items-center gap-2 text-sm text-zinc-700 cursor-pointer"
+              className="flex items-center gap-2 text-sm text-zinc-700 dark:text-zinc-300 cursor-pointer"
             >
               <input
                 type="checkbox"
@@ -207,7 +207,7 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
         </div>
 
         <div className="flex flex-col gap-2">
-          <p className="text-sm font-medium text-zinc-700">{t('sectionCompat')}</p>
+          <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{t('sectionCompat')}</p>
           <div className="grid grid-cols-3 gap-3">
             {(
               [

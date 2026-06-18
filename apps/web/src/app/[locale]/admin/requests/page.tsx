@@ -29,14 +29,14 @@ export default async function AdminRequestsPage() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-zinc-900">{t('title')}</h1>
-        <p className="text-zinc-500 text-sm mt-0.5">
+        <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{t('title')}</h1>
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-0.5">
           {t('stats', { total: rows.length, pending: pendingCount })}
         </p>
       </div>
 
       {rows.length === 0 ? (
-        <div className="text-center py-20 bg-white rounded-2xl border border-zinc-100 text-zinc-400">
+        <div className="text-center py-20 bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 text-zinc-400 dark:text-zinc-500">
           {t('empty')}
         </div>
       ) : (
@@ -44,7 +44,7 @@ export default async function AdminRequestsPage() {
           {rows.map(({ request: req, animal: a, user: u }) => (
             <div
               key={req.id}
-              className="bg-white rounded-2xl border border-zinc-100 p-5"
+              className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-5"
             >
               <div className="flex items-start gap-4 flex-wrap">
                 {/* Animal */}
@@ -55,16 +55,16 @@ export default async function AdminRequestsPage() {
                   <img
                     src={a.images?.[0] ?? `https://picsum.photos/seed/${a.id}/80/80`}
                     alt={a.name}
-                    className="w-12 h-12 rounded-lg object-cover bg-zinc-100"
+                    className="w-12 h-12 rounded-lg object-cover bg-zinc-100 dark:bg-zinc-800"
                   />
-                  <p className="text-sm font-semibold text-zinc-900">{a.name}</p>
+                  <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{a.name}</p>
                 </a>
 
-                <div className="w-px self-stretch bg-zinc-100 hidden sm:block" />
+                <div className="w-px self-stretch bg-zinc-100 dark:bg-zinc-800 hidden sm:block" />
 
                 {/* User */}
                 <div className="flex items-center gap-3 flex-1 min-w-0">
-                  <div className="w-10 h-10 rounded-full bg-zinc-200 shrink-0 relative overflow-hidden flex items-center justify-center text-zinc-500 text-sm font-medium">
+                  <div className="w-10 h-10 rounded-full bg-zinc-200 dark:bg-zinc-700 shrink-0 relative overflow-hidden flex items-center justify-center text-zinc-500 dark:text-zinc-400 text-sm font-medium">
                     {u.name?.[0] ?? '?'}
                     {u.image && (
                       <img
@@ -75,12 +75,12 @@ export default async function AdminRequestsPage() {
                     )}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-zinc-900 truncate">
+                    <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">
                       {u.name ?? '—'}
                     </p>
                     <a
                       href={`mailto:${u.email}`}
-                      className="text-xs text-zinc-500 hover:text-zinc-900 transition-colors"
+                      className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                     >
                       {u.email}
                     </a>
@@ -94,7 +94,7 @@ export default async function AdminRequestsPage() {
                   >
                     {t(`status.${req.status}` as Parameters<typeof t>[0])}
                   </span>
-                  <p className="text-xs text-zinc-400">
+                  <p className="text-xs text-zinc-400 dark:text-zinc-500">
                     {new Date(req.createdAt).toLocaleDateString()}
                   </p>
                 </div>
@@ -102,7 +102,7 @@ export default async function AdminRequestsPage() {
 
               {/* Message */}
               {req.message && (
-                <p className="mt-4 text-sm text-zinc-600 bg-zinc-50 rounded-xl px-4 py-3">
+                <p className="mt-4 text-sm text-zinc-600 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-800 rounded-xl px-4 py-3">
                   {req.message}
                 </p>
               )}
@@ -131,7 +131,7 @@ export default async function AdminRequestsPage() {
                   >
                     <button
                       type="submit"
-                      className="px-4 py-2 text-sm font-medium rounded-xl border border-zinc-200 text-zinc-600 hover:bg-zinc-50 transition-colors"
+                      className="px-4 py-2 text-sm font-medium rounded-xl border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
                     >
                       {t('reject')}
                     </button>

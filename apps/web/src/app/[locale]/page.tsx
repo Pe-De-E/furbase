@@ -26,7 +26,7 @@ export default async function Page({
   const shelterName = config?.name ?? 'Animal Shelter'
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Header title={shelterName} />
 
       <main className="max-w-6xl mx-auto px-6 py-10">

@@ -13,7 +13,7 @@ export default async function HeaderAuth() {
           await signIn('google')
         }}
       >
-        <button className="text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors">
+        <button className="text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
           {t('signIn')}
         </button>
       </form>

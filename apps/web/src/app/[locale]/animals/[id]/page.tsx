@@ -110,13 +110,13 @@ export default async function AnimalPage({
   ]
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Header />
 
       <main className="max-w-6xl mx-auto px-6 py-10">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors mb-8"
+          className="inline-flex items-center gap-1.5 text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors mb-8"
         >
           ← Back to all animals
         </Link>
@@ -124,7 +124,7 @@ export default async function AnimalPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Images */}
           <div className="flex flex-col gap-3">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-zinc-100">
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-800">
               <img
                 src={images[0]}
                 alt={row.name}
@@ -136,7 +136,7 @@ export default async function AnimalPage({
                 {images.slice(1).map((src, i) => (
                   <div
                     key={i}
-                    className="aspect-square rounded-xl overflow-hidden bg-zinc-100"
+                    className="aspect-square rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800"
                   >
                     <img
                       src={src}
@@ -153,14 +153,14 @@ export default async function AnimalPage({
           <div className="flex flex-col gap-6">
             <div>
               <div className="flex items-center gap-3 mb-1">
-                <h1 className="text-3xl font-bold text-zinc-900">{row.name}</h1>
+                <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100">{row.name}</h1>
                 <span
                   className={`text-xs font-medium px-2.5 py-1 rounded-full ${status.className}`}
                 >
                   {status.label}
                 </span>
               </div>
-              <p className="text-zinc-500">
+              <p className="text-zinc-500 dark:text-zinc-400">
                 {SPECIES_LABEL[row.species] ?? row.species}
                 {row.breed ? ` · ${row.breed}` : ''}
                 {row.breedSuspected
@@ -170,7 +170,7 @@ export default async function AnimalPage({
             </div>
 
             {row.description && (
-              <p className="text-zinc-700 leading-relaxed">{row.description}</p>
+              <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">{row.description}</p>
             )}
 
             {/* Details grid */}
@@ -197,12 +197,12 @@ export default async function AnimalPage({
               ].map(({ label, value }) => (
                 <div
                   key={label}
-                  className="bg-white rounded-xl border border-zinc-100 px-4 py-3"
+                  className="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-100 dark:border-zinc-800 px-4 py-3"
                 >
-                  <p className="text-xs text-zinc-400 uppercase tracking-wide">
+                  <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wide">
                     {label}
                   </p>
-                  <p className="text-sm font-medium text-zinc-800 mt-0.5">
+                  <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 mt-0.5">
                     {value}
                   </p>
                 </div>
@@ -211,7 +211,7 @@ export default async function AnimalPage({
 
             {/* Health */}
             <div>
-              <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">
+              <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wide mb-2">
                 Health
               </p>
               <div className="flex flex-wrap gap-2">
@@ -225,7 +225,7 @@ export default async function AnimalPage({
                     className={`text-xs px-3 py-1 rounded-full border font-medium ${
                       value
                         ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
-                        : 'bg-zinc-50 border-zinc-200 text-zinc-400'
+                        : 'bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500'
                     }`}
                   >
                     {value ? '✓' : '✗'} {label}
@@ -236,7 +236,7 @@ export default async function AnimalPage({
 
             {/* Compatibility */}
             <div>
-              <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">
+              <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wide mb-2">
                 Good with
               </p>
               <div className="flex flex-wrap gap-2">
@@ -248,7 +248,7 @@ export default async function AnimalPage({
                         ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
                         : value === false
                           ? 'bg-red-50 border-red-200 text-red-600'
-                          : 'bg-zinc-50 border-zinc-200 text-zinc-400'
+                          : 'bg-zinc-50 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500'
                     }`}
                   >
                     {value === true ? '✓' : value === false ? '✗' : '?'} {label}
@@ -260,7 +260,7 @@ export default async function AnimalPage({
             {/* Needs */}
             {needsItems.some((n) => n.value) && (
               <div>
-                <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">
+                <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wide mb-2">
                   Needs
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -281,14 +281,14 @@ export default async function AnimalPage({
             {/* Tags */}
             {tagRows.length > 0 && (
               <div>
-                <p className="text-xs text-zinc-400 uppercase tracking-wide mb-2">
+                <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wide mb-2">
                   Tags
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {tagRows.map((t) => (
                     <span
                       key={t.name}
-                      className="text-xs px-3 py-1 rounded-full bg-zinc-100 text-zinc-600 border border-zinc-200"
+                      className="text-xs px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
                     >
                       {t.name}
                     </span>

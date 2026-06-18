@@ -25,7 +25,7 @@ function OptionButton({
       className={`w-full text-left px-5 py-4 rounded-2xl border-2 text-sm font-medium transition-all ${
         selected
           ? 'border-zinc-900 bg-zinc-900 text-white'
-          : 'border-zinc-200 bg-white text-zinc-700 hover:border-zinc-400'
+          : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:border-zinc-400 dark:hover:border-zinc-500'
       }`}
     >
       {children}
@@ -48,7 +48,7 @@ function ToggleButton({
       className={`px-4 py-2.5 rounded-xl border-2 text-sm font-medium transition-all ${
         selected
           ? 'border-zinc-900 bg-zinc-900 text-white'
-          : 'border-zinc-200 bg-white text-zinc-600 hover:border-zinc-400'
+          : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:border-zinc-400 dark:hover:border-zinc-500'
       }`}
     >
       {children}
@@ -107,10 +107,10 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
   })()
 
   return (
-    <div className="min-h-screen bg-zinc-50 flex flex-col">
-      <header className="bg-white border-b border-zinc-200">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col">
+      <header className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
         <div className="max-w-6xl mx-auto px-6 py-4">
-          <a href="/" className="text-lg font-semibold text-zinc-900">
+          <a href="/" className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
             Tierherberge Pfaffenhofen
           </a>
         </div>
@@ -124,7 +124,7 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
               <div
                 key={i}
                 className={`h-1 flex-1 rounded-full transition-colors ${
-                  i < step ? 'bg-zinc-900' : 'bg-zinc-200'
+                  i < step ? 'bg-zinc-900 dark:bg-zinc-100' : 'bg-zinc-200 dark:bg-zinc-700'
                 }`}
               />
             ))}
@@ -133,10 +133,10 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
           {/* Step 1: Living situation */}
           {step === 1 && (
             <div>
-              <h2 className="text-2xl font-bold text-zinc-900 mb-1">
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-1">
                 Where do you live?
               </h2>
-              <p className="text-zinc-500 mb-6">
+              <p className="text-zinc-500 dark:text-zinc-400 mb-6">
                 This helps us find animals suited to your space.
               </p>
               <div className="flex flex-col gap-3">
@@ -159,10 +159,10 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
           {/* Step 2: Household */}
           {step === 2 && (
             <div>
-              <h2 className="text-2xl font-bold text-zinc-900 mb-1">
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-1">
                 Who lives with you?
               </h2>
-              <p className="text-zinc-500 mb-6">
+              <p className="text-zinc-500 dark:text-zinc-400 mb-6">
                 Select everything that applies.
               </p>
               <div className="flex flex-col gap-4">
@@ -175,9 +175,9 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
                 ).map(({ key, label }) => (
                   <div
                     key={key}
-                    className="flex items-center justify-between bg-white border border-zinc-200 rounded-2xl px-5 py-4"
+                    className="flex items-center justify-between bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl px-5 py-4"
                   >
-                    <span className="text-sm font-medium text-zinc-700">
+                    <span className="text-sm font-medium text-zinc-700 dark:text-zinc-300">
                       {label}
                     </span>
                     <div className="flex gap-2">
@@ -203,10 +203,10 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
           {/* Step 3: Activity level */}
           {step === 3 && (
             <div>
-              <h2 className="text-2xl font-bold text-zinc-900 mb-1">
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-1">
                 How active are you?
               </h2>
-              <p className="text-zinc-500 mb-6">
+              <p className="text-zinc-500 dark:text-zinc-400 mb-6">
                 We&apos;ll match you with an animal that fits your lifestyle.
               </p>
               <div className="flex flex-col gap-3">
@@ -244,10 +244,10 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
           {/* Step 4: Hours alone */}
           {step === 4 && (
             <div>
-              <h2 className="text-2xl font-bold text-zinc-900 mb-1">
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-1">
                 How long will the animal be alone per day?
               </h2>
-              <p className="text-zinc-500 mb-6">On an average workday.</p>
+              <p className="text-zinc-500 dark:text-zinc-400 mb-6">On an average workday.</p>
               <div className="flex flex-col gap-3">
                 {(['0-2', '2-4', '4-6', '6+'] as const).map((h) => (
                   <OptionButton
@@ -265,10 +265,10 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
           {/* Step 5: Experience */}
           {step === 5 && (
             <div>
-              <h2 className="text-2xl font-bold text-zinc-900 mb-1">
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-1">
                 How experienced are you with animals?
               </h2>
-              <p className="text-zinc-500 mb-6">
+              <p className="text-zinc-500 dark:text-zinc-400 mb-6">
                 Be honest — it helps us find the right match.
               </p>
               <div className="flex flex-col gap-3">
@@ -297,16 +297,16 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
           {/* Step 6: Preferences (optional) */}
           {step === 6 && (
             <div>
-              <h2 className="text-2xl font-bold text-zinc-900 mb-1">
+              <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-1">
                 Any preferences?
               </h2>
-              <p className="text-zinc-500 mb-6">
+              <p className="text-zinc-500 dark:text-zinc-400 mb-6">
                 Optional — leave on &quot;Any&quot; to see all compatible animals.
               </p>
 
               <div className="flex flex-col gap-6">
                 <div>
-                  <p className="text-sm font-medium text-zinc-700 mb-2">
+                  <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
                     Species
                   </p>
                   <div className="flex flex-wrap gap-2">
@@ -330,7 +330,7 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
                 </div>
 
                 <div>
-                  <p className="text-sm font-medium text-zinc-700 mb-2">Size</p>
+                  <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">Size</p>
                   <div className="flex flex-wrap gap-2">
                     {(['any', 'small', 'medium', 'large'] as const).map((s) => (
                       <ToggleButton
@@ -352,7 +352,7 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
             {step > 1 ? (
               <button
                 onClick={back}
-                className="text-sm text-zinc-500 hover:text-zinc-900 transition-colors"
+                className="text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
               >
                 ← Back
               </button>

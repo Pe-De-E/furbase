@@ -51,7 +51,7 @@ export default function VolunteerForm({
         {OPTIONS.map(({ key, label, description }) => (
           <label
             key={key}
-            className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 cursor-pointer hover:border-zinc-400 transition-colors has-[:checked]:border-zinc-900 has-[:checked]:bg-zinc-50"
+            className="flex items-start gap-4 p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 cursor-pointer hover:border-zinc-400 dark:hover:border-zinc-500 transition-colors has-[:checked]:border-zinc-900 dark:has-[:checked]:border-zinc-100 has-[:checked]:bg-zinc-50 dark:has-[:checked]:bg-zinc-800"
           >
             <input
               type="checkbox"
@@ -60,15 +60,15 @@ export default function VolunteerForm({
               className="mt-0.5 accent-zinc-900"
             />
             <div>
-              <p className="text-sm font-medium text-zinc-800">{label}</p>
-              <p className="text-xs text-zinc-500 mt-0.5">{description}</p>
+              <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200">{label}</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">{description}</p>
             </div>
           </label>
         ))}
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-zinc-700 mb-1.5">
+        <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1.5">
           Anything else you&apos;d like to add?
         </label>
         <textarea
@@ -76,7 +76,7 @@ export default function VolunteerForm({
           defaultValue={initial?.notes ?? ''}
           rows={3}
           placeholder="e.g. I can only help on weekends, I have a car..."
-          className="w-full text-sm rounded-xl border border-zinc-200 px-4 py-3 resize-none focus:outline-none focus:border-zinc-400 placeholder:text-zinc-300"
+          className="w-full text-sm rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 py-3 text-zinc-900 dark:text-zinc-100 resize-none focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-500 placeholder:text-zinc-300 dark:placeholder:text-zinc-600"
         />
       </div>
 

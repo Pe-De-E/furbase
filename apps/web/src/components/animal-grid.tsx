@@ -29,13 +29,15 @@ export default async function AnimalGrid({ species, userId }: Props) {
 
   if (animals.length === 0) {
     return (
-      <div className="text-center py-32 text-zinc-400">{t('empty')}</div>
+      <div className="text-center py-32 text-zinc-400 dark:text-zinc-500">
+        {t('empty')}
+      </div>
     )
   }
 
   return (
     <>
-      <p className="text-zinc-500 mb-8">
+      <p className="text-zinc-500 dark:text-zinc-400 mb-8">
         {t('count', { count: animals.length })}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

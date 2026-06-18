@@ -8,7 +8,6 @@ import {
 } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 import { auth } from '@/auth'
-import type { Session } from 'next-auth'
 import Header from '@/components/header'
 import VolunteerForm from './volunteer-form'
 import { getTranslations } from 'next-intl/server'
@@ -50,12 +49,12 @@ export default async function ProfilePage() {
   ])
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Header />
 
       <main className="max-w-3xl mx-auto px-6 py-10 flex flex-col gap-10">
         {/* Account */}
-        <section className="bg-white rounded-2xl border border-zinc-100 p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
+        <section className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
           {session.user.image && (
             <img
               src={session.user.image}
@@ -64,19 +63,19 @@ export default async function ProfilePage() {
             />
           )}
           <div>
-            <h1 className="text-xl font-bold text-zinc-900">
+            <h1 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">
               {session.user.name}
             </h1>
-            <p className="text-sm text-zinc-500">{session.user.email}</p>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">{session.user.email}</p>
           </div>
         </section>
 
         {/* Volunteer */}
-        <section className="bg-white rounded-2xl border border-zinc-100 p-6">
-          <h2 className="text-lg font-semibold text-zinc-900 mb-1">
+        <section className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-6">
+          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
             How can you help?
           </h2>
-          <p className="text-sm text-zinc-500 mb-6">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
             Let us know how you&apos;d like to support the shelter — we&apos;ll reach out
             when needed.
           </p>
@@ -84,19 +83,19 @@ export default async function ProfilePage() {
         </section>
 
         {/* Favorites */}
-        <section className="bg-white rounded-2xl border border-zinc-100 p-6">
-          <h2 className="text-lg font-semibold text-zinc-900 mb-4">
+        <section className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-6">
+          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
             Saved animals
             {favorites.length > 0 && (
-              <span className="ml-2 text-sm font-normal text-zinc-400">
+              <span className="ml-2 text-sm font-normal text-zinc-400 dark:text-zinc-500">
                 {favorites.length}
               </span>
             )}
           </h2>
           {favorites.length === 0 ? (
-            <div className="text-center py-10 text-zinc-400 text-sm">
+            <div className="text-center py-10 text-zinc-400 dark:text-zinc-500 text-sm">
               No saved animals yet.{' '}
-              <a href="/" className="text-zinc-900 underline">
+              <a href="/" className="text-zinc-900 dark:text-zinc-100 underline">
                 Browse animals
               </a>
             </div>
@@ -106,7 +105,7 @@ export default async function ProfilePage() {
                 <a
                   key={a.id}
                   href={`/animals/${a.id}`}
-                  className="flex items-center gap-3 rounded-xl border border-zinc-100 p-3 hover:border-zinc-300 transition-colors"
+                  className="flex items-center gap-3 rounded-xl border border-zinc-100 dark:border-zinc-800 p-3 hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors"
                 >
                   <img
                     src={
@@ -114,13 +113,13 @@ export default async function ProfilePage() {
                       `https://picsum.photos/seed/${a.id}/80/80`
                     }
                     alt={a.name}
-                    className="w-12 h-12 rounded-lg object-cover bg-zinc-100"
+                    className="w-12 h-12 rounded-lg object-cover bg-zinc-100 dark:bg-zinc-800"
                   />
                   <div>
-                    <p className="text-sm font-medium text-zinc-900">
+                    <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
                       {a.name}
                     </p>
-                    <p className="text-xs text-zinc-400 capitalize">
+                    <p className="text-xs text-zinc-400 dark:text-zinc-500 capitalize">
                       {a.species} · {a.breed ?? '—'}
                     </p>
                   </div>
@@ -131,17 +130,17 @@ export default async function ProfilePage() {
         </section>
 
         {/* Adoption Requests */}
-        <section className="bg-white rounded-2xl border border-zinc-100 p-6">
-          <h2 className="text-lg font-semibold text-zinc-900 mb-4">
+        <section className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-6">
+          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-4">
             {t('title')}
             {requests.length > 0 && (
-              <span className="ml-2 text-sm font-normal text-zinc-400">
+              <span className="ml-2 text-sm font-normal text-zinc-400 dark:text-zinc-500">
                 {requests.length}
               </span>
             )}
           </h2>
           {requests.length === 0 ? (
-            <p className="text-sm text-zinc-400">{t('empty')}</p>
+            <p className="text-sm text-zinc-400 dark:text-zinc-500">{t('empty')}</p>
           ) : (
             <div className="flex flex-col gap-3">
               {requests.map((r) => {
@@ -154,7 +153,7 @@ export default async function ProfilePage() {
                   <a
                     key={r.id}
                     href={`/animals/${r.animalId}`}
-                    className="flex items-center gap-3 rounded-xl border border-zinc-100 p-3 hover:border-zinc-300 transition-colors"
+                    className="flex items-center gap-3 rounded-xl border border-zinc-100 dark:border-zinc-800 p-3 hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors"
                   >
                     <img
                       src={
@@ -162,11 +161,11 @@ export default async function ProfilePage() {
                         `https://picsum.photos/seed/${r.animalId}/80/80`
                       }
                       alt={r.animalName}
-                      className="w-12 h-12 rounded-lg object-cover bg-zinc-100"
+                      className="w-12 h-12 rounded-lg object-cover bg-zinc-100 dark:bg-zinc-800"
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-zinc-900">{r.animalName}</p>
-                      <p className="text-xs text-zinc-400">
+                      <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">{r.animalName}</p>
+                      <p className="text-xs text-zinc-400 dark:text-zinc-500">
                         {new Date(r.createdAt).toLocaleDateString()}
                       </p>
                     </div>
@@ -181,13 +180,13 @@ export default async function ProfilePage() {
         </section>
 
         {/* Matcher */}
-        <section className="bg-white rounded-2xl border border-zinc-100 p-6">
+        <section className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-lg font-semibold text-zinc-900">
+              <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
                 Matching profile
               </h2>
-              <p className="text-sm text-zinc-500 mt-0.5">
+              <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-0.5">
                 Find animals that fit your lifestyle.
               </p>
             </div>
@@ -233,18 +232,18 @@ export default async function ProfilePage() {
               ]
                 .filter((i) => i.value)
                 .map(({ label, value }) => (
-                  <div key={label} className="bg-zinc-50 rounded-xl px-4 py-3">
-                    <p className="text-xs text-zinc-400 uppercase tracking-wide">
+                  <div key={label} className="bg-zinc-50 dark:bg-zinc-800 rounded-xl px-4 py-3">
+                    <p className="text-xs text-zinc-400 dark:text-zinc-500 uppercase tracking-wide">
                       {label}
                     </p>
-                    <p className="text-sm font-medium text-zinc-800 mt-0.5 capitalize">
+                    <p className="text-sm font-medium text-zinc-800 dark:text-zinc-200 mt-0.5 capitalize">
                       {value}
                     </p>
                   </div>
                 ))}
             </div>
           ) : (
-            <p className="text-sm text-zinc-400">
+            <p className="text-sm text-zinc-400 dark:text-zinc-500">
               No matching profile saved yet.
             </p>
           )}

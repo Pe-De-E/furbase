@@ -30,7 +30,7 @@ export default async function AboutPage() {
   ].filter((item) => item.value)
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Header title={config?.name ?? undefined} />
 
       <main className="max-w-3xl mx-auto px-6 py-12">
@@ -42,35 +42,35 @@ export default async function AboutPage() {
           />
         )}
 
-        <h1 className="text-3xl font-bold text-zinc-900 mb-4">
+        <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">
           {config?.name ?? ''}
         </h1>
 
-        <p className="text-zinc-600 leading-relaxed mb-12">
+        <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed mb-12">
           {config?.description ?? t('noDescription')}
         </p>
 
-        <div className="bg-white rounded-2xl border border-zinc-100 shadow-sm p-6">
-          <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide mb-4">
+        <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 shadow-sm p-6">
+          <h2 className="text-sm font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wide mb-4">
             {t('contact')}
           </h2>
 
           <div className="flex flex-col gap-4">
             {contactItems.map(({ icon: Icon, label, value, href, external }) => (
               <div key={label} className="flex items-start gap-3">
-                <Icon className="w-4 h-4 text-zinc-400 mt-0.5 shrink-0" />
+                <Icon className="w-4 h-4 text-zinc-400 dark:text-zinc-500 mt-0.5 shrink-0" />
                 <div>
-                  <p className="text-xs text-zinc-400 mb-0.5">{label}</p>
+                  <p className="text-xs text-zinc-400 dark:text-zinc-500 mb-0.5">{label}</p>
                   {href ? (
                     <a
                       href={href}
                       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                      className="text-sm text-zinc-800 hover:text-zinc-600 transition-colors"
+                      className="text-sm text-zinc-800 dark:text-zinc-200 hover:text-zinc-600 dark:hover:text-zinc-400 transition-colors"
                     >
                       {value}
                     </a>
                   ) : (
-                    <p className="text-sm text-zinc-800">{value}</p>
+                    <p className="text-sm text-zinc-800 dark:text-zinc-200">{value}</p>
                   )}
                 </div>
               </div>
