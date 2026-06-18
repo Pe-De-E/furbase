@@ -203,7 +203,7 @@ export default async function ProfilePage() {
               {[
                 {
                   label: 'Living',
-                  value: matcher.livingSituation?.replace('_', ' '),
+                  value: matcher.livingSituation?.replaceAll('_', ' '),
                 },
                 { label: 'Activity', value: matcher.activityLevel },
                 { label: 'Experience', value: matcher.experienceLevel },
