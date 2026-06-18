@@ -45,7 +45,7 @@ test.describe('Admin animals — create', () => {
     await adminPage.getByRole('button', { name: 'Add animal' }).click()
 
     await expect(adminPage).toHaveURL(/\/admin\/animals$/)
-    await expect(adminPage.getByText(name)).toBeVisible()
+    await expect(adminPage.getByText(name).first()).toBeVisible()
 
     // cleanup via UI
     adminPage.on('dialog', (d) => d.accept())
