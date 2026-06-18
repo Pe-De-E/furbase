@@ -37,7 +37,7 @@ test.describe('Admin volunteers', () => {
     )
 
     await adminPage.goto('/en/admin/volunteers')
-    await expect(adminPage.getByText('volunteer@test.com')).toBeVisible()
+    await expect(adminPage.getByRole('link', { name: 'volunteer@test.com' })).toBeVisible()
     await expect(adminPage.getByText('Foster care')).toBeVisible()
 
     // cleanup

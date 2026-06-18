@@ -94,8 +94,10 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
       species: p.preferredSpecies ?? '',
       size: p.preferredSize,
     })
-    if (userId) startTransition(() => saveMatcherProfile(userId, p))
-    router.push(`/matcher/results?${params.toString()}`)
+    startTransition(async () => {
+      if (userId) await saveMatcherProfile(userId, p)
+      router.push(`/matcher/results?${params.toString()}`)
+    })
   }
 
   const canProceed = (() => {

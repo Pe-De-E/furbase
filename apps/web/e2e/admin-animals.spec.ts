@@ -45,7 +45,7 @@ test.describe('Admin animals — create', () => {
     await adminPage.getByRole('button', { name: 'Add animal' }).click()
 
     await expect(adminPage).toHaveURL(/\/admin\/animals$/)
-    await expect(adminPage.getByText(name).first()).toBeVisible()
+    await expect(adminPage.getByRole('table').getByText(name)).toBeVisible()
 
     // cleanup via UI
     adminPage.on('dialog', (d) => d.accept())
@@ -54,7 +54,7 @@ test.describe('Admin animals — create', () => {
       .filter({ hasText: name })
       .getByRole('button', { name: 'Delete' })
       .click()
-    await expect(adminPage.getByText(name)).not.toBeVisible()
+    await expect(adminPage.getByRole('table').getByText(name)).not.toBeVisible()
   })
 })
 
@@ -96,7 +96,7 @@ test.describe('Admin animals — edit', () => {
     await adminPage.getByRole('button', { name: 'Save changes' }).click()
 
     await expect(adminPage).toHaveURL(/\/admin\/animals$/)
-    await expect(adminPage.getByText(updatedName).first()).toBeVisible()
+    await expect(adminPage.getByRole('table').getByText(updatedName)).toBeVisible()
   })
 })
 
@@ -130,7 +130,7 @@ test.describe('Admin animals — delete', () => {
     const row = adminPage.getByRole('row').filter({ hasText: animalName })
     await expect(row).toBeVisible()
     await row.getByRole('button', { name: 'Delete' }).click()
-    await expect(adminPage.getByText(animalName).first()).not.toBeVisible()
+    await expect(adminPage.getByRole('table').getByText(animalName)).not.toBeVisible()
   })
 
   test('dismiss confirm dialog keeps the animal', async ({ adminPage }) => {
@@ -139,7 +139,7 @@ test.describe('Admin animals — delete', () => {
     await adminPage.goto('/en/admin/animals')
     const row = adminPage.getByRole('row').filter({ hasText: animalName })
     await row.getByRole('button', { name: 'Delete' }).click()
-    await expect(adminPage.getByText(animalName).first()).toBeVisible()
+    await expect(adminPage.getByRole('table').getByText(animalName)).toBeVisible()
   })
 
   test('delete from edit page removes the animal', async ({ adminPage }) => {
