@@ -55,6 +55,7 @@ jobs:
 
     env:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/tierheim
+      AUTH_URL: http://localhost:3000
       AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
       AUTH_GOOGLE_ID: dummy
       AUTH_GOOGLE_SECRET: dummy
