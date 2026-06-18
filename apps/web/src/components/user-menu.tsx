@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { LayoutDashboard, LogOut, User, ClipboardList } from 'lucide-react'
+import { LayoutDashboard, LogOut, User, ClipboardList, CalendarDays } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import UserAvatar from './user-avatar'
 
@@ -68,6 +68,15 @@ export default function UserMenu({
           >
             <ClipboardList className="inline-block mr-2 w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
             {t('adoption')}
+          </Link>
+
+          <Link
+            href="/walks"
+            onClick={() => setOpen(false)}
+            className="block px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+          >
+            <CalendarDays className="inline-block mr-2 w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
+            {t('walks')}
           </Link>
 
           {isAdmin && (

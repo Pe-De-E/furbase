@@ -48,6 +48,7 @@
   "UserMenu": {
     "profile": "Profil",
     "adoption": "Adoptions-Checkliste",
+    "walks": "Gassiplan",
     "adminPanel": "Admin-Bereich",
     "signOut": "Abmelden"
   },
@@ -197,6 +198,17 @@
       "approved": "Genehmigt",
       "rejected": "Abgelehnt"
     }
+  },
+  "Walks": {
+    "title": "Gassiplan",
+    "morning": "Vormittag",
+    "afternoon": "Nachmittag",
+    "signUp": "Eintragen",
+    "cancel": "Austragen",
+    "prevWeek": "← Vorwoche",
+    "nextWeek": "Nächste Woche →",
+    "notVolunteer": "Du bist noch kein registrierter Ehrenamtlicher. Melde dich zuerst auf deiner Profilseite an.",
+    "registerLink": "Zum Profil →"
   },
   "ProfileRequests": {
     "title": "Meine Adoptionsanfragen",

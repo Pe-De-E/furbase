@@ -48,6 +48,7 @@
   "UserMenu": {
     "profile": "Profile",
     "adoption": "Adoption Checklist",
+    "walks": "Walk schedule",
     "adminPanel": "Admin panel",
     "signOut": "Sign out"
   },
@@ -197,6 +198,17 @@
       "approved": "Approved",
       "rejected": "Rejected"
     }
+  },
+  "Walks": {
+    "title": "Walk schedule",
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "signUp": "Sign up",
+    "cancel": "Cancel",
+    "prevWeek": "← Previous week",
+    "nextWeek": "Next week →",
+    "notVolunteer": "You are not registered as a volunteer yet. Sign up on your profile page first.",
+    "registerLink": "Go to profile →"
   },
   "ProfileRequests": {
     "title": "My adoption requests",
