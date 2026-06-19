@@ -208,7 +208,8 @@
     "prevWeek": "← Previous week",
     "nextWeek": "Next week →",
     "notVolunteer": "You are not registered as a volunteer yet. Sign up on your profile page first.",
-    "registerLink": "Go to profile →"
+    "registerLink": "Go to profile →",
+    "noAnimals": "No dogs scheduled for this week."
   },
   "ProfileRequests": {
     "title": "My adoption requests",

@@ -5,6 +5,7 @@ import { getMessages } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import ThemeProvider from '@/components/theme-provider'
+import ThemeScript from '@/components/theme-script'
 import '../globals.css'
 
 const geistSans = Geist({
@@ -42,6 +43,7 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-zinc-50 dark:bg-zinc-950">
+        <ThemeScript />
         <ThemeProvider>
           <NextIntlClientProvider messages={messages}>
             {children}

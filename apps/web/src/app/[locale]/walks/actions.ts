@@ -5,7 +5,11 @@ import { db, walkSlot, volunteerProfile } from '@furbase/db'
 import { and, eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 
-export async function signUpForSlot(date: string, period: 'morning' | 'afternoon') {
+export async function signUpForSlot(
+  date: string,
+  period: 'morning' | 'afternoon',
+  animalId: string,
+) {
   const session = await auth()
   if (!session?.user?.id) return
 
@@ -19,7 +23,7 @@ export async function signUpForSlot(date: string, period: 'morning' | 'afternoon
 
   await db
     .insert(walkSlot)
-    .values({ date, period, userId: session.user.id })
+    .values({ date, period, userId: session.user.id, animalId })
     .onConflictDoNothing()
 
   revalidatePath('/walks')

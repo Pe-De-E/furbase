@@ -135,7 +135,11 @@
     "compatKids": "Kinder",
     "compatDogs": "Hunde",
     "compatCats": "Katzen",
-    "gender": { "male": "Männlich", "female": "Weiblich", "unknown": "Unbekannt" },
+    "gender": {
+      "male": "Männlich",
+      "female": "Weiblich",
+      "unknown": "Unbekannt"
+    },
     "size": { "small": "Klein", "medium": "Mittel", "large": "Groß" },
     "status": {
       "available": "Vermittelbar",
@@ -208,7 +212,8 @@
     "prevWeek": "← Vorwoche",
     "nextWeek": "Nächste Woche →",
     "notVolunteer": "Du bist noch kein registrierter Ehrenamtlicher. Melde dich zuerst auf deiner Profilseite an.",
-    "registerLink": "Zum Profil →"
+    "registerLink": "Zum Profil →",
+    "noAnimals": "Für diese Woche sind noch keine Hunde im Plan eingetragen."
   },
   "ProfileRequests": {
     "title": "Meine Adoptionsanfragen",
