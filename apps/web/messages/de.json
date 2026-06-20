@@ -166,7 +166,7 @@
   },
   "AdminVolunteers": {
     "title": "Ehrenamtliche",
-    "stats": "{total} registriert · {active} mit Angeboten",
+    "stats": "{total} registriert · {active} mit Angeboten · {pending} ausstehend",
     "roles": {
       "canFoster": "Pflegestelle",
       "canTransport": "Transport",
@@ -176,7 +176,11 @@
     "noActiveOffers": "Keine aktiven Angebote",
     "empty": "Noch keine Ehrenamtlichen registriert.",
     "offerCount": "{count, plural, one {# Angebot} other {# Angebote}}",
-    "contactEmail": "Per E-Mail kontaktieren →"
+    "contactEmail": "Per E-Mail kontaktieren →",
+    "approve": "Freischalten",
+    "revoke": "Sperren",
+    "statusApproved": "Aktiv",
+    "statusPending": "Ausstehend"
   },
   "AdminSpecies": {
     "title": "Tierarten",
@@ -212,6 +216,7 @@
     "prevWeek": "← Vorwoche",
     "nextWeek": "Nächste Woche →",
     "notVolunteer": "Du bist noch kein registrierter Ehrenamtlicher. Melde dich zuerst auf deiner Profilseite an.",
+    "pendingApproval": "Deine Anmeldung als Ehrenamtlicher ist eingegangen und wartet auf Freischaltung durch einen Admin.",
     "registerLink": "Zum Profil →",
     "noAnimals": "Für diese Woche sind noch keine Hunde im Plan eingetragen."
   },

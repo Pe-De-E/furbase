@@ -59,14 +59,14 @@ export default async function WalksPage({
 
   const [volunteer, t] = await Promise.all([
     db
-      .select({ id: volunteerProfile.id })
+      .select({ id: volunteerProfile.id, approved: volunteerProfile.approved })
       .from(volunteerProfile)
       .where(eq(volunteerProfile.userId, userId))
       .then((r) => r[0] ?? null),
     getTranslations('Walks'),
   ])
 
-  const isAdmin = session.user.role === 'admin'
+  const isApprovedVolunteer = volunteer?.approved === true
 
   const monday = getMondayOfWeek(week)
   const sunday = addDays(monday, 6)
@@ -94,7 +94,7 @@ export default async function WalksPage({
   }).format(mobileDay)
 
   const [animals, slots] =
-    volunteer || isAdmin
+    isApprovedVolunteer
       ? await Promise.all([
           db
             .select({ id: animal.id, name: animal.name })
@@ -156,10 +156,22 @@ export default async function WalksPage({
           {t('title')}
         </h1>
 
-        {!volunteer && !isAdmin ? (
+        {!volunteer ? (
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-10 text-center">
             <p className="text-zinc-500 dark:text-zinc-400 mb-4">
               {t('notVolunteer')}
+            </p>
+            <Link
+              href="/profile"
+              className="text-sm font-medium text-zinc-900 dark:text-zinc-100 underline underline-offset-2"
+            >
+              {t('registerLink')}
+            </Link>
+          </div>
+        ) : !isApprovedVolunteer ? (
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-10 text-center">
+            <p className="text-zinc-500 dark:text-zinc-400 mb-4">
+              {t('pendingApproval')}
             </p>
             <Link
               href="/profile"

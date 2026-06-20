@@ -9,5 +9,6 @@ export const volunteerProfile = pgTable('volunteer_profile', {
   canWalkDogs:  boolean('can_walk_dogs').default(false),
   canHelp:      boolean('can_help').default(false),
   notes:        text('notes'),
+  approved:     boolean('approved').default(false).notNull(),
   updatedAt:    timestamp('updated_at').defaultNow().notNull(),
 })

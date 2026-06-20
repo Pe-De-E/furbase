@@ -72,9 +72,22 @@ export default async function ProfilePage() {
 
         {/* Volunteer */}
         <section className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-6">
-          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-1">
-            How can you help?
-          </h2>
+          <div className="flex items-center justify-between mb-1 gap-3 flex-wrap">
+            <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+              How can you help?
+            </h2>
+            {volunteer && (
+              <span
+                className={`text-xs font-medium px-2.5 py-1 rounded-full border ${
+                  volunteer.approved
+                    ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                    : 'bg-amber-50 border-amber-200 text-amber-700'
+                }`}
+              >
+                {volunteer.approved ? 'Active volunteer' : 'Pending approval'}
+              </span>
+            )}
+          </div>
           <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
             Let us know how you&apos;d like to support the shelter — we&apos;ll reach out
             when needed.

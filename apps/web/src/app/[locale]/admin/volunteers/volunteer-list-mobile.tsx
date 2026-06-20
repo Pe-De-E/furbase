@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
+import { setVolunteerApproval } from './actions'
 
 const ROLE_KEYS = ['canFoster', 'canTransport', 'canWalkDogs', 'canHelp'] as const
 
@@ -20,6 +21,7 @@ type Row = {
     canWalkDogs: boolean | null
     canHelp: boolean | null
     notes: string | null
+    approved: boolean
   }
   user: { name: string | null; email: string; image: string | null }
 }
@@ -49,11 +51,15 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
           <p className="font-medium text-zinc-900 truncate">{u.name ?? '—'}</p>
           <p className="text-xs text-zinc-400 truncate">{u.email}</p>
         </div>
-        {activeRoles.length > 0 && (
-          <span className="text-xs bg-zinc-100 text-zinc-500 px-2 py-0.5 rounded-full shrink-0">
-            {t('offerCount', { count: activeRoles.length })}
-          </span>
-        )}
+        <span
+          className={`text-xs font-medium px-2 py-0.5 rounded-full border shrink-0 ${
+            v.approved
+              ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+              : 'bg-amber-50 border-amber-200 text-amber-700'
+          }`}
+        >
+          {v.approved ? t('statusApproved') : t('statusPending')}
+        </span>
         <span className="text-zinc-300 text-sm ml-1">{open ? '▲' : '▼'}</span>
       </button>
 
@@ -78,12 +84,26 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
               {v.notes}
             </p>
           )}
-          <a
-            href={`mailto:${u.email}`}
-            className="text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"
-          >
-            {t('contactEmail')}
-          </a>
+          <div className="flex items-center justify-between gap-3">
+            <a
+              href={`mailto:${u.email}`}
+              className="text-sm font-medium text-zinc-700 hover:text-zinc-900 transition-colors"
+            >
+              {t('contactEmail')}
+            </a>
+            <form action={setVolunteerApproval.bind(null, v.id, !v.approved)}>
+              <button
+                type="submit"
+                className={`text-xs font-medium px-3 py-1.5 rounded-xl border transition-colors ${
+                  v.approved
+                    ? 'border-red-200 text-red-600 hover:bg-red-50'
+                    : 'border-emerald-200 text-emerald-700 hover:bg-emerald-50'
+                }`}
+              >
+                {v.approved ? t('revoke') : t('approve')}
+              </button>
+            </form>
+          </div>
         </div>
       )}
     </div>

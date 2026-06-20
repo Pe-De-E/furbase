@@ -162,7 +162,7 @@
   },
   "AdminVolunteers": {
     "title": "Volunteers",
-    "stats": "{total} registered · {active} offering help",
+    "stats": "{total} registered · {active} offering help · {pending} pending",
     "roles": {
       "canFoster": "Foster care",
       "canTransport": "Transport",
@@ -172,7 +172,11 @@
     "noActiveOffers": "No active offers",
     "empty": "No volunteers registered yet.",
     "offerCount": "{count, plural, one {# offer} other {# offers}}",
-    "contactEmail": "Contact via email →"
+    "contactEmail": "Contact via email →",
+    "approve": "Approve",
+    "revoke": "Revoke access",
+    "statusApproved": "Active",
+    "statusPending": "Pending"
   },
   "AdminSpecies": {
     "title": "Species",
@@ -208,6 +212,7 @@
     "prevWeek": "← Previous week",
     "nextWeek": "Next week →",
     "notVolunteer": "You are not registered as a volunteer yet. Sign up on your profile page first.",
+    "pendingApproval": "Your volunteer registration has been received and is waiting for approval by an admin.",
     "registerLink": "Go to profile →",
     "noAnimals": "No dogs scheduled for this week."
   },
