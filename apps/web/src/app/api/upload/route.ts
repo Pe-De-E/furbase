@@ -5,6 +5,8 @@ import { writeFile, mkdir } from 'fs/promises'
 import path from 'path'
 import { randomUUID } from 'crypto'
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB
+
 export async function POST(req: NextRequest) {
   const session = await auth()
   if (session?.user?.role !== 'admin') {
@@ -15,6 +17,9 @@ export async function POST(req: NextRequest) {
   const file = formData.get('file') as File | null
   if (!file || !file.size) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 })
+  }
+  if (file.size > MAX_FILE_SIZE) {
+    return NextResponse.json({ error: 'File too large' }, { status: 413 })
   }
 
   const buffer = Buffer.from(await file.arrayBuffer())

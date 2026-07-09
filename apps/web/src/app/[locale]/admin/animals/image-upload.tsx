@@ -3,6 +3,8 @@
 import { useState, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB — must match apps/web/src/app/api/upload/route.ts
+
 export default function ImageUpload({
   defaultImages,
 }: {
@@ -11,16 +13,25 @@ export default function ImageUpload({
   const t = useTranslations('AnimalForm')
   const [images, setImages] = useState<string[]>(defaultImages)
   const [uploading, setUploading] = useState(false)
+  const [errors, setErrors] = useState<string[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
 
   async function handleFiles(files: FileList) {
     setUploading(true)
+    setErrors([])
     try {
       for (const file of Array.from(files)) {
+        if (file.size > MAX_FILE_SIZE) {
+          setErrors((prev) => [...prev, `${file.name} ${t('imageTooLarge')}`])
+          continue
+        }
         const fd = new FormData()
         fd.append('file', file)
         const res = await fetch('/api/upload', { method: 'POST', body: fd })
-        if (!res.ok) continue
+        if (!res.ok) {
+          setErrors((prev) => [...prev, `${file.name} ${t('uploadFailed')}`])
+          continue
+        }
         const { url } = (await res.json()) as { url: string }
         setImages((prev) => [...prev, url])
       }
@@ -74,6 +85,14 @@ export default function ImageUpload({
           {uploading ? t('uploading') : t('uploadImages')}
         </button>
       </div>
+
+      {errors.length > 0 && (
+        <ul className="text-sm text-red-600 dark:text-red-400 flex flex-col gap-0.5">
+          {errors.map((error, i) => (
+            <li key={i}>{error}</li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

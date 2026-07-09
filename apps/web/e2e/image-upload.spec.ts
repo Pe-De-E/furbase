@@ -52,6 +52,19 @@ test.describe('Image upload — API', () => {
     })
     expect(res.status()).toBe(400)
   })
+
+  test('rejects a file over the size limit with 413', async ({ adminPage }) => {
+    const res = await adminPage.request.post('/api/upload', {
+      multipart: {
+        file: {
+          name: 'huge.png',
+          mimeType: 'image/png',
+          buffer: Buffer.alloc(11 * 1024 * 1024),
+        },
+      },
+    })
+    expect(res.status()).toBe(413)
+  })
 })
 
 // ─── UI ───────────────────────────────────────────────────────────────────────
@@ -98,6 +111,24 @@ test.describe('Image upload — UI', () => {
     // button is opacity-0 until hover — force the click
     await adminPage.locator('button', { hasText: '×' }).click({ force: true })
     await expect(preview).not.toBeVisible()
+  })
+
+  test('shows an error for a file over the size limit without uploading it', async ({
+    adminPage,
+  }) => {
+    await adminPage.goto(`/en/admin/animals/${animalId}`)
+    await expect(
+      adminPage.getByRole('heading', { name: 'Edit' }),
+    ).toBeVisible({ timeout: 30000 })
+
+    await adminPage.locator('input[type="file"]').setInputFiles({
+      name: 'huge.png',
+      mimeType: 'image/png',
+      buffer: Buffer.alloc(11 * 1024 * 1024),
+    })
+
+    await expect(adminPage.getByText(/too large/i)).toBeVisible()
+    await expect(adminPage.locator('img[src^="/uploads"]')).not.toBeVisible()
   })
 
   test('uploaded image url is persisted after save', async ({ adminPage }) => {

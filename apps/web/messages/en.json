@@ -130,6 +130,8 @@
     "fieldImages": "Images",
     "uploadImages": "Add images",
     "uploading": "Uploading…",
+    "imageTooLarge": "is too large (max 10 MB)",
+    "uploadFailed": "could not be uploaded",
     "fieldActivityLevel": "Activity level",
     "sectionCompat": "Compatibility",
     "compatKids": "Kids",
