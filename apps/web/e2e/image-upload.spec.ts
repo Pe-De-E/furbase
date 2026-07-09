@@ -295,6 +295,24 @@ test.describe('Image upload — UI', () => {
     await expect(adminPage.locator('img[src^="/uploads"]')).not.toBeVisible()
   })
 
+  test('shows a generic error for an unexpected server failure', async ({
+    adminPage,
+  }) => {
+    await adminPage.goto(`/en/admin/animals/${animalId}`)
+    await expect(
+      adminPage.getByRole('heading', { name: 'Edit' }),
+    ).toBeVisible({ timeout: 30000 })
+
+    await adminPage.route('**/api/upload', (route) =>
+      route.fulfill({ status: 500, contentType: 'application/json', body: '{}' }),
+    )
+
+    await adminPage.locator('input[type="file"]').setInputFiles(MIN_PNG)
+
+    await expect(adminPage.getByText(/could not be uploaded/i)).toBeVisible()
+    await expect(adminPage.locator('img[src^="/uploads"]')).not.toBeVisible()
+  })
+
   test('uploaded image url is persisted after save', async ({ adminPage }) => {
     test.slow()
     await adminPage.goto(`/en/admin/animals/${animalId}`)
