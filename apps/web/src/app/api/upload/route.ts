@@ -6,6 +6,7 @@ import path from 'path'
 import { randomUUID } from 'crypto'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB
+const ALLOWED_FORMATS = new Set(['jpeg', 'png', 'webp'])
 
 export async function POST(req: NextRequest) {
   const session = await auth()
@@ -28,7 +29,13 @@ export async function POST(req: NextRequest) {
 
   let processed: Buffer
   try {
-    processed = await sharp(buffer)
+    const image = sharp(buffer)
+    const { format } = await image.metadata()
+    if (!format || !ALLOWED_FORMATS.has(format)) {
+      return NextResponse.json({ error: 'Unsupported image format' }, { status: 400 })
+    }
+
+    processed = await image
       .resize({ width: 1200, withoutEnlargement: true })
       .webp({ quality: 85 })
       .toBuffer()

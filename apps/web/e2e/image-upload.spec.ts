@@ -53,6 +53,24 @@ test.describe('Image upload — API', () => {
     expect(res.status()).toBe(400)
   })
 
+  test('rejects a structurally valid but disallowed format (gif) with 400', async ({
+    adminPage,
+  }) => {
+    const res = await adminPage.request.post('/api/upload', {
+      multipart: {
+        file: {
+          name: 'test.gif',
+          mimeType: 'image/gif',
+          buffer: Buffer.from(
+            'R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==',
+            'base64',
+          ),
+        },
+      },
+    })
+    expect(res.status()).toBe(400)
+  })
+
   test('rejects a file over the size limit with 413', async ({ adminPage }) => {
     const res = await adminPage.request.post('/api/upload', {
       multipart: {
@@ -113,6 +131,22 @@ test.describe('Image upload — UI', () => {
     await expect(preview).not.toBeVisible()
   })
 
+  test('shows an error for a non-image file', async ({ adminPage }) => {
+    await adminPage.goto(`/en/admin/animals/${animalId}`)
+    await expect(
+      adminPage.getByRole('heading', { name: 'Edit' }),
+    ).toBeVisible({ timeout: 30000 })
+
+    await adminPage.locator('input[type="file"]').setInputFiles({
+      name: 'test.txt',
+      mimeType: 'text/plain',
+      buffer: Buffer.from('not an image'),
+    })
+
+    await expect(adminPage.getByText(/unsupported format/i)).toBeVisible()
+    await expect(adminPage.locator('img[src^="/uploads"]')).not.toBeVisible()
+  })
+
   test('shows an error for a file over the size limit without uploading it', async ({
     adminPage,
   }) => {
@@ -128,6 +162,27 @@ test.describe('Image upload — UI', () => {
     })
 
     await expect(adminPage.getByText(/too large/i)).toBeVisible()
+    await expect(adminPage.locator('img[src^="/uploads"]')).not.toBeVisible()
+  })
+
+  test('shows an error for an unsupported format (gif)', async ({
+    adminPage,
+  }) => {
+    await adminPage.goto(`/en/admin/animals/${animalId}`)
+    await expect(
+      adminPage.getByRole('heading', { name: 'Edit' }),
+    ).toBeVisible({ timeout: 30000 })
+
+    await adminPage.locator('input[type="file"]').setInputFiles({
+      name: 'test.gif',
+      mimeType: 'image/gif',
+      buffer: Buffer.from(
+        'R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==',
+        'base64',
+      ),
+    })
+
+    await expect(adminPage.getByText(/unsupported format/i)).toBeVisible()
     await expect(adminPage.locator('img[src^="/uploads"]')).not.toBeVisible()
   })
 

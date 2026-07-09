@@ -131,6 +131,7 @@
     "uploadImages": "Add images",
     "uploading": "Uploading…",
     "imageTooLarge": "is too large (max 10 MB)",
+    "unsupportedFormat": "has an unsupported format (only JPG, PNG, WebP allowed)",
     "uploadFailed": "could not be uploaded",
     "fieldActivityLevel": "Activity level",
     "sectionCompat": "Compatibility",

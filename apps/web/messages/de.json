@@ -131,6 +131,7 @@
     "uploadImages": "Bilder hinzufügen",
     "uploading": "Wird hochgeladen…",
     "imageTooLarge": "ist zu groß (max. 10 MB)",
+    "unsupportedFormat": "hat ein nicht unterstütztes Format (nur JPG, PNG, WebP erlaubt)",
     "uploadFailed": "konnte nicht hochgeladen werden",
     "fieldActivityLevel": "Aktivitätslevel",
     "sectionCompat": "Verträglichkeit",

@@ -4,6 +4,7 @@ import { useState, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB — must match apps/web/src/app/api/upload/route.ts
+const ALLOWED_MIME_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
 export default function ImageUpload({
   defaultImages,
@@ -25,11 +26,21 @@ export default function ImageUpload({
           setErrors((prev) => [...prev, `${file.name} ${t('imageTooLarge')}`])
           continue
         }
+        if (!ALLOWED_MIME_TYPES.has(file.type)) {
+          setErrors((prev) => [...prev, `${file.name} ${t('unsupportedFormat')}`])
+          continue
+        }
         const fd = new FormData()
         fd.append('file', file)
         const res = await fetch('/api/upload', { method: 'POST', body: fd })
         if (!res.ok) {
-          setErrors((prev) => [...prev, `${file.name} ${t('uploadFailed')}`])
+          const message =
+            res.status === 413
+              ? t('imageTooLarge')
+              : res.status === 400
+                ? t('unsupportedFormat')
+                : t('uploadFailed')
+          setErrors((prev) => [...prev, `${file.name} ${message}`])
           continue
         }
         const { url } = (await res.json()) as { url: string }
@@ -71,7 +82,7 @@ export default function ImageUpload({
         <input
           ref={inputRef}
           type="file"
-          accept="image/*"
+          accept="image/jpeg,image/png,image/webp"
           multiple
           className="hidden"
           onChange={(e) => e.target.files && handleFiles(e.target.files)}
