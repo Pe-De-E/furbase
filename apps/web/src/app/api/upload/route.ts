@@ -21,13 +21,17 @@ export async function POST(req: NextRequest) {
   const filename = `${randomUUID()}.webp`
   const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'animals')
 
+  let processed: Buffer
+  try {
+    processed = await sharp(buffer)
+      .resize({ width: 1200, withoutEnlargement: true })
+      .webp({ quality: 85 })
+      .toBuffer()
+  } catch {
+    return NextResponse.json({ error: 'Invalid image file' }, { status: 400 })
+  }
+
   await mkdir(uploadDir, { recursive: true })
-
-  const processed = await sharp(buffer)
-    .resize({ width: 1200, withoutEnlargement: true })
-    .webp({ quality: 85 })
-    .toBuffer()
-
   await writeFile(path.join(uploadDir, filename), processed)
 
   return NextResponse.json({ url: `/uploads/animals/${filename}` })

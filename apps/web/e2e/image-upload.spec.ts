@@ -39,6 +39,19 @@ test.describe('Image upload — API', () => {
     const body = (await res.json()) as { url: string }
     expect(body.url).toMatch(/^\/uploads\/animals\/.+\.webp$/)
   })
+
+  test('rejects a non-image file with 400', async ({ adminPage }) => {
+    const res = await adminPage.request.post('/api/upload', {
+      multipart: {
+        file: {
+          name: 'test.txt',
+          mimeType: 'text/plain',
+          buffer: Buffer.from('not an image'),
+        },
+      },
+    })
+    expect(res.status()).toBe(400)
+  })
 })
 
 // ─── UI ───────────────────────────────────────────────────────────────────────

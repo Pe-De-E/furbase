@@ -66,7 +66,9 @@ export default async function WalksPage({
     getTranslations('Walks'),
   ])
 
+  const isAdmin = session.user.role === 'admin'
   const isApprovedVolunteer = volunteer?.approved === true
+  const canViewSchedule = isApprovedVolunteer || isAdmin
 
   const monday = getMondayOfWeek(week)
   const sunday = addDays(monday, 6)
@@ -94,7 +96,7 @@ export default async function WalksPage({
   }).format(mobileDay)
 
   const [animals, slots] =
-    isApprovedVolunteer
+    canViewSchedule
       ? await Promise.all([
           db
             .select({ id: animal.id, name: animal.name })
@@ -156,7 +158,7 @@ export default async function WalksPage({
           {t('title')}
         </h1>
 
-        {!volunteer ? (
+        {!volunteer && !isAdmin ? (
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-10 text-center">
             <p className="text-zinc-500 dark:text-zinc-400 mb-4">
               {t('notVolunteer')}
@@ -168,7 +170,7 @@ export default async function WalksPage({
               {t('registerLink')}
             </Link>
           </div>
-        ) : !isApprovedVolunteer ? (
+        ) : !canViewSchedule ? (
           <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-10 text-center">
             <p className="text-zinc-500 dark:text-zinc-400 mb-4">
               {t('pendingApproval')}
