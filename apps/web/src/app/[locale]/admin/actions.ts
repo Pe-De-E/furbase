@@ -4,6 +4,7 @@ import { db, animal } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { deleteUploadedImages } from '@/lib/uploads'
 
 export async function updateAnimalStatus(
   id: string,
@@ -18,7 +19,14 @@ export async function updateAnimalStatus(
 }
 
 export async function deleteAnimal(id: string) {
+  const [existing] = await db
+    .select({ images: animal.images })
+    .from(animal)
+    .where(eq(animal.id, id))
+
   await db.delete(animal).where(eq(animal.id, id))
+  if (existing?.images?.length) await deleteUploadedImages(existing.images)
+
   revalidatePath('/admin/animals')
   revalidatePath('/')
   redirect('/admin/animals')
@@ -77,7 +85,17 @@ export async function saveAnimal(formData: FormData) {
   }
 
   if (id) {
+    const [existing] = await db
+      .select({ images: animal.images })
+      .from(animal)
+      .where(eq(animal.id, id))
+
     await db.update(animal).set(values).where(eq(animal.id, id))
+
+    const removedImages = existing?.images?.filter(
+      (url) => !values.images.includes(url),
+    )
+    if (removedImages?.length) await deleteUploadedImages(removedImages)
   } else {
     await db.insert(animal).values(values)
   }

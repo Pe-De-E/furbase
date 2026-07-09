@@ -51,6 +51,20 @@ export default function ImageUpload({
     }
   }
 
+  function removeImage(url: string) {
+    setImages((prev) => prev.filter((u) => u !== url))
+    // Images already saved to the animal are only unlinked on the next successful
+    // save (see saveAnimal in ../actions.ts) — only clean up files that were
+    // uploaded in this session and never made it into a saved animal record.
+    if (!defaultImages.includes(url)) {
+      fetch('/api/upload', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+      }).catch(() => {})
+    }
+  }
+
   return (
     <div className="flex flex-col gap-3">
       {images.map((url) => (
@@ -68,7 +82,7 @@ export default function ImageUpload({
               />
               <button
                 type="button"
-                onClick={() => setImages((prev) => prev.filter((u) => u !== url))}
+                onClick={() => removeImage(url)}
                 className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-zinc-900 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
               >
                 ×

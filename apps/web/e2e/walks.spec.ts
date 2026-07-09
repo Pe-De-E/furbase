@@ -8,8 +8,12 @@ const SECRET = process.env.AUTH_SECRET!
 const SALT = 'authjs.session-token'
 
 // Each parallel project gets its own volunteer user to avoid cross-project DB conflicts.
-const CHROMIUM_VOL_USER = '00000000-0000-0000-0000-000000000001' // same as userPage fixture
-const MOBILE_VOL_USER = '00000000-0000-0000-0000-000000000003'
+// These IDs are dedicated to this file — they must not match any ID used by other spec
+// files (e.g. the userPage fixture's 000...001, or admin-volunteers.spec.ts's 000...003),
+// since concurrent writes to the same volunteer_profile/user row across spec files running
+// in parallel can cause DB lock contention and hang the whole suite.
+const CHROMIUM_VOL_USER = '00000000-0000-0000-0000-000000000101'
+const MOBILE_VOL_USER = '00000000-0000-0000-0000-000000000102'
 
 // Dedicated non-volunteer — never gets a volunteer_profile
 const TEST_NONVOL_ID = '00000000-0000-0000-0000-000000000099'

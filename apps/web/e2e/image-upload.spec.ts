@@ -1,5 +1,11 @@
 import { test, expect } from './fixtures'
 import { Pool } from 'pg'
+import { existsSync } from 'fs'
+import path from 'path'
+
+function uploadFilePath(url: string): string {
+  return path.join(process.cwd(), 'public', 'uploads', 'animals', url.split('/').pop()!)
+}
 
 let pool: Pool
 
@@ -83,6 +89,36 @@ test.describe('Image upload — API', () => {
     })
     expect(res.status()).toBe(413)
   })
+
+  test('DELETE removes the uploaded file from disk', async ({ adminPage }) => {
+    const uploadRes = await adminPage.request.post('/api/upload', {
+      multipart: { file: MIN_PNG },
+    })
+    const { url } = (await uploadRes.json()) as { url: string }
+    expect(existsSync(uploadFilePath(url))).toBe(true)
+
+    const delRes = await adminPage.request.delete('/api/upload', {
+      data: { url },
+    })
+    expect(delRes.status()).toBe(200)
+    expect(existsSync(uploadFilePath(url))).toBe(false)
+  })
+
+  test('DELETE rejects non-admin requests with 403', async ({ userPage }) => {
+    const res = await userPage.request.delete('/api/upload', {
+      data: { url: '/uploads/animals/does-not-matter.webp' },
+    })
+    expect(res.status()).toBe(403)
+  })
+
+  test('DELETE rejects a url outside the uploads directory with 400', async ({
+    adminPage,
+  }) => {
+    const res = await adminPage.request.delete('/api/upload', {
+      data: { url: '/etc/passwd' },
+    })
+    expect(res.status()).toBe(400)
+  })
 })
 
 // ─── UI ───────────────────────────────────────────────────────────────────────
@@ -125,10 +161,83 @@ test.describe('Image upload — UI', () => {
     await adminPage.locator('input[type="file"]').setInputFiles(MIN_PNG)
     const preview = adminPage.locator('img[src^="/uploads"]')
     await expect(preview).toBeVisible({ timeout: 15000 })
+    const url = await preview.getAttribute('src')
 
     // button is opacity-0 until hover — force the click
     await adminPage.locator('button', { hasText: '×' }).click({ force: true })
     await expect(preview).not.toBeVisible()
+
+    // never-saved upload — removing it deletes the file from disk right away
+    await expect
+      .poll(() => existsSync(uploadFilePath(url!)), { timeout: 5000 })
+      .toBe(false)
+  })
+
+  test('removing a previously-saved image and saving deletes the old file from disk', async ({
+    adminPage,
+  }) => {
+    test.slow()
+    await adminPage.goto(`/en/admin/animals/${animalId}`)
+    await expect(
+      adminPage.getByRole('heading', { name: 'Edit' }),
+    ).toBeVisible({ timeout: 30000 })
+
+    await adminPage.locator('input[type="file"]').setInputFiles(MIN_PNG)
+    const preview = adminPage.locator('img[src^="/uploads"]')
+    await expect(preview).toBeVisible({ timeout: 15000 })
+    const url = (await preview.getAttribute('src'))!
+
+    await adminPage.getByRole('button', { name: 'Save changes' }).click()
+    await expect(adminPage).toHaveURL(/\/admin\/animals$/, { timeout: 15000 })
+    expect(existsSync(uploadFilePath(url))).toBe(true)
+
+    await adminPage.goto(`/en/admin/animals/${animalId}`)
+    await expect(
+      adminPage.getByRole('heading', { name: 'Edit' }),
+    ).toBeVisible({ timeout: 30000 })
+    await expect(adminPage.locator('img[src^="/uploads"]')).toBeVisible({
+      timeout: 15000,
+    })
+
+    await adminPage.locator('button', { hasText: '×' }).click({ force: true })
+    // still on disk — cleanup only happens once the removal is actually saved
+    expect(existsSync(uploadFilePath(url))).toBe(true)
+
+    await adminPage.getByRole('button', { name: 'Save changes' }).click()
+    await expect(adminPage).toHaveURL(/\/admin\/animals$/, { timeout: 15000 })
+
+    const { rows } = await pool.query(
+      `SELECT images FROM animal WHERE id = $1`,
+      [animalId],
+    )
+    expect(rows[0].images).toHaveLength(0)
+    expect(existsSync(uploadFilePath(url))).toBe(false)
+  })
+
+  test('deleting an animal removes its image files from disk', async ({
+    adminPage,
+  }) => {
+    test.slow()
+    await adminPage.goto(`/en/admin/animals/${animalId}`)
+    await expect(
+      adminPage.getByRole('heading', { name: 'Edit' }),
+    ).toBeVisible({ timeout: 30000 })
+
+    await adminPage.locator('input[type="file"]').setInputFiles(MIN_PNG)
+    const preview = adminPage.locator('img[src^="/uploads"]')
+    await expect(preview).toBeVisible({ timeout: 15000 })
+    const url = (await preview.getAttribute('src'))!
+
+    await adminPage.getByRole('button', { name: 'Save changes' }).click()
+    await expect(adminPage).toHaveURL(/\/admin\/animals$/, { timeout: 15000 })
+    expect(existsSync(uploadFilePath(url))).toBe(true)
+
+    await adminPage.goto(`/en/admin/animals/${animalId}`)
+    await adminPage.getByRole('button', { name: /delete animal/i }).click()
+    await expect(adminPage).toHaveURL(/\/admin\/animals$/, { timeout: 15000 })
+
+    expect(existsSync(uploadFilePath(url))).toBe(false)
+    // animal row is already gone — afterEach's DELETE is a harmless no-op
   })
 
   test('shows an error for a non-image file', async ({ adminPage }) => {
