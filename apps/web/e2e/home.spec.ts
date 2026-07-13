@@ -25,7 +25,9 @@ test.describe('Home — animal listing', () => {
   })
 
   test('empty state when no animals match filter', async ({ page }) => {
-    await page.goto('/en?species=bird')
+    // a species value that can never match a real seeded animal, so this test
+    // doesn't depend on which species happen to have zero animals in the seed
+    await page.goto('/en?species=nonexistent-species')
     await expect(page.getByText(/no animals found/i)).toBeVisible()
   })
 
