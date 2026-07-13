@@ -67,8 +67,8 @@ async function main() {
       color: 'Black',
       description: 'Luna is an affectionate Labrador mix looking for a loving home. She is very playful and loves long walks.',
       images: [
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Black_Labrador_Retriever_portrait.jpg',
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Sadie_the_black_Labrador_Retriever.jpg',
+        '/seed-animals/luna-1.jpg',
+        '/seed-animals/luna-2.jpg',
       ],
       status: 'available',
       arrivalDate: '2024-11-15',
@@ -94,8 +94,8 @@ async function main() {
       color: 'Brown-Black',
       description: 'Bello is a loyal German Shepherd who needs an experienced owner. He is very intelligent and eager to learn.',
       images: [
-        'https://commons.wikimedia.org/wiki/Special:FilePath/20110425_German_Shepherd_Dog_8505.jpg',
-        'https://commons.wikimedia.org/wiki/Special:FilePath/German_shepherd_enjoying_the_sun.jpg',
+        '/seed-animals/bello-1.jpg',
+        '/seed-animals/bello-2.jpg',
       ],
       status: 'available',
       arrivalDate: '2025-01-10',
@@ -121,8 +121,8 @@ async function main() {
       color: 'Tabby',
       description: 'Mia is a calm cat who loves to cuddle on the sofa. She gets along well with other cats.',
       images: [
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Tabby_cat_with_blue_eyes-3336579.jpg',
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Cat_November_2010-1a.jpg',
+        '/seed-animals/mia-1.jpg',
+        '/seed-animals/mia-2.jpg',
       ],
       status: 'available',
       arrivalDate: '2025-02-20',
@@ -148,7 +148,7 @@ async function main() {
       color: 'Auburn',
       description: 'Felix is an impressive Maine Coon mix with lots of personality. He loves being the center of attention.',
       images: [
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Maine_Coon_male_NO_Sigdalskauen_Balder.jpg',
+        '/seed-animals/felix-1.jpg',
       ],
       status: 'reserved',
       arrivalDate: '2024-12-01',
@@ -174,7 +174,7 @@ async function main() {
       color: 'White-Grey',
       description: 'Hoppel is looking for a quiet household. He is happiest with another rabbit for company.',
       images: [
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Dwarf_rabbit_with_loop_ears.jpg',
+        '/seed-animals/hoppel-1.jpg',
       ],
       status: 'available',
       arrivalDate: '2025-03-05',
@@ -200,8 +200,8 @@ async function main() {
       color: 'Brindle',
       description: 'Rocky is a young energetic Boxer who needs lots of exercise and mental stimulation.',
       images: [
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Brindle_boxer_puppy.jpg',
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Brindle_Male_Boxer_Profile.jpg',
+        '/seed-animals/rocky-1.jpg',
+        '/seed-animals/rocky-2.jpg',
       ],
       status: 'available',
       arrivalDate: '2025-04-01',
@@ -227,8 +227,8 @@ async function main() {
       color: 'Green-Yellow',
       description: 'Kiwi is a lively budgerigar who loves to chirp and mimic sounds. Best kept with another bird for company.',
       images: [
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Melopsittacus_undulatus_-_Vogelpark_Steinen_02.jpg',
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Melopsittacus_undulatus_-_Vogelpark_Steinen_01.jpg',
+        '/seed-animals/kiwi-1.jpg',
+        '/seed-animals/kiwi-2.jpg',
       ],
       status: 'available',
       arrivalDate: '2025-05-12',
@@ -254,7 +254,7 @@ async function main() {
       color: 'Brown-White',
       description: 'Keks is a social guinea pig who thrives with company. She loves fresh vegetables and gentle cuddles.',
       images: [
-        'https://commons.wikimedia.org/wiki/Special:FilePath/Guinea_pig_(Cavia_porcellus).jpg',
+        '/seed-animals/keks-1.jpg',
       ],
       status: 'available',
       arrivalDate: '2025-05-20',
@@ -280,8 +280,8 @@ async function main() {
       color: 'Brown-Grey',
       description: 'Stachel came to us injured and has since fully recovered. Hedgehogs are wild animals and need species-appropriate outdoor care rather than a typical pet home.',
       images: [
-        'https://commons.wikimedia.org/wiki/Special:FilePath/West_European_Hedgehog_(Erinaceus_europaeus)1.jpg',
-        'https://commons.wikimedia.org/wiki/Special:FilePath/West_European_Hedgehog_(Erinaceus_europaeus)2.jpg',
+        '/seed-animals/stachel-1.jpg',
+        '/seed-animals/stachel-2.jpg',
       ],
       status: 'not_adoptable',
       arrivalDate: '2025-06-02',
