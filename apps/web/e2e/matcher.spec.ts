@@ -1,6 +1,16 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Matcher wizard', () => {
+  test('header controls (theme toggle, locale switcher) are visible', async ({
+    page,
+  }) => {
+    await page.goto('/en/matcher')
+    await expect(
+      page.getByRole('button', { name: /toggle theme/i }),
+    ).toBeVisible()
+    await expect(page.getByRole('link', { name: 'Tierherberge Pfaffenhofen' })).toBeVisible()
+  })
+
   test('progress bar advances on each step', async ({ page }) => {
     await page.goto('/matcher')
     // Step 1 — first bar should be filled

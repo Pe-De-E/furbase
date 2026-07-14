@@ -121,15 +121,7 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
   })()
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 flex flex-col">
-      <header className="bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800">
-        <div className="max-w-6xl mx-auto px-6 py-4">
-          <a href="/" className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-            Tierherberge Pfaffenhofen
-          </a>
-        </div>
-      </header>
-
+    <>
       <main className="flex-1 flex flex-col items-center justify-center px-6 py-12">
         <div className="w-full max-w-lg">
           {/* Progress bar */}
@@ -397,6 +389,6 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
           </div>
         </div>
       </main>
-    </div>
+    </>
   )
 }
