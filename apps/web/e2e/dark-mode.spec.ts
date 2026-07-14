@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures'
 
 function withDark(page: import('@playwright/test').Page) {
   return page.addInitScript(() => localStorage.setItem('theme', 'dark'))
@@ -111,6 +111,21 @@ test.describe('Dark mode', () => {
         page.getByRole('heading', { name: /adoption checklist/i }),
       ).toBeVisible()
       await expect(page.getByRole('checkbox').first()).toBeVisible()
+    })
+  })
+
+  test.describe('Admin area in dark mode', () => {
+    test('layout and animal list have dark background classes', async ({
+      adminPage,
+    }) => {
+      await withDark(adminPage)
+      await adminPage.goto('/en/admin/animals')
+      await expect(
+        adminPage.locator('div.dark\\:bg-zinc-950').first(),
+      ).toBeAttached()
+      await expect(
+        adminPage.getByRole('heading', { name: /animals/i }),
+      ).toBeVisible()
     })
   })
 })

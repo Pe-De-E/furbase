@@ -19,7 +19,7 @@ export default function DeleteButton({
       onClick={() => {
         if (confirm(deleteConfirm)) deleteAnimal(animalId)
       }}
-      className="text-xs text-red-400 hover:text-red-600 transition-colors"
+      className="text-xs text-red-400 dark:text-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
     >
       {deleteLabel}
     </button>

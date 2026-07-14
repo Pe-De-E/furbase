@@ -14,8 +14,8 @@ export default async function AdminAdoptionPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-900">{t('title')}</h1>
-          <p className="text-zinc-500 text-sm mt-0.5">{t('total', { count: items.length })}</p>
+          <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">{t('title')}</h1>
+          <p className="text-zinc-500 dark:text-zinc-400 text-sm mt-0.5">{t('total', { count: items.length })}</p>
         </div>
         <Link
           href="/admin/adoption/new"
@@ -25,27 +25,27 @@ export default async function AdminAdoptionPage() {
         </Link>
       </div>
 
-      <div className="bg-white rounded-2xl border border-zinc-100 overflow-hidden">
+      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden">
         <table className="w-full text-sm">
-          <thead className="bg-zinc-50 border-b border-zinc-100">
+          <thead className="bg-zinc-50 dark:bg-zinc-800 border-b border-zinc-100 dark:border-zinc-700">
             <tr>
-              <th className="text-left px-5 py-3 font-medium text-zinc-500 w-8">#</th>
-              <th className="text-left px-5 py-3 font-medium text-zinc-500">{t('fieldTextDe')}</th>
-              <th className="text-left px-5 py-3 font-medium text-zinc-500 hidden sm:table-cell">{t('fieldTextEn')}</th>
+              <th className="text-left px-5 py-3 font-medium text-zinc-500 dark:text-zinc-400 w-8">#</th>
+              <th className="text-left px-5 py-3 font-medium text-zinc-500 dark:text-zinc-400">{t('fieldTextDe')}</th>
+              <th className="text-left px-5 py-3 font-medium text-zinc-500 dark:text-zinc-400 hidden sm:table-cell">{t('fieldTextEn')}</th>
               <th className="px-5 py-3 w-24" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-50">
+          <tbody className="divide-y divide-zinc-50 dark:divide-zinc-800">
             {items.map((item) => (
-              <tr key={item.id} className="hover:bg-zinc-50 transition-colors">
-                <td className="px-5 py-3 text-zinc-400">{item.sortOrder}</td>
-                <td className="px-5 py-3 text-zinc-900">{item.textDe}</td>
-                <td className="px-5 py-3 text-zinc-500 hidden sm:table-cell">{item.textEn}</td>
+              <tr key={item.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
+                <td className="px-5 py-3 text-zinc-400 dark:text-zinc-500">{item.sortOrder}</td>
+                <td className="px-5 py-3 text-zinc-900 dark:text-zinc-100">{item.textDe}</td>
+                <td className="px-5 py-3 text-zinc-500 dark:text-zinc-400 hidden sm:table-cell">{item.textEn}</td>
                 <td className="px-5 py-3">
                   <div className="flex items-center justify-end gap-3">
                     <Link
                       href={`/admin/adoption/${item.id}`}
-                      className="text-xs text-zinc-500 hover:text-zinc-900 transition-colors"
+                      className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
                     >
                       {t('edit')}
                     </Link>

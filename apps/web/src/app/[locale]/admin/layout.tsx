@@ -10,7 +10,7 @@ export default async function AdminLayout({
   const [session, t] = await Promise.all([auth(), getTranslations('AdminLayout')])
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <header className="bg-zinc-900 text-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-y-2">
           <div className="flex items-center gap-4 sm:gap-6 flex-wrap">

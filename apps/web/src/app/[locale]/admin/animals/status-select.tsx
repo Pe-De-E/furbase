@@ -5,11 +5,11 @@ import { useTranslations } from 'next-intl'
 import { updateAnimalStatus } from '../actions'
 
 const STATUS_STYLE: Record<string, string> = {
-  available: 'bg-emerald-100 text-emerald-700',
-  reserved: 'bg-amber-100 text-amber-700',
-  adopted: 'bg-zinc-100 text-zinc-500',
-  quarantine: 'bg-red-100 text-red-600',
-  not_adoptable: 'bg-red-100 text-red-600',
+  available: 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300',
+  reserved: 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-300',
+  adopted: 'bg-zinc-100 dark:bg-zinc-800 text-zinc-500 dark:text-zinc-400',
+  quarantine: 'bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-300',
+  not_adoptable: 'bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-300',
 }
 
 const STATUSES = [
