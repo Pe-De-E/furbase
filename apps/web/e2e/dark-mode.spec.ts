@@ -92,4 +92,25 @@ test.describe('Dark mode', () => {
       await expect(page.getByRole('link', { name: /redo questionnaire/i })).toBeVisible()
     })
   })
+
+  test.describe('Adoption checklist in dark mode', () => {
+    test.beforeEach(async ({ page }) => {
+      await withDark(page)
+    })
+
+    test('page wrapper has dark background class', async ({ page }) => {
+      await page.goto('/en/adoption')
+      await expect(page.locator('div.dark\\:bg-zinc-950').first()).toBeAttached()
+    })
+
+    test('heading and checklist items are visible in dark mode', async ({
+      page,
+    }) => {
+      await page.goto('/en/adoption')
+      await expect(
+        page.getByRole('heading', { name: /adoption checklist/i }),
+      ).toBeVisible()
+      await expect(page.getByRole('checkbox').first()).toBeVisible()
+    })
+  })
 })

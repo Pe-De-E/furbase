@@ -42,16 +42,16 @@ export default async function AdoptionPage({
   const done = enriched.filter((i) => i.checked).length
 
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
       <Header />
 
       <main className="max-w-2xl mx-auto px-6 py-12">
-        <h1 className="text-3xl font-bold text-zinc-900 mb-2">{t('title')}</h1>
-        <p className="text-zinc-500 mb-2">{t('subtitle')}</p>
+        <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">{t('title')}</h1>
+        <p className="text-zinc-500 dark:text-zinc-400 mb-2">{t('subtitle')}</p>
 
         {userId && (
           <div className="flex items-center gap-3 mb-8">
-            <div className="flex-1 h-2 bg-zinc-200 rounded-full overflow-hidden">
+            <div className="flex-1 h-2 bg-zinc-200 dark:bg-zinc-700 rounded-full overflow-hidden">
               <div
                 className="h-full bg-emerald-500 rounded-full transition-all duration-300"
                 style={{
@@ -59,7 +59,7 @@ export default async function AdoptionPage({
                 }}
               />
             </div>
-            <span className="text-sm text-zinc-500 shrink-0">
+            <span className="text-sm text-zinc-500 dark:text-zinc-400 shrink-0">
               {t('progress', { done, total: items.length })}
             </span>
           </div>
