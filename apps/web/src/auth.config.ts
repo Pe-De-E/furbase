@@ -10,6 +10,7 @@ const adminEmails = () =>
 export default {
   providers: [Google],
   session: { strategy: 'jwt' },
+  trustHost: true,
   callbacks: {
     jwt({ token, user: u }) {
       if (u) {
