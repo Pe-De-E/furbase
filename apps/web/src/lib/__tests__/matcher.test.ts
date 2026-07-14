@@ -46,7 +46,7 @@ const baseProfile: MatcherProfile = {
   activityLevel: 'medium',
   hoursAlone: '2-4',
   experienceLevel: 'experienced',
-  preferredSpecies: '',
+  preferredSpecies: [],
   preferredSize: 'any',
 }
 
@@ -136,7 +136,7 @@ describe('scoring', () => {
   it('preferred species match gives bonus', () => {
     const result = scoreAnimal(makeAnimal({ species: 'cat' }), {
       ...baseProfile,
-      preferredSpecies: 'cat',
+      preferredSpecies: ['cat'],
     })
     expect(result.isCompatible).toBe(true)
     expect(result.reasons).toContain('Preferred species match')
@@ -145,13 +145,31 @@ describe('scoring', () => {
   it('species mismatch gives no species bonus', () => {
     const withMatch = scoreAnimal(makeAnimal({ species: 'dog' }), {
       ...baseProfile,
-      preferredSpecies: 'dog',
+      preferredSpecies: ['dog'],
     })
     const withMismatch = scoreAnimal(makeAnimal({ species: 'cat' }), {
       ...baseProfile,
-      preferredSpecies: 'dog',
+      preferredSpecies: ['dog'],
     })
     expect(withMatch.score).toBeGreaterThan(withMismatch.score)
+  })
+
+  it('matches when animal species is any of several preferred species', () => {
+    const dog = scoreAnimal(makeAnimal({ species: 'dog' }), {
+      ...baseProfile,
+      preferredSpecies: ['dog', 'cat'],
+    })
+    const cat = scoreAnimal(makeAnimal({ species: 'cat' }), {
+      ...baseProfile,
+      preferredSpecies: ['dog', 'cat'],
+    })
+    const rabbit = scoreAnimal(makeAnimal({ species: 'rabbit' }), {
+      ...baseProfile,
+      preferredSpecies: ['dog', 'cat'],
+    })
+    expect(dog.reasons).toContain('Preferred species match')
+    expect(cat.reasons).toContain('Preferred species match')
+    expect(rabbit.reasons).not.toContain('Preferred species match')
   })
 
   it('good with kids gives bonus when user has kids', () => {
@@ -207,7 +225,7 @@ describe('matchAnimals', () => {
     const results = matchAnimals([weakMatch, perfectMatch], {
       ...baseProfile,
       activityLevel: 'high',
-      preferredSpecies: 'dog',
+      preferredSpecies: ['dog'],
     })
 
     expect(results[0].animal.id).toBe('perfect')

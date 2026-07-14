@@ -24,9 +24,7 @@ export async function saveMatcherProfile(
     activityLevel: profile.activityLevel,
     hoursAlonePerDay: HOURS_MAP[profile.hoursAlone] ?? null,
     experienceLevel: profile.experienceLevel,
-    preferredSpecies: profile.preferredSpecies
-      ? [profile.preferredSpecies]
-      : [],
+    preferredSpecies: profile.preferredSpecies,
     preferredSize: profile.preferredSize,
     updatedAt: new Date(),
   }

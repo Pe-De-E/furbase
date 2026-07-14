@@ -24,7 +24,7 @@ function OptionButton({
       onClick={onClick}
       className={`w-full text-left px-5 py-4 rounded-2xl border-2 text-sm font-medium transition-all ${
         selected
-          ? 'border-zinc-900 bg-zinc-900 text-white'
+          ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-100'
           : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 hover:border-zinc-400 dark:hover:border-zinc-500'
       }`}
     >
@@ -47,7 +47,7 @@ function ToggleButton({
       onClick={onClick}
       className={`px-4 py-2.5 rounded-xl border-2 text-sm font-medium transition-all ${
         selected
-          ? 'border-zinc-900 bg-zinc-900 text-white'
+          ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950 text-emerald-900 dark:text-emerald-100'
           : 'border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 hover:border-zinc-400 dark:hover:border-zinc-500'
       }`}
     >
@@ -60,7 +60,7 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
   const router = useRouter()
   const [step, setStep] = useState<Step>(1)
   const [draft, setDraft] = useState<Draft>({
-    preferredSpecies: '',
+    preferredSpecies: [],
     preferredSize: 'any',
     hasKids: false,
     hasOtherDogs: false,
@@ -69,6 +69,18 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
 
   function set<K extends keyof Draft>(key: K, value: Draft[K]) {
     setDraft((d) => ({ ...d, [key]: value }))
+  }
+
+  function toggleSpecies(value: string) {
+    setDraft((d) => {
+      const current = d.preferredSpecies ?? []
+      if (value === '') return { ...d, preferredSpecies: [] }
+      const withoutAny = current.filter((v) => v !== '')
+      const next = withoutAny.includes(value)
+        ? withoutAny.filter((v) => v !== value)
+        : [...withoutAny, value]
+      return { ...d, preferredSpecies: next }
+    })
   }
 
   function next() {
@@ -91,7 +103,7 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
       activity: p.activityLevel,
       alone: p.hoursAlone,
       experience: p.experienceLevel,
-      species: p.preferredSpecies ?? '',
+      species: p.preferredSpecies.join(','),
       size: p.preferredSize,
     })
     startTransition(async () => {
@@ -322,8 +334,12 @@ export default function MatcherWizard({ userId }: { userId: string | null }) {
                     ].map((opt) => (
                       <ToggleButton
                         key={opt.value}
-                        selected={draft.preferredSpecies === opt.value}
-                        onClick={() => set('preferredSpecies', opt.value)}
+                        selected={
+                          opt.value === ''
+                            ? (draft.preferredSpecies ?? []).length === 0
+                            : (draft.preferredSpecies ?? []).includes(opt.value)
+                        }
+                        onClick={() => toggleSpecies(opt.value)}
                       >
                         {opt.label}
                       </ToggleButton>

@@ -52,6 +52,47 @@ test.describe('Matcher wizard', () => {
     ).toBeVisible()
   })
 
+  test('can select multiple species preferences in step 6', async ({
+    page,
+  }) => {
+    await page.goto('/matcher')
+
+    await page.getByText('Apartment').click()
+    await page.getByRole('button', { name: /continue/i }).click()
+    await page.getByRole('button', { name: /continue/i }).click()
+    await page.getByText('Medium').first().click()
+    await page.getByRole('button', { name: /continue/i }).click()
+    await page.getByText('2-4 hours').click()
+    await page.getByRole('button', { name: /continue/i }).click()
+    await page.getByText('Beginner').click()
+    await page.getByRole('button', { name: /continue/i }).click()
+
+    // Step 6: select both Dog and Cat — neither should deselect the other
+    const speciesSection = page
+      .locator('div')
+      .filter({ has: page.getByText('Species', { exact: true }) })
+      .last()
+    const dogBtn = speciesSection.getByRole('button', { name: 'Dog', exact: true })
+    const catBtn = speciesSection.getByRole('button', { name: 'Cat', exact: true })
+    const anyBtn = speciesSection.getByRole('button', { name: 'Any', exact: true })
+
+    await expect(anyBtn).toHaveClass(/border-emerald-500/)
+
+    await dogBtn.click()
+    await catBtn.click()
+
+    await expect(dogBtn).toHaveClass(/border-emerald-500/)
+    await expect(catBtn).toHaveClass(/border-emerald-500/)
+    await expect(anyBtn).not.toHaveClass(/border-emerald-500/)
+
+    await page.getByRole('button', { name: /find my match/i }).click()
+
+    await expect(page).toHaveURL(/species=dog%2Ccat/)
+    await expect(
+      page.getByRole('heading', { name: /your matches/i }),
+    ).toBeVisible()
+  })
+
   test('results show compatible and incompatible sections', async ({
     page,
   }) => {

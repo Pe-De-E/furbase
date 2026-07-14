@@ -22,7 +22,7 @@ export default async function MatcherResultsPage({
     hoursAlone: (p.alone as MatcherProfile['hoursAlone']) ?? '2-4',
     experienceLevel:
       (p.experience as MatcherProfile['experienceLevel']) ?? 'beginner',
-    preferredSpecies: p.species ?? '',
+    preferredSpecies: p.species ? p.species.split(',').filter(Boolean) : [],
     preferredSize: (p.size as MatcherProfile['preferredSize']) ?? 'any',
   }
 

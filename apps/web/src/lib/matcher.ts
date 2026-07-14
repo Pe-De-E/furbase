@@ -11,7 +11,7 @@ export type MatcherProfile = {
   activityLevel: 'low' | 'medium' | 'high'
   hoursAlone: '0-2' | '2-4' | '4-6' | '6+'
   experienceLevel: 'beginner' | 'experienced'
-  preferredSpecies: string // '' = any
+  preferredSpecies: string[] // [] = any
   preferredSize: 'small' | 'medium' | 'large' | 'any'
 }
 
@@ -94,9 +94,9 @@ export function scoreAnimal(a: Animal, p: MatcherProfile): MatchResult {
   }
 
   // Species preference (0-25 pts)
-  if (!p.preferredSpecies || a.species === p.preferredSpecies) {
+  if (p.preferredSpecies.length === 0 || p.preferredSpecies.includes(a.species)) {
     score += 25
-    if (p.preferredSpecies) reasons.push(`Preferred species match`)
+    if (p.preferredSpecies.length > 0) reasons.push(`Preferred species match`)
   }
 
   // Size preference (0-20 pts)
