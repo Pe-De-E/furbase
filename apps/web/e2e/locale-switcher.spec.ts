@@ -35,6 +35,25 @@ test.describe('Language switcher', () => {
     ).toBeVisible()
   })
 
+  test('preserves query params (e.g. matcher results) when switching locale', async ({
+    page,
+  }) => {
+    await page.goto(
+      '/en/matcher/results?living=apartment&kids=false&dogs=false&cats=false&activity=high&alone=0-2&experience=experienced&species=dog&size=any',
+    )
+    await expect(
+      page.getByRole('heading', { name: /your matches/i }),
+    ).toBeVisible()
+
+    await page.getByRole('button', { name: 'DE', exact: true }).click()
+
+    // German is the default locale ('as-needed' prefix), so the URL loses
+    // the /en prefix entirely rather than gaining a /de one.
+    await expect(page).toHaveURL(/\/matcher\/results\?/)
+    await expect(page).toHaveURL(/species=dog/)
+    await expect(page).toHaveURL(/activity=high/)
+  })
+
   test('switcher shows correct label for current locale', async ({ page }) => {
     await page.goto('/')
     await expect(
