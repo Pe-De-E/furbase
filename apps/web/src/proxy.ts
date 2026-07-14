@@ -25,8 +25,10 @@ export default async function proxy(req: NextRequest) {
       // Render's proxy setup makes protocol auto-detection unreliable (same
       // root cause as the AUTH_URL/host issues) — without this, getToken()
       // can look for the wrong cookie name (missing the __Secure- prefix)
-      // and silently find no token even for a logged-in user.
-      secureCookie: process.env.NODE_ENV === 'production',
+      // and silently find no token even for a logged-in user. AUTH_URL's own
+      // protocol is a reliable signal (NODE_ENV isn't: CI builds in
+      // production mode too, but serves plain http on localhost).
+      secureCookie: process.env.AUTH_URL?.startsWith('https://') ?? false,
     })
     const isLoggedIn = !!token
     const isAdmin = token?.role === 'admin'
