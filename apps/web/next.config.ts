@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [{ protocol: 'https', hostname: '**' }],
+    // Images are pre-resized/compressed before being bundled or uploaded (see
+    // packages/db/src/seed.ts and the upload route), so the extra on-demand
+    // server-side optimization isn't needed — and is too CPU-heavy for
+    // Render's free tier, where it noticeably slows down first image loads.
+    unoptimized: true,
   },
 }
 

@@ -19,7 +19,15 @@ export default async function proxy(req: NextRequest) {
   const { nextUrl } = req
 
   if (isAdminRoute(nextUrl.pathname) || isProfileRoute(nextUrl.pathname)) {
-    const token = await getToken({ req, secret: process.env.AUTH_SECRET })
+    const token = await getToken({
+      req,
+      secret: process.env.AUTH_SECRET,
+      // Render's proxy setup makes protocol auto-detection unreliable (same
+      // root cause as the AUTH_URL/host issues) — without this, getToken()
+      // can look for the wrong cookie name (missing the __Secure- prefix)
+      // and silently find no token even for a logged-in user.
+      secureCookie: process.env.NODE_ENV === 'production',
+    })
     const isLoggedIn = !!token
     const isAdmin = token?.role === 'admin'
 
