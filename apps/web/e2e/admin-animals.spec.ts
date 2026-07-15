@@ -232,3 +232,15 @@ test.describe('Admin animals — inline status change', () => {
     await expect(entryAfterReload.locator('select')).toHaveValue('reserved')
   })
 })
+
+// ─── Header profile menu ──────────────────────────────────────────────────────
+
+test.describe('Admin header — profile menu', () => {
+  test('avatar menu opens with profile and sign-out links', async ({ adminPage }) => {
+    await adminPage.goto('/en/admin/animals')
+
+    await adminPage.locator('button[title="Your account"]').click()
+    await expect(adminPage.getByRole('link', { name: 'Profile' })).toBeVisible()
+    await expect(adminPage.getByRole('button', { name: 'Sign out' })).toBeVisible()
+  })
+})

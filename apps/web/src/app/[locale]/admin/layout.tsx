@@ -1,13 +1,13 @@
-import { auth } from '@/auth'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
+import HeaderAuth from '@/components/header-auth'
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const [session, t] = await Promise.all([auth(), getTranslations('AdminLayout')])
+  const t = await getTranslations('AdminLayout')
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
@@ -52,9 +52,7 @@ export default async function AdminLayout({
               {t('requests')}
             </Link>
           </div>
-          <span className="text-xs text-zinc-500 hidden sm:inline">
-            Admin — {session?.user?.email}
-          </span>
+          <HeaderAuth />
         </div>
       </header>
       <div className="max-w-6xl mx-auto px-6 py-10 bg-zinc-50 dark:bg-zinc-950 min-h-[calc(100vh-56px)]">{children}</div>
