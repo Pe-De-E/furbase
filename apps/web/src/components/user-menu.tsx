@@ -80,14 +80,16 @@ export default function UserMenu({
           </Link>
 
           {isAdmin && (
-            <Link
-              href="/admin"
-              onClick={() => setOpen(false)}
-              className="block px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
-            >
-              <LayoutDashboard className="inline-block mr-2 w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
-              {t('adminPanel')}
-            </Link>
+            <div className="border-t border-zinc-100 dark:border-zinc-800 mt-1 pt-1">
+              <Link
+                href="/admin"
+                onClick={() => setOpen(false)}
+                className="block px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+              >
+                <LayoutDashboard className="inline-block mr-2 w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
+                {t('adminPanel')}
+              </Link>
+            </div>
           )}
 
           <div className="border-t border-zinc-100 dark:border-zinc-800 mt-1 pt-1">

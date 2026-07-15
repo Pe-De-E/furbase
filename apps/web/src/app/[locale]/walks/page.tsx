@@ -245,7 +245,7 @@ export default async function WalksPage({
                           <span className="text-[10px] font-medium text-zinc-300 dark:text-zinc-600 w-4 pt-0.5">
                             {period === 'morning' ? amLabel : pmLabel}
                           </span>
-                          <div className="flex flex-wrap items-center gap-1.5 flex-1">
+                          <div className="flex flex-wrap items-center justify-center gap-1.5 flex-1">
                             {others.map((slot) => (
                               <span key={slot.slotId} className="text-xs text-zinc-500 dark:text-zinc-400">
                                 {slot.volunteerName?.split(' ')[0] ?? '—'}
