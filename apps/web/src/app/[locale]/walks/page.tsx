@@ -101,6 +101,7 @@ export default async function WalksPage({
           db
             .select({ id: animal.id, name: animal.name })
             .from(animal)
+            .where(eq(animal.species, 'dog'))
             .orderBy(animal.name),
           db
             .select({
@@ -346,7 +347,7 @@ export default async function WalksPage({
                                   key={animal.id}
                                   className="border-l border-zinc-100 dark:border-zinc-800 px-1 py-1.5 align-top"
                                 >
-                                  <div className="flex flex-col gap-0.5 min-h-[1.75rem]">
+                                  <div className="flex flex-col items-center gap-0.5 min-h-[1.75rem]">
                                     {others.map((slot) => (
                                       <span
                                         key={slot.slotId}
