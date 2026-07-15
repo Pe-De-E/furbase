@@ -7,6 +7,7 @@ import { updateAnimalStatus } from '../actions'
 import { deleteAnimal } from '../actions'
 import type { InferSelectModel } from 'drizzle-orm'
 import type { animal } from '@furbase/db'
+import ConfirmDeleteDialog from '@/components/confirm-delete-dialog'
 
 type Animal = InferSelectModel<typeof animal>
 
@@ -33,7 +34,10 @@ function AnimalRow({ animal: a }: { animal: Animal }) {
   const [isPending, startTransition] = useTransition()
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden">
+    <div
+      className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden"
+      data-testid="animal-card"
+    >
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center gap-3 p-4 text-left"
@@ -112,15 +116,15 @@ function AnimalRow({ animal: a }: { animal: Animal }) {
             >
               {t('edit')}
             </Link>
-            <button
-              type="button"
-              onClick={() => {
-                if (confirm(t('deleteConfirm', { name: a.name }))) deleteAnimal(a.id)
-              }}
-              className="text-sm text-red-400 dark:text-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-            >
-              {t('delete')}
-            </button>
+            <ConfirmDeleteDialog
+              trigger={t('delete')}
+              triggerClassName="text-sm text-red-400 dark:text-red-500 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+              title={t('deleteConfirm', { name: a.name })}
+              description={t('deleteWarning')}
+              confirmLabel={t('delete')}
+              cancelLabel={t('cancel')}
+              onConfirm={() => deleteAnimal(a.id)}
+            />
           </div>
         </div>
       )}
@@ -130,7 +134,7 @@ function AnimalRow({ animal: a }: { animal: Animal }) {
 
 export default function AnimalListMobile({ animals }: { animals: Animal[] }) {
   return (
-    <div className="flex flex-col gap-3 sm:hidden">
+    <div className="flex flex-col gap-3 sm:hidden" data-testid="animal-list-mobile">
       {animals.map((a) => (
         <AnimalRow key={a.id} animal={a} />
       ))}

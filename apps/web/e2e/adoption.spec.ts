@@ -119,8 +119,10 @@ test.describe('Adoption checklist (admin)', () => {
     const row = adminPage.getByRole('row').filter({ hasText: unique })
     await expect(row).toBeVisible()
 
-    adminPage.on('dialog', (dialog) => dialog.accept())
     await row.getByRole('button', { name: 'Delete' }).click()
+    const confirmDialog = adminPage.getByRole('alertdialog')
+    await expect(confirmDialog).toBeVisible()
+    await confirmDialog.getByRole('button', { name: 'Delete' }).click()
     await expect(row).not.toBeVisible()
   })
 })

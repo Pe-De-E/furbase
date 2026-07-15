@@ -51,7 +51,10 @@ export default async function AdminAnimalsPage({
 
       <AnimalListMobile animals={animals} />
 
-      <div className="hidden sm:block bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden overflow-x-auto">
+      <div
+        className="hidden sm:block bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden overflow-x-auto"
+        data-testid="animal-list-desktop"
+      >
         <table className="w-full text-sm min-w-[600px]">
           <thead className="bg-zinc-50 dark:bg-zinc-800 border-b border-zinc-100 dark:border-zinc-700">
             <tr>
@@ -106,7 +109,7 @@ export default async function AdminAnimalsPage({
                     >
                       {t('edit')}
                     </Link>
-                    <DeleteButton animalId={a.id} name={a.name} deleteConfirm={t('deleteConfirm', { name: a.name })} deleteLabel={t('delete')} />
+                    <DeleteButton animalId={a.id} name={a.name} />
                   </div>
                 </td>
               </tr>

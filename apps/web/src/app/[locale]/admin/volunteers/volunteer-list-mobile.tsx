@@ -32,7 +32,10 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
   const activeRoles = ROLE_KEYS.filter((k) => v[k])
 
   return (
-    <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden">
+    <div
+      className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden"
+      data-testid="volunteer-card"
+    >
       <button
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center gap-3 p-4 text-left"
@@ -112,7 +115,7 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
 
 export default function VolunteerListMobile({ rows }: { rows: Row[] }) {
   return (
-    <div className="flex flex-col gap-3 sm:hidden">
+    <div className="flex flex-col gap-3 sm:hidden" data-testid="volunteer-list-mobile">
       {rows.map((row) => (
         <VolunteerRow key={row.volunteer.id} row={row} />
       ))}

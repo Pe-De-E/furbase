@@ -53,7 +53,7 @@ export default async function AdminVolunteersPage() {
         <>
           <VolunteerListMobile rows={rows} />
 
-          <div className="hidden sm:flex flex-col gap-4">
+          <div className="hidden sm:flex flex-col gap-4" data-testid="volunteer-list-desktop">
             {rows.map(({ volunteer: v, user: u }) => {
               const activeRoles = ROLE_KEYS.filter((k) => v[k])
               return (
