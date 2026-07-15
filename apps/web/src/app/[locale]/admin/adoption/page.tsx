@@ -2,7 +2,7 @@ import { db, adoptionChecklistItem } from '@furbase/db'
 import { asc } from 'drizzle-orm'
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
-import DeleteButton from './delete-button'
+import ChecklistDragList from './checklist-drag-list'
 
 export default async function AdminAdoptionPage() {
   const [items, t] = await Promise.all([
@@ -25,38 +25,7 @@ export default async function AdminAdoptionPage() {
         </Link>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-zinc-50 dark:bg-zinc-800 border-b border-zinc-100 dark:border-zinc-700">
-            <tr>
-              <th className="text-left px-5 py-3 font-medium text-zinc-500 dark:text-zinc-400 w-8">#</th>
-              <th className="text-left px-5 py-3 font-medium text-zinc-500 dark:text-zinc-400">{t('fieldTextDe')}</th>
-              <th className="text-left px-5 py-3 font-medium text-zinc-500 dark:text-zinc-400 hidden sm:table-cell">{t('fieldTextEn')}</th>
-              <th className="px-5 py-3 w-24" />
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-50 dark:divide-zinc-800">
-            {items.map((item) => (
-              <tr key={item.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
-                <td className="px-5 py-3 text-zinc-400 dark:text-zinc-500">{item.sortOrder}</td>
-                <td className="px-5 py-3 text-zinc-900 dark:text-zinc-100">{item.textDe}</td>
-                <td className="px-5 py-3 text-zinc-500 dark:text-zinc-400 hidden sm:table-cell">{item.textEn}</td>
-                <td className="px-5 py-3">
-                  <div className="flex items-center justify-end gap-3">
-                    <Link
-                      href={`/admin/adoption/${item.id}`}
-                      className="text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-                    >
-                      {t('edit')}
-                    </Link>
-                    <DeleteButton id={item.id} text={item.textDe} />
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ChecklistDragList items={items} />
     </div>
   )
 }

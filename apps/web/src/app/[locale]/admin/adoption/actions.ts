@@ -29,3 +29,16 @@ export async function deleteChecklistItem(id: string) {
   await db.delete(adoptionChecklistItem).where(eq(adoptionChecklistItem.id, id))
   revalidatePath('/admin/adoption')
 }
+
+export async function reorderChecklistItems(orderedIds: string[]) {
+  await Promise.all(
+    orderedIds.map((id, index) =>
+      db
+        .update(adoptionChecklistItem)
+        .set({ sortOrder: index + 1 })
+        .where(eq(adoptionChecklistItem.id, id)),
+    ),
+  )
+  revalidatePath('/admin/adoption')
+  revalidatePath('/adoption')
+}
