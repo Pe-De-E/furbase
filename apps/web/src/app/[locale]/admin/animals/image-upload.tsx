@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB — must match apps/web/src/app/api/upload/route.ts
@@ -75,9 +76,11 @@ export default function ImageUpload({
         <div className="flex flex-wrap gap-2">
           {images.map((url) => (
             <div key={url} className="relative group">
-              <img
+              <Image
                 src={url}
                 alt=""
+                width={96}
+                height={96}
                 className="w-24 h-24 object-cover rounded-xl border border-zinc-200"
               />
               <button

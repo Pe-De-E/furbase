@@ -2,6 +2,7 @@ import { db, animal, animalTag, tag, adoptionRequest } from '@furbase/db'
 import { eq, and } from 'drizzle-orm'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import Header from '@/components/header'
 import { auth } from '@/auth'
 import RequestButton from './request-button'
@@ -124,11 +125,13 @@ export default async function AnimalPage({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           {/* Images */}
           <div className="flex flex-col gap-3">
-            <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-800">
-              <img
+            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+              <Image
                 src={images[0]}
                 alt={row.name}
-                className="w-full h-full object-cover"
+                fill
+                priority
+                className="object-cover"
               />
             </div>
             {images.length > 1 && (
@@ -136,12 +139,13 @@ export default async function AnimalPage({
                 {images.slice(1).map((src, i) => (
                   <div
                     key={i}
-                    className="aspect-square rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800"
+                    className="relative aspect-square rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800"
                   >
-                    <img
+                    <Image
                       src={src}
                       alt={`${row.name} ${i + 2}`}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                   </div>
                 ))}

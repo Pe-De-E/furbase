@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 import { createAdoptionRequest } from './actions'
 
 type Props = {
@@ -20,12 +21,12 @@ export default function RequestButton({ animalId, animalName, isLoggedIn, hasExi
 
   if (!isLoggedIn) {
     return (
-      <a
+      <Link
         href="/api/auth/signin"
         className="w-full block text-center bg-zinc-900 text-white rounded-xl py-3.5 text-sm font-medium hover:bg-zinc-700 transition-colors mt-2"
       >
         {t('signIn')}
-      </a>
+      </Link>
     )
   }
 

@@ -1,6 +1,7 @@
 import { db, adoptionRequest, animal, user } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 import { getTranslations } from 'next-intl/server'
+import Image from 'next/image'
 import { updateRequestStatus } from './actions'
 
 const STATUS_STYLE: Record<string, string> = {
@@ -52,9 +53,11 @@ export default async function AdminRequestsPage() {
                   href={`/animals/${a.id}`}
                   className="flex items-center gap-3 shrink-0 hover:opacity-80 transition-opacity"
                 >
-                  <img
+                  <Image
                     src={a.images?.[0] ?? `https://picsum.photos/seed/${a.id}/80/80`}
                     alt={a.name}
+                    width={48}
+                    height={48}
                     className="w-12 h-12 rounded-lg object-cover bg-zinc-100 dark:bg-zinc-800"
                   />
                   <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{a.name}</p>
@@ -67,10 +70,11 @@ export default async function AdminRequestsPage() {
                   <div className="w-10 h-10 rounded-full bg-zinc-200 dark:bg-zinc-700 shrink-0 relative overflow-hidden flex items-center justify-center text-zinc-500 dark:text-zinc-400 text-sm font-medium">
                     {u.name?.[0] ?? '?'}
                     {u.image && (
-                      <img
+                      <Image
                         src={u.image}
                         alt=""
-                        className="absolute inset-0 w-full h-full object-cover"
+                        fill
+                        className="object-cover"
                       />
                     )}
                   </div>

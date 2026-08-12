@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { updateAnimalStatus } from '../actions'
 import { deleteAnimal } from '../actions'
@@ -42,9 +43,11 @@ function AnimalRow({ animal: a }: { animal: Animal }) {
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center gap-3 p-4 text-left"
       >
-        <img
+        <Image
           src={a.images?.[0] ?? `https://picsum.photos/seed/${a.id}/80/80`}
           alt={a.name}
+          width={40}
+          height={40}
           className="w-10 h-10 rounded-lg object-cover bg-zinc-100 dark:bg-zinc-800 shrink-0"
         />
         <div className="flex-1 min-w-0">

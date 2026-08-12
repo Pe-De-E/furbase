@@ -2,6 +2,7 @@ import { db, animal, species as speciesTable } from '@furbase/db'
 import { eq, and, asc, desc, type SQL } from 'drizzle-orm'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
+import Image from 'next/image'
 import StatusSelect from './status-select'
 import DeleteButton from './delete-button'
 import AnimalListMobile from './animal-list-mobile'
@@ -78,12 +79,14 @@ export default async function AdminAnimalsPage({
               <tr key={a.id} className="hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
                 <td className="px-5 py-3">
                   <div className="flex items-center gap-3">
-                    <img
+                    <Image
                       src={
                         a.images?.[0] ??
                         `https://picsum.photos/seed/${a.id}/80/80`
                       }
                       alt={a.name}
+                      width={36}
+                      height={36}
                       className="w-9 h-9 rounded-lg object-cover bg-zinc-100 dark:bg-zinc-700"
                     />
                     <div>

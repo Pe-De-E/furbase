@@ -1,6 +1,7 @@
 import { db, settings } from '@furbase/db'
 import { getTranslations } from 'next-intl/server'
 import Header from '@/components/header'
+import Image from 'next/image'
 import { MapPin, Phone, Mail, Globe } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -35,11 +36,14 @@ export default async function AboutPage() {
 
       <main className="max-w-3xl mx-auto px-6 py-12">
         {config?.logo && (
-          <img
-            src={config.logo}
-            alt={config.name}
-            className="h-20 w-auto object-contain mb-8"
-          />
+          <div className="relative h-20 w-48 mb-8">
+            <Image
+              src={config.logo}
+              alt={config.name ?? ''}
+              fill
+              className="object-contain"
+            />
+          </div>
         )}
 
         <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-4">

@@ -9,6 +9,7 @@ import {
 import { eq } from 'drizzle-orm'
 import { auth } from '@/auth'
 import Link from 'next/link'
+import Image from 'next/image'
 import Header from '@/components/header'
 import VolunteerForm from './volunteer-form'
 import { getTranslations } from 'next-intl/server'
@@ -57,9 +58,11 @@ export default async function ProfilePage() {
         {/* Account */}
         <section className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-100 dark:border-zinc-800 p-6 flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
           {session.user.image && (
-            <img
+            <Image
               src={session.user.image}
               alt=""
+              width={64}
+              height={64}
               className="w-16 h-16 rounded-full"
             />
           )}
@@ -121,12 +124,14 @@ export default async function ProfilePage() {
                   href={`/animals/${a.id}`}
                   className="flex items-center gap-3 rounded-xl border border-zinc-100 dark:border-zinc-800 p-3 hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors"
                 >
-                  <img
+                  <Image
                     src={
                       a.images?.[0] ??
                       `https://picsum.photos/seed/${a.id}/80/80`
                     }
                     alt={a.name}
+                    width={48}
+                    height={48}
                     className="w-12 h-12 rounded-lg object-cover bg-zinc-100 dark:bg-zinc-800"
                   />
                   <div>
@@ -169,12 +174,14 @@ export default async function ProfilePage() {
                     href={`/animals/${r.animalId}`}
                     className="flex items-center gap-3 rounded-xl border border-zinc-100 dark:border-zinc-800 p-3 hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors"
                   >
-                    <img
+                    <Image
                       src={
                         r.animalImage?.[0] ??
                         `https://picsum.photos/seed/${r.animalId}/80/80`
                       }
                       alt={r.animalName}
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded-lg object-cover bg-zinc-100 dark:bg-zinc-800"
                     />
                     <div className="flex-1 min-w-0">

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { setVolunteerApproval } from './actions'
 
@@ -43,10 +44,11 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
         <div className="w-10 h-10 rounded-full bg-zinc-200 dark:bg-zinc-700 relative overflow-hidden shrink-0 flex items-center justify-center text-zinc-500 dark:text-zinc-400 text-sm font-medium">
           {u.name?.[0] ?? '?'}
           {u.image && (
-            <img
+            <Image
               src={u.image}
               alt=""
-              className="absolute inset-0 w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
           )}
         </div>

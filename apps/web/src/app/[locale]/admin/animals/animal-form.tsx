@@ -4,6 +4,7 @@ import type { InferSelectModel } from 'drizzle-orm'
 import type { animal } from '@furbase/db'
 import { db, species as speciesTable } from '@furbase/db'
 import { asc } from 'drizzle-orm'
+import Link from 'next/link'
 import ImageUpload from './image-upload'
 
 type Animal = InferSelectModel<typeof animal>
@@ -253,12 +254,12 @@ export default async function AnimalForm({ animal: a }: { animal?: Animal }) {
         )}
 
         <div className="flex gap-3">
-          <a
+          <Link
             href="/admin/animals"
             className="px-4 py-2.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors"
           >
             {t('cancel')}
-          </a>
+          </Link>
           <button
             type="submit"
             className="px-5 py-2.5 bg-zinc-900 text-white text-sm font-medium rounded-xl hover:bg-zinc-700 transition-colors"
