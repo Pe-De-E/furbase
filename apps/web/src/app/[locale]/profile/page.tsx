@@ -8,6 +8,7 @@ import {
 } from '@furbase/db'
 import { eq } from 'drizzle-orm'
 import { auth } from '@/auth'
+import Link from 'next/link'
 import Header from '@/components/header'
 import VolunteerForm from './volunteer-form'
 import { getTranslations } from 'next-intl/server'
@@ -108,14 +109,14 @@ export default async function ProfilePage() {
           {favorites.length === 0 ? (
             <div className="text-center py-10 text-zinc-400 dark:text-zinc-500 text-sm">
               No saved animals yet.{' '}
-              <a href="/" className="text-zinc-900 dark:text-zinc-100 underline">
+              <Link href="/" className="text-zinc-900 dark:text-zinc-100 underline">
                 Browse animals
-              </a>
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {favorites.map(({ animal: a }) => (
-                <a
+                <Link
                   key={a.id}
                   href={`/animals/${a.id}`}
                   className="flex items-center gap-3 rounded-xl border border-zinc-100 dark:border-zinc-800 p-3 hover:border-zinc-300 dark:hover:border-zinc-600 transition-colors"
@@ -136,7 +137,7 @@ export default async function ProfilePage() {
                       {a.species} · {a.breed ?? '—'}
                     </p>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           )}
@@ -203,12 +204,12 @@ export default async function ProfilePage() {
                 Find animals that fit your lifestyle.
               </p>
             </div>
-            <a
+            <Link
               href="/matcher"
               className="px-4 py-2 bg-zinc-900 text-white text-sm font-medium rounded-xl hover:bg-zinc-700 transition-colors"
             >
               {matcher ? 'Redo questionnaire →' : 'Start questionnaire →'}
-            </a>
+            </Link>
           </div>
 
           {matcher ? (
