@@ -50,6 +50,7 @@
     "adoption": "Adoption Checklist",
     "walks": "Walk schedule",
     "adminPanel": "Admin panel",
+    "faq": "Admin FAQ",
     "signOut": "Sign out"
   },
   "AdminAdoption": {
@@ -95,6 +96,36 @@
     "species": "Species",
     "adoption": "Process",
     "requests": "Requests"
+  },
+  "AdminFaq": {
+    "title": "Admin FAQ",
+    "subtitle": "Quick answers to the most common questions about the admin area",
+    "items": [
+      {
+        "question": "How do I add a new animal?",
+        "answer": "Go to \"Animals\" and click \"+ Add animal\" in the top right, fill in the details and save. Photos can be uploaded right when creating the entry."
+      },
+      {
+        "question": "How do I change an animal's status (e.g. adopted)?",
+        "answer": "In the animal list, click the status dropdown for that animal and pick the new status. The change is saved immediately."
+      },
+      {
+        "question": "Where do I see new adoption requests?",
+        "answer": "Under \"Requests\". Open requests can be approved or rejected directly, including the message from the interested person."
+      },
+      {
+        "question": "How do I add a new species?",
+        "answer": "Under \"Species\", fill in the form on the right (display label and internal value) and add it. Entries you no longer need can be deleted there too."
+      },
+      {
+        "question": "How do I manage volunteers?",
+        "answer": "Under \"Volunteers\" you'll find the list of all registered people including their contact details."
+      },
+      {
+        "question": "How do I adjust the adoption process/checklist?",
+        "answer": "Under \"Process\" you can add checklist items, reorder them via drag & drop, or delete them."
+      }
+    ]
   },
   "AdminAnimals": {
     "title": "Animals",

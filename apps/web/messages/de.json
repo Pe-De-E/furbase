@@ -50,6 +50,7 @@
     "adoption": "Adoptions-Checkliste",
     "walks": "Gassiplan",
     "adminPanel": "Admin-Bereich",
+    "faq": "FAQ für Admins",
     "signOut": "Abmelden"
   },
   "AdminAdoption": {
@@ -95,6 +96,36 @@
     "species": "Tierarten",
     "adoption": "Ablauf",
     "requests": "Anfragen"
+  },
+  "AdminFaq": {
+    "title": "FAQ für Admins",
+    "subtitle": "Kurze Antworten auf die häufigsten Fragen zum Admin-Bereich",
+    "items": [
+      {
+        "question": "Wie füge ich ein neues Tier hinzu?",
+        "answer": "Unter „Tiere“ oben rechts auf „+ Tier hinzufügen“ klicken, Angaben ausfüllen und speichern. Fotos lassen sich direkt beim Anlegen hochladen."
+      },
+      {
+        "question": "Wie ändere ich den Status eines Tieres (z. B. vermittelt)?",
+        "answer": "In der Tierliste beim jeweiligen Tier auf das Status-Dropdown klicken und den neuen Status auswählen. Die Änderung wird sofort gespeichert."
+      },
+      {
+        "question": "Wo sehe ich neue Adoptionsanfragen?",
+        "answer": "Unter „Anfragen“. Dort können offene Anfragen direkt genehmigt oder abgelehnt werden, inklusive Nachricht der interessierten Person."
+      },
+      {
+        "question": "Wie trage ich eine neue Tierart ein?",
+        "answer": "Unter „Tierarten“ rechts das Formular ausfüllen (Anzeigename und interner Wert) und hinzufügen. Nicht mehr benötigte Einträge lassen sich dort auch löschen."
+      },
+      {
+        "question": "Wie verwalte ich Ehrenamtliche?",
+        "answer": "Unter „Ehrenamtliche“ findest du die Liste aller registrierten Personen inklusive Kontaktdaten."
+      },
+      {
+        "question": "Wie passe ich den Adoptions-Ablauf/Checkliste an?",
+        "answer": "Unter „Ablauf“ lassen sich Checklisten-Punkte hinzufügen, per Drag & Drop sortieren oder löschen."
+      }
+    ]
   },
   "AdminAnimals": {
     "title": "Tiere",
