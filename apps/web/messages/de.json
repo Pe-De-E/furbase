@@ -51,6 +51,7 @@
     "walks": "Gassiplan",
     "adminPanel": "Admin-Bereich",
     "faq": "FAQ für Admins",
+    "feedback": "Feedback geben",
     "signOut": "Abmelden"
   },
   "AdminAdoption": {
@@ -95,7 +96,26 @@
     "volunteers": "Ehrenamtliche",
     "species": "Tierarten",
     "adoption": "Ablauf",
-    "requests": "Anfragen"
+    "requests": "Anfragen",
+    "feedback": "Feedback"
+  },
+  "Feedback": {
+    "title": "Feedback",
+    "subtitle": "Hast du einen Fehler gefunden oder eine Idee für uns? Immer her damit.",
+    "placeholder": "Was möchtest du uns mitteilen?",
+    "submit": "Absenden",
+    "success": "Danke für dein Feedback!"
+  },
+  "AdminFeedback": {
+    "title": "Feedback",
+    "stats": "{total} gesamt · {new} neu",
+    "empty": "Noch kein Feedback vorhanden.",
+    "resolve": "Erledigt",
+    "delete": "Löschen",
+    "status": {
+      "new": "Neu",
+      "resolved": "Erledigt"
+    }
   },
   "AdminFaq": {
     "title": "FAQ für Admins",

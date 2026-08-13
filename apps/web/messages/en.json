@@ -51,6 +51,7 @@
     "walks": "Walk schedule",
     "adminPanel": "Admin panel",
     "faq": "Admin FAQ",
+    "feedback": "Give feedback",
     "signOut": "Sign out"
   },
   "AdminAdoption": {
@@ -95,7 +96,26 @@
     "volunteers": "Volunteers",
     "species": "Species",
     "adoption": "Process",
-    "requests": "Requests"
+    "requests": "Requests",
+    "feedback": "Feedback"
+  },
+  "Feedback": {
+    "title": "Feedback",
+    "subtitle": "Found a bug or have an idea for us? Let us know.",
+    "placeholder": "What would you like to tell us?",
+    "submit": "Submit",
+    "success": "Thanks for your feedback!"
+  },
+  "AdminFeedback": {
+    "title": "Feedback",
+    "stats": "{total} total · {new} new",
+    "empty": "No feedback yet.",
+    "resolve": "Resolve",
+    "delete": "Delete",
+    "status": {
+      "new": "New",
+      "resolved": "Resolved"
+    }
   },
   "AdminFaq": {
     "title": "Admin FAQ",
