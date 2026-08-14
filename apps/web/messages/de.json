@@ -97,7 +97,19 @@
     "species": "Tierarten",
     "adoption": "Ablauf",
     "requests": "Anfragen",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "users": "Nutzer"
+  },
+  "AdminUsers": {
+    "title": "Nutzer",
+    "stats": "{count} gesamt",
+    "you": "(du)",
+    "roleAdmin": "Admin",
+    "roleUser": "Nutzer",
+    "makeAdmin": "Zum Admin machen",
+    "removeAdmin": "Admin entziehen",
+    "envAdmin": "via ADMIN_EMAILS",
+    "envAdminHint": "Über die Umgebungsvariable ADMIN_EMAILS als Admin festgelegt — wird bei jedem Login automatisch wiederhergestellt und kann hier nicht entzogen werden."
   },
   "Feedback": {
     "title": "Feedback",

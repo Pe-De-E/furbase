@@ -97,7 +97,19 @@
     "species": "Species",
     "adoption": "Process",
     "requests": "Requests",
-    "feedback": "Feedback"
+    "feedback": "Feedback",
+    "users": "Users"
+  },
+  "AdminUsers": {
+    "title": "Users",
+    "stats": "{count} total",
+    "you": "(you)",
+    "roleAdmin": "Admin",
+    "roleUser": "User",
+    "makeAdmin": "Make admin",
+    "removeAdmin": "Remove admin",
+    "envAdmin": "via ADMIN_EMAILS",
+    "envAdminHint": "Set as admin via the ADMIN_EMAILS environment variable — restored automatically on every login and can't be revoked here."
   },
   "Feedback": {
     "title": "Feedback",

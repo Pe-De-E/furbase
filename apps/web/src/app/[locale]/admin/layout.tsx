@@ -57,6 +57,12 @@ export default async function AdminLayout({
             >
               {t('feedback')}
             </Link>
+            <Link
+              href="/admin/users"
+              className="text-sm font-medium hover:text-zinc-300 transition-colors"
+            >
+              {t('users')}
+            </Link>
           </div>
           <HeaderAuth />
         </div>
