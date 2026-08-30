@@ -8,7 +8,7 @@
   "scripts": {
     "db:generate": "drizzle-kit generate",
     "db:migrate": "node --env-file=.env node_modules/drizzle-kit/bin.cjs migrate",
-    "db:migrate:deploy": "drizzle-kit migrate",
+    "db:migrate:deploy": "tsx src/migrate.ts",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx --env-file=.env src/seed.ts",
     "db:seed:adoption": "tsx --env-file=.env src/seed-adoption.ts",
