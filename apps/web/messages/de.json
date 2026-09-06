@@ -270,6 +270,7 @@
     "empty": "Noch keine Adoptionsanfragen.",
     "approve": "Genehmigen",
     "reject": "Ablehnen",
+    "resetToPending": "Zurück auf offen",
     "status": {
       "pending": "Ausstehend",
       "approved": "Genehmigt",

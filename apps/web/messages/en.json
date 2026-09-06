@@ -266,6 +266,7 @@
     "empty": "No adoption requests yet.",
     "approve": "Approve",
     "reject": "Reject",
+    "resetToPending": "Reset to pending",
     "status": {
       "pending": "Pending",
       "approved": "Approved",

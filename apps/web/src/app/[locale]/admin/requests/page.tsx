@@ -112,36 +112,52 @@ export default async function AdminRequestsPage() {
               )}
 
               {/* Actions */}
-              {req.status === 'pending' && (
-                <div className="flex gap-2 mt-4">
-                  <form
-                    action={async () => {
-                      'use server'
-                      await updateRequestStatus(req.id, 'approved')
-                    }}
-                  >
-                    <button
-                      type="submit"
-                      className="px-4 py-2 text-sm font-medium rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+              <div className="flex gap-2 mt-4">
+                {req.status === 'pending' ? (
+                  <>
+                    <form
+                      action={async () => {
+                        'use server'
+                        await updateRequestStatus(req.id, 'approved')
+                      }}
                     >
-                      {t('approve')}
-                    </button>
-                  </form>
+                      <button
+                        type="submit"
+                        className="px-4 py-2 text-sm font-medium rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+                      >
+                        {t('approve')}
+                      </button>
+                    </form>
+                    <form
+                      action={async () => {
+                        'use server'
+                        await updateRequestStatus(req.id, 'rejected')
+                      }}
+                    >
+                      <button
+                        type="submit"
+                        className="px-4 py-2 text-sm font-medium rounded-xl border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                      >
+                        {t('reject')}
+                      </button>
+                    </form>
+                  </>
+                ) : (
                   <form
                     action={async () => {
                       'use server'
-                      await updateRequestStatus(req.id, 'rejected')
+                      await updateRequestStatus(req.id, 'pending')
                     }}
                   >
                     <button
                       type="submit"
                       className="px-4 py-2 text-sm font-medium rounded-xl border border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
                     >
-                      {t('reject')}
+                      {t('resetToPending')}
                     </button>
                   </form>
-                </div>
-              )}
+                )}
+              </div>
             </div>
           ))}
         </div>
