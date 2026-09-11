@@ -16,7 +16,7 @@ export default function SpeciesFilter({
     <div className="flex flex-wrap gap-2">
       {options.map((opt) => {
         const isActive = opt.value === '' ? !active : opt.value === active
-        const href = opt.value ? `?species=${opt.value}` : '/'
+        const href = opt.value ? `?species=${opt.value}` : '?'
         return (
           <a
             key={opt.value}
