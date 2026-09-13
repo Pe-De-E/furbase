@@ -3,9 +3,16 @@ import { eq } from 'drizzle-orm'
 import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
 import VolunteerListMobile from './volunteer-list-mobile'
-import { setVolunteerApproval } from './actions'
+import { setVolunteerGrant } from './actions'
 
 const ROLE_KEYS = ['canFoster', 'canTransport', 'canWalkDogs', 'canHelp'] as const
+
+const GRANT_FIELD = {
+  canFoster: 'grantedFoster',
+  canTransport: 'grantedTransport',
+  canWalkDogs: 'grantedWalkDogs',
+  canHelp: 'grantedHelp',
+} as const
 
 const ROLE_COLOR: Record<string, string> = {
   canFoster: 'bg-purple-100 text-purple-700',
@@ -35,7 +42,11 @@ export default async function AdminVolunteersPage() {
       r.volunteer.canHelp,
   ).length
 
-  const pendingCount = rows.filter((r) => !r.volunteer.approved).length
+  const pendingCount = rows.filter(
+    (r) =>
+      ROLE_KEYS.some((k) => r.volunteer[k]) &&
+      !ROLE_KEYS.some((k) => r.volunteer[GRANT_FIELD[k]]),
+  ).length
 
   return (
     <div>
@@ -89,43 +100,28 @@ export default async function AdminVolunteersPage() {
                           </a>
                         </div>
 
-                        <div className="flex items-center gap-3">
-                          <span
-                            className={`text-xs font-medium px-2.5 py-1 rounded-full border ${
-                              v.approved
-                                ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
-                                : 'bg-amber-50 border-amber-200 text-amber-700'
-                            }`}
-                          >
-                            {v.approved ? t('statusApproved') : t('statusPending')}
-                          </span>
-                          <form
-                            action={setVolunteerApproval.bind(null, v.id, !v.approved)}
-                          >
-                            <button
-                              type="submit"
-                              className={`text-xs font-medium px-3 py-1.5 rounded-xl border transition-colors ${
-                                v.approved
-                                  ? 'border-red-200 text-red-600 hover:bg-red-50 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950'
-                                  : 'border-emerald-200 text-emerald-700 hover:bg-emerald-50 dark:border-emerald-800 dark:text-emerald-400 dark:hover:bg-emerald-950'
-                              }`}
-                            >
-                              {v.approved ? t('revoke') : t('approve')}
-                            </button>
-                          </form>
-                        </div>
                       </div>
 
                       {activeRoles.length > 0 && (
                         <div className="flex flex-wrap gap-2 mt-3">
-                          {activeRoles.map((k) => (
-                            <span
-                              key={k}
-                              className={`text-xs font-medium px-2.5 py-1 rounded-full ${ROLE_COLOR[k]}`}
-                            >
-                              {t(`roles.${k}` as Parameters<typeof t>[0])}
-                            </span>
-                          ))}
+                          {activeRoles.map((k) => {
+                            const granted = v[GRANT_FIELD[k]]
+                            return (
+                              <form key={k} action={setVolunteerGrant.bind(null, v.id, GRANT_FIELD[k], !granted)}>
+                                <button
+                                  type="submit"
+                                  className={`text-xs font-medium px-2.5 py-1 rounded-full border transition-colors ${
+                                    granted
+                                      ? `${ROLE_COLOR[k]} border-transparent`
+                                      : 'border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500 hover:border-zinc-400 dark:hover:border-zinc-500'
+                                  }`}
+                                >
+                                  {t(`roles.${k}` as Parameters<typeof t>[0])}
+                                  {granted ? ' ✓' : ''}
+                                </button>
+                              </form>
+                            )
+                          })}
                         </div>
                       )}
 

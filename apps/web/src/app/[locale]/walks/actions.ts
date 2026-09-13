@@ -13,13 +13,13 @@ export async function signUpForSlot(
   const session = await auth()
   if (!session?.user?.id) return
 
-  const isVolunteer = await db
-    .select({ id: volunteerProfile.id })
+  const volunteer = await db
+    .select({ grantedWalkDogs: volunteerProfile.grantedWalkDogs })
     .from(volunteerProfile)
     .where(eq(volunteerProfile.userId, session.user.id))
-    .then((r) => r.length > 0)
+    .then((r) => r[0])
 
-  if (!isVolunteer && session.user.role !== 'admin') return
+  if (!volunteer?.grantedWalkDogs && session.user.role !== 'admin') return
 
   await db
     .insert(walkSlot)

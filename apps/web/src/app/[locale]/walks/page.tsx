@@ -59,7 +59,7 @@ export default async function WalksPage({
 
   const [volunteer, t] = await Promise.all([
     db
-      .select({ id: volunteerProfile.id, approved: volunteerProfile.approved })
+      .select({ id: volunteerProfile.id, grantedWalkDogs: volunteerProfile.grantedWalkDogs })
       .from(volunteerProfile)
       .where(eq(volunteerProfile.userId, userId))
       .then((r) => r[0] ?? null),
@@ -67,7 +67,7 @@ export default async function WalksPage({
   ])
 
   const isAdmin = session.user.role === 'admin'
-  const isApprovedVolunteer = volunteer?.approved === true
+  const isApprovedVolunteer = volunteer?.grantedWalkDogs === true
   const canViewSchedule = isApprovedVolunteer || isAdmin
 
   const monday = getMondayOfWeek(week)

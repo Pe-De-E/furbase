@@ -34,6 +34,12 @@ export default async function AdminLayout({
               {t('volunteers')}
             </Link>
             <Link
+              href="/admin/gassigeher"
+              className="text-sm font-medium hover:text-zinc-300 transition-colors"
+            >
+              {t('gassigeher')}
+            </Link>
+            <Link
               href="/admin/species"
               className="text-sm font-medium hover:text-zinc-300 transition-colors"
             >

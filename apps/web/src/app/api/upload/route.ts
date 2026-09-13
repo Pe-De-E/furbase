@@ -4,7 +4,13 @@ import sharp from 'sharp'
 import { writeFile, mkdir } from 'fs/promises'
 import path from 'path'
 import { randomUUID } from 'crypto'
-import { UPLOAD_DIR, deleteUploadedImages, uploadFilenameFromUrl } from '@/lib/uploads'
+import {
+  UPLOAD_CATEGORIES,
+  uploadDir,
+  type UploadCategory,
+  deleteUploadedImages,
+  uploadFilenameFromUrl,
+} from '@/lib/uploads'
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB
 const ALLOWED_FORMATS = new Set(['jpeg', 'png', 'webp'])
@@ -16,6 +22,13 @@ export async function POST(req: NextRequest) {
   }
 
   const formData = await req.formData()
+  const categoryRaw = formData.get('category')
+  const category: UploadCategory =
+    typeof categoryRaw === 'string' &&
+    (UPLOAD_CATEGORIES as readonly string[]).includes(categoryRaw)
+      ? (categoryRaw as UploadCategory)
+      : 'animals'
+
   const file = formData.get('file') as File | null
   if (!file || !file.size) {
     return NextResponse.json({ error: 'No file provided' }, { status: 400 })
@@ -43,10 +56,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Invalid image file' }, { status: 400 })
   }
 
-  await mkdir(UPLOAD_DIR, { recursive: true })
-  await writeFile(path.join(UPLOAD_DIR, filename), processed)
+  const dir = uploadDir(category)
+  await mkdir(dir, { recursive: true })
+  await writeFile(path.join(dir, filename), processed)
 
-  return NextResponse.json({ url: `/uploads/animals/${filename}` })
+  return NextResponse.json({ url: `/uploads/${category}/${filename}` })
 }
 
 export async function DELETE(req: NextRequest) {

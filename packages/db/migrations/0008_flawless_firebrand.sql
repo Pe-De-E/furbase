@@ -1,0 +1,1 @@
+ALTER TABLE "volunteer_profile" DROP COLUMN "approved";

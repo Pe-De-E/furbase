@@ -3,9 +3,16 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
-import { setVolunteerApproval } from './actions'
+import { setVolunteerGrant, type GrantField } from './actions'
 
 const ROLE_KEYS = ['canFoster', 'canTransport', 'canWalkDogs', 'canHelp'] as const
+
+const GRANT_FIELD: Record<(typeof ROLE_KEYS)[number], GrantField> = {
+  canFoster: 'grantedFoster',
+  canTransport: 'grantedTransport',
+  canWalkDogs: 'grantedWalkDogs',
+  canHelp: 'grantedHelp',
+}
 
 const ROLE_COLOR: Record<string, string> = {
   canFoster: 'bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300',
@@ -22,7 +29,10 @@ type Row = {
     canWalkDogs: boolean | null
     canHelp: boolean | null
     notes: string | null
-    approved: boolean
+    grantedFoster: boolean
+    grantedTransport: boolean
+    grantedWalkDogs: boolean
+    grantedHelp: boolean
   }
   user: { name: string | null; email: string; image: string | null }
 }
@@ -31,6 +41,7 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
   const t = useTranslations('AdminVolunteers')
   const [open, setOpen] = useState(false)
   const activeRoles = ROLE_KEYS.filter((k) => v[k])
+  const hasAnyGrant = ROLE_KEYS.some((k) => v[GRANT_FIELD[k]])
 
   return (
     <div
@@ -58,12 +69,12 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
         </div>
         <span
           className={`text-xs font-medium px-2 py-0.5 rounded-full border shrink-0 ${
-            v.approved
+            hasAnyGrant
               ? 'bg-emerald-50 dark:bg-emerald-950 border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300'
               : 'bg-amber-50 dark:bg-amber-950 border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300'
           }`}
         >
-          {v.approved ? t('statusApproved') : t('statusPending')}
+          {hasAnyGrant ? t('statusApproved') : t('statusPending')}
         </span>
         <span className="text-zinc-300 dark:text-zinc-600 text-sm ml-1">{open ? '▲' : '▼'}</span>
       </button>
@@ -72,14 +83,24 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
         <div className="border-t border-zinc-100 dark:border-zinc-800 px-4 py-4 flex flex-col gap-4">
           {activeRoles.length > 0 ? (
             <div className="flex flex-wrap gap-2">
-              {activeRoles.map((k) => (
-                <span
-                  key={k}
-                  className={`text-xs font-medium px-2.5 py-1 rounded-full ${ROLE_COLOR[k]}`}
-                >
-                  {t(`roles.${k}` as Parameters<typeof t>[0])}
-                </span>
-              ))}
+              {activeRoles.map((k) => {
+                const granted = v[GRANT_FIELD[k]]
+                return (
+                  <form key={k} action={setVolunteerGrant.bind(null, v.id, GRANT_FIELD[k], !granted)}>
+                    <button
+                      type="submit"
+                      className={`text-xs font-medium px-2.5 py-1 rounded-full border transition-colors ${
+                        granted
+                          ? `${ROLE_COLOR[k]} border-transparent`
+                          : 'border-zinc-200 dark:border-zinc-700 text-zinc-400 dark:text-zinc-500 hover:border-zinc-400 dark:hover:border-zinc-500'
+                      }`}
+                    >
+                      {t(`roles.${k}` as Parameters<typeof t>[0])}
+                      {granted ? ' ✓' : ''}
+                    </button>
+                  </form>
+                )
+              })}
             </div>
           ) : (
             <p className="text-sm text-zinc-400 dark:text-zinc-500">{t('noActiveOffers')}</p>
@@ -89,26 +110,12 @@ function VolunteerRow({ row: { volunteer: v, user: u } }: { row: Row }) {
               {v.notes}
             </p>
           )}
-          <div className="flex items-center justify-between gap-3">
-            <a
-              href={`mailto:${u.email}`}
-              className="text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-            >
-              {t('contactEmail')}
-            </a>
-            <form action={setVolunteerApproval.bind(null, v.id, !v.approved)}>
-              <button
-                type="submit"
-                className={`text-xs font-medium px-3 py-1.5 rounded-xl border transition-colors ${
-                  v.approved
-                    ? 'border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950'
-                    : 'border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950'
-                }`}
-              >
-                {v.approved ? t('revoke') : t('approve')}
-              </button>
-            </form>
-          </div>
+          <a
+            href={`mailto:${u.email}`}
+            className="text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+          >
+            {t('contactEmail')}
+          </a>
         </div>
       )}
     </div>
