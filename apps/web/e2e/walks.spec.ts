@@ -97,9 +97,9 @@ test.beforeAll(async ({}, workerInfo) => {
     [TEST_NONVOL_ID],
   )
   await pool.query(
-    `INSERT INTO volunteer_profile (user_id, can_walk_dogs, can_foster, can_transport, can_help, approved)
+    `INSERT INTO volunteer_profile (user_id, can_walk_dogs, can_foster, can_transport, can_help, granted_walk_dogs)
      VALUES ($1, true, false, false, false, true)
-     ON CONFLICT (user_id) DO UPDATE SET can_walk_dogs = true, approved = true`,
+     ON CONFLICT (user_id) DO UPDATE SET can_walk_dogs = true, granted_walk_dogs = true`,
     [volUserId],
   )
 
